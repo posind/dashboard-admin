@@ -19,10 +19,7 @@
       sizes="32x32"
       href="shuffle-for-tailwind.png"
     />
-    <script
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"
-      defer
-    ></script>
+    
   </head>
   <body class="antialiased bg-body text-body font-body">
     <div class="">
@@ -391,6 +388,7 @@
                 <a
                   class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
                   href="#"
+                  onclick="logout()"
                 >
                   <span class="inline-block mr-4">
                     <svg
@@ -744,6 +742,7 @@
                 <a
                   class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
                   href="#"
+                  onclick="logout()"
                 >
                   <span class="inline-block mr-4">
                     <svg
@@ -1016,14 +1015,21 @@
             </div>
           </div>
           <!-- Alert -->
-
+         
+          
           <!-- Dashboard -->
           <section class="py-8" x-data="{ tab: 'EN' }">
             <div class="container px-4 mx-auto">
               <div class="py-4 bg-white rounded">
                 <div class="flex px-6 pb-4 border-b">
-                  <h3 x-show="tab == 'EN'" class="text-xl font-bold">prohibited items</h3>
-                  <h3 x-show="tab == 'ID'" class="text-xl font-bold">barang terlarang</h3>
+                  <h3 x-show="tab == 'EN'" class="text-xl font-bold flex-grow">prohibited items</h3>
+                  <h3 x-show="tab == 'ID'" class="text-xl font-bold flex-grow">barang terlarang</h3>
+                  <div x-show="tab == 'EN'" class="ml-12">
+                    <button onclick="addItem()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">Add Item</button>
+                  </div>
+                  <div x-show="tab == 'ID'" class="ml-12">
+                    <button onclick="tambahBarang()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">Tambah Barang</button>
+                  </div>
                   <div class="ml-auto">
                     <button
                       x-on:click="tab = 'EN'"
@@ -1528,7 +1534,12 @@
         </div>
       </div>
     </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"
+      defer
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
