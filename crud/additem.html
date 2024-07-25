@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+    <link rel="stylesheet" href="css/crud.css">
+</head>
+<body>
+    <div class="form-container">
+        <form x-on:submit.prevent="saveItem()">
+          <div class="mb-4">
+            <label>Item Name</label>
+            <input type="text" x-model="itemName">
+          </div>
+          <div class="mb-4">
+            <label>Country</label>
+            <input type="text" x-model="country">
+          </div>
+          <div class="mb-4">
+            <label>Language</label>
+            <select x-model="formLang">
+              <option value="EN">English</option>
+              <option value="IN">Indonesian</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <button type="submit">Save Item</button>
+          </div>
+        </form>
+    </div>
+</body>
+</html>
