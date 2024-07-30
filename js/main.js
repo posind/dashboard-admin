@@ -5,12 +5,12 @@ function logout() {
 
 // Fungsi untuk menavigasi ke halaman tambah item
 function addItem() {
-  window.location.href = "additem.html";
+  window.location.href = "crud/additem.html";
 }
 
 // Fungsi untuk menavigasi ke halaman tambah barang
 function tambahBarang() {
-  window.location.href = "tambah.html";
+  window.location.href = "crud/tambah.html";
 }
 
 // Menambahkan event listener untuk tab
@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>
               <div>
                 <!-- Ikon Edit -->
-                <a class="inline-block mr-2" href="#">
+                <a class="inline-block mr-2" href="#" >
                   <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
                 </a>
                 <!-- Ikon Delete -->
-                <a class="inline-block" href="#">
+                <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
                   <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
                 </a>
               </div>
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
                 </a>
                 <!-- Ikon Delete -->
-                <a class="inline-block" href="#">
+                <a class="inline-block" href="#" onclick="deleteItemId('${barang.id}')">
                   <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
                 </a>
               </div>
@@ -156,5 +156,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Fungsi untuk menghapus item Inggris
+function deleteItemEn(id) {
+  if (confirm('Are you sure you want to delete this item?')) {
+    fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en?id=${id}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Item deleted successfully');
+        // Update tampilan setelah penghapusan
+        location.reload(); // Refresh halaman untuk melihat perubahan
+      } else {
+        alert('Failed to delete item');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error deleting item');
+    });
+  }
+}
+
+// Fungsi untuk menghapus item Indonesia
+function deleteItemId(id) {
+  if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+    fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id?id=${id}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Item berhasil dihapus');
+        // Update tampilan setelah penghapusan
+        location.reload(); // Refresh halaman untuk melihat perubahan
+      } else {
+        alert('Gagal menghapus item');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error deleting item');
+    });
+  }
+}
 
 
