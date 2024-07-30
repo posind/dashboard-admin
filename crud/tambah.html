@@ -1,33 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tambah Barang</title>
-    <link rel="stylesheet" href="css/crud.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/crud.css" />
+  </head>
+  <body>
     <div class="form-container">
-        <form x-on:submit.prevent="saveItem()">
-          <div class="mb-4">
-            <label>Item Name</label>
-            <input type="text" x-model="itemName">
-          </div>
-          <div class="mb-4">
-            <label>Destination</label>
-            <input type="text" x-model="">
-          </div>
-          <div class="mb-4">
-            <label>Language</label>
-            <select x-model="formLang">
-              <option value="EN">English</option>
-              <option value="IN">Indonesian</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <button type="submit">Save Item</button>
-          </div>
-        </form>
+      <form x-on:submit.prevent="saveItem()">
+        <div class="mb-4">
+          <label>Destinasi</label>
+          <select x-model="formLang">
+            <option value="EN">English</option>
+            <option value="IN">Indonesia</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label>Nama Barang</label>
+          <input type="text" x-model="itemName" />
+        </div>
+
+        <div class="mb-4">
+          <button type="submit">Save Item</button>
+        </div>
+      </form>
     </div>
-</body>
+  </body>
 </html>

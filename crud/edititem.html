@@ -10,19 +10,15 @@
     <div class="form-container">
         <form x-on:submit.prevent="updateItem()">
           <div class="mb-4">
-            <label>Item Name</label>
-            <input type="text" x-model="itemName">
-          </div>
-          <div class="mb-4">
-            <label>Country</label>
-            <input type="text" x-model="country">
-          </div>
-          <div class="mb-4">
-            <label>Language</label>
+            <label>Destination</label>
             <select x-model="formLang">
               <option value="EN">English</option>
-              <option value="IN">Indonesian</option>
+              <option value="IN">Indonesia</option>
             </select>
+          </div>
+          <div class="mb-4">
+            <label>Item Name</label>
+            <input type="text" x-model="itemName">
           </div>
           <div class="mb-4">
             <button type="submit">Update Item</button>
