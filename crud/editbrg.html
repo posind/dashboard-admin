@@ -1,29 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Barang</title>
-    <link rel="stylesheet" href="css/crud.css">
-</head>
-<body>
-    <div class="form-container">
-        <form x-on:submit.prevent="updateItem()">
-          <div class="mb-4">
-            <label>Destinasi</label>
-            <select x-model="formLang">
-              <option value="EN">English</option>
-              <option value="IN">Indonesia</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label>Nama Barang</label>
-            <input type="text" x-model="namabarang">
-          </div>
-          <div class="mb-4">
-            <button type="submit">Perbaharui Barang</button>
-          </div>
-        </form>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Barang Terlarang (ID)</title>
+    <link rel="stylesheet" href="css/crud.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <div class="form-content">
+          <h2>Edit Barang Terlarang</h2>
+          <form
+            id="editItemForm"
+            onsubmit="event.preventDefault(); updateItem();"
+          >
+            <input type="hidden" id="itemId" />
+            <div class="form-group mb-4">
+              <label for="destination">Destinasi:</label>
+              <select
+                id="destination"
+                name="destination"
+                class="form-control"
+                required
+              >
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group mb-4">
+              <label for="prohibited_items">Barang Terlarang:</label>
+              <input
+                type="text"
+                id="prohibited_items"
+                name="prohibited_items"
+                class="form-control"
+                required
+              />
+            </div>
+            <button type="submit" class="btn">Perbarui Barang</button>
+          </form>
+        </div>
+      </div>
     </div>
-</body>
+
+    <script>
+      // Function to get query string parameter by name
+      function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      // On page load, use the query parameter to populate the form
+      document.addEventListener("DOMContentLoaded", () => {
+        const itemId = getQueryParam("id");
+        if (itemId) {
+          // Fetch the item details using the itemId and populate the form
+          fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id?id=${itemId}`)
+            .then((response) => response.json())
+            .then((data) => {
+              document.getElementById("itemId").value = itemId;
+              document.getElementById("destination").value =
+                data.item_id.Destination;
+              document.getElementById("prohibited_items").value =
+                data.item_id.ProhibitedItems;
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      });
+
+      // Function to fetch and populate the destination options
+      function loadDestinations() {
+        const destinations = ["USA", "UK", "France", "Germany", "Japan"];
+        const destinationSelect = document.getElementById("destination");
+        destinations.forEach((destination) => {
+          const option = document.createElement("option");
+          option.value = destination;
+          option.textContent = destination;
+          destinationSelect.appendChild(option);
+        });
+
+      }
+
+      function updateItem() {
+        const id = document.getElementById("itemId").value;
+        const destination = document.getElementById("destination").value;
+        const prohibitedItems =
+          document.getElementById("prohibited_items").value;
+
+        fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id?id=${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Destination: destination,
+            ProhibitedItems: prohibitedItems,
+          }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Barang berhasil diperbarui");
+              window.location.href = "./index.html";
+            } else {
+              alert("Gagal memperbarui barang");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error memperbarui barang");
+          });
+      }
+
+      loadDestinations();
+    </script>
+  </body>
 </html>

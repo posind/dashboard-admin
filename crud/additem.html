@@ -15,9 +15,11 @@
           <div class="mb-4">
             <label for="destination" class="block text-gray-700">Destination:</label>
             <select id="destination" name="destination" class="mt-1 block w-full" required>
-              <option value="destination1">Destination 1</option>
-              <option value="destination2">Destination 2</option>
-              <option value="destination3">Destination 3</option>
+              <option value="destination1">USA</option>
+              <option value="destination2">UK</option>
+              <option value="destination3">France</option>
+              <option value="destination3">Germany</option>
+              <option value="destination3">Japan</option>
             </select>
           </div>
           <div class="mb-4">
@@ -34,7 +36,7 @@
         const destination = document.getElementById('destination').value;
         const prohibitedItems = document.getElementById('prohibited_items').value;
 
-        fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en', {
+        fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
