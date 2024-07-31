@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadItems() {
     try {
       const response = await fetch(
-        "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en"
+        "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/eng"
       );
       if (!response.ok) throw new Error("Network response was not ok");
       const items = await response.json();
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadBarang() {
     try {
       const response = await fetch(
-        "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id"
+        "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/ind"
       );
       if (!response.ok) throw new Error("Network response was not ok");
       const barangs = await response.json();
