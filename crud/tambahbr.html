@@ -6,32 +6,34 @@
     <title>Tambah Barang Terlarang (ID)</title>
     <link rel="stylesheet" href="css/crud.css">
 </head>
-<body>
+<body class="bg-gray-100">
   <div class="container">
     <div class="form-container">
-      <h2 class="title">Tambah Barang Terlarang</h2>
+      <div class="form-content">
+      <h2 class="text-2xl font-bold mb-4 text-center">Tambah Barang Terlarang</h2>
       <form id="tambahBarangForm" onsubmit="event.preventDefault(); tambahBarang();">
         <div class="mb-4">
           <label for="destination" class="block text-gray-700">Destinasi:</label>
           <select id="destination" name="destination" class="mt-1 block w-full" required>
-              <option value="destination1">USA</option>
-              <option value="destination2">UK</option>
-              <option value="destination3">France</option>
-              <option value="destination3">Germany</option>
-              <option value="destination3">Japan</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+              <option value="France">France</option>
+              <option value="Germany">Germany</option>
+              <option value="Japan">Japan</option>
           </select>
         </div>
-          <div class="form-group">
-              <label for="barang_terlarang" class="label">Barang Terlarang:</label>
-              <input type="text" id="barang_terlarang" name="barang_terlarang" class="input" required>
-          </div>
-          <button type="submit" class="button">Tambah Barang</button>
+        <div class="mb-4">
+          <label for="barang_terlarang" class="block text-gray-700">Barang Terlarang:</label>
+          <input type="text" id="barang_terlarang" name="barang_terlarang" class="mt-1 block w-full" required>
+        </div>
+        <button type="submit" class="py-2 px-4 bg-indigo-500 text-white rounded w-full">Tambah Barang</button>
       </form>
+    </div>
     </div>
   </div>
   <script>
     function tambahBarang() {
-        const destinasi = document.getElementById('destinasi').value;
+        const destination = document.getElementById('destination').value;
         const barangTerlarang = document.getElementById('barang_terlarang').value;
 
         fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id', {
@@ -40,7 +42,7 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                destinasi: destinasi,
+                destinasi: destination,
                 barang_terlarang: barangTerlarang
             }),
         })
