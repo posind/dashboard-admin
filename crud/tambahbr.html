@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Barang Terlarang (ID)</title>
+    <link rel="stylesheet" href="css/crud.css">
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2 class="title">Tambah Barang Terlarang</h2>
+      <form id="tambahBarangForm" onsubmit="event.preventDefault(); tambahBarang();">
+        <div class="mb-4">
+          <label for="destination" class="block text-gray-700">Destinasi:</label>
+          <select id="destination" name="destination" class="mt-1 block w-full" required>
+            <option value="destination1">Destinasi 1</option>
+            <option value="destination2">Destinasi 2</option>
+            <option value="destination3">Destinasi 3</option>
+          </select>
+        </div>
+          <div class="form-group">
+              <label for="barang_terlarang" class="label">Barang Terlarang:</label>
+              <input type="text" id="barang_terlarang" name="barang_terlarang" class="input" required>
+          </div>
+          <button type="submit" class="button">Tambah Barang</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    function tambahBarang() {
+        const destinasi = document.getElementById('destinasi').value;
+        const barangTerlarang = document.getElementById('barang_terlarang').value;
+
+        fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                destinasi: destinasi,
+                barang_terlarang: barangTerlarang
+            }),
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Barang berhasil ditambahkan');
+                window.location.href = '../index.html'; 
+            } else {
+                alert('Gagal menambahkan barang');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error menambahkan barang');
+        });
+    }
+  </script>
+</body>
+</html>

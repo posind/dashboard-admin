@@ -10,7 +10,7 @@ function addItem() {
 
 // Fungsi untuk menavigasi ke halaman tambah barang
 function tambahBarang() {
-  window.location.href = "crud/tambah.html";
+  window.location.href = "crud/tambahbr.html";
 }
 
 // Menambahkan event listener untuk tab
