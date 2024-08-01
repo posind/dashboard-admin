@@ -146,11 +146,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ini fungsi untuk tombol edit
-  document.addEventListener('DOMContentLoaded', () => {
-    const itemId = new URLSearchParams(window.location.search).get('id');
+  document.addEventListener("DOMContentLoaded", () => {
+    const itemId = new URLSearchParams(window.location.search).get("id");
     if (itemId) {
-      document.getElementById('editItemLink').href = `edititem.html?id=${itemId}`;
-      document.getElementById('editBrgLink').href = `editbrg.html?id=${itemId}`;
+      document.getElementById(
+        "editItemLink"
+      ).href = `edititem.html?id=${itemId}`;
+      document.getElementById("editBrgLink").href = `editbrg.html?id=${itemId}`;
     }
   });
 

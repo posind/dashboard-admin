@@ -54,7 +54,7 @@
         const itemId = getQueryParam("id");
         if (itemId) {
           // Fetch the item details using the itemId and populate the form
-          fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en`)
+          fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en?id=${itemId}`)
             .then((response) => response.json())
             .then((data) => {
               document.getElementById("itemId").value = itemId;
