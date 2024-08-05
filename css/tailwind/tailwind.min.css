@@ -648,7 +648,17 @@ video {
 } .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-} .antialiased{
+} 
+.text-green-600 {
+  --tw-text-opacity: 1;
+  color: rgb(34 197 94 / var(--tw-text-opacity)); /* Warna hijau yang sesuai */
+}
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity)); /* Warna merah yang sesuai */
+}
+
+.antialiased{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } .opacity-10{
