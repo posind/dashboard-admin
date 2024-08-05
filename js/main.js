@@ -13,7 +13,6 @@ function tambahBarang() {
   window.location.href = "crud/tambahbr.html";
 }
 
-// Menambahkan event listener untuk tab
 document.addEventListener("DOMContentLoaded", () => {
   // Mendapatkan elemen konten untuk bahasa Inggris dan Indonesia
   const contentEN = document.getElementById("content-en");
@@ -145,31 +144,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ini fungsi untuk tombol edit
-  document.addEventListener("DOMContentLoaded", () => {
+  // Cek jika elemen editItemLink atau editBrgLink ada
+  const editItemLink = document.getElementById("editItemLink");
+  const editBrgLink = document.getElementById("editBrgLink");
+
+  if (editItemLink) {
     const itemId = new URLSearchParams(window.location.search).get("id");
     if (itemId) {
-      document.getElementById(
-        "editItemLink"
-      ).href = `edititem.html?id=${itemId}`;
-      document.getElementById("editBrgLink").href = `editbrg.html?id=${itemId}`;
+      editItemLink.href = `edititem.html?id=${itemId}`;
     }
-  });
+  }
+
+  if (editBrgLink) {
+    const itemId = new URLSearchParams(window.location.search).get("id");
+    if (itemId) {
+      editBrgLink.href = `editbrg.html?id=${itemId}`;
+    }
+  }
 
   // Menangani perubahan tab
   function handleTabChange() {
-    if (document.querySelector("[x-data]").__x.$data.tab === "EN") {
+    const tab = document.querySelector("[x-data]").__x.$data.tab;
+    if (tab === "EN") {
       loadItems();
       contentID.innerHTML = ""; // Hapus konten Bahasa Indonesia
-    } else if (document.querySelector("[x-data]").__x.$data.tab === "ID") {
+    } else if (tab === "ID") {
       loadBarang();
       contentEN.innerHTML = ""; // Hapus konten Bahasa Inggris
     }
   }
 
-  // Menambahkan event listener untuk menangani perubahan tab
+  // Set tab default dan muat konten saat halaman pertama kali dimuat
   document.querySelector("[x-data]").__x.$data.tab = "EN";
-  handleTabChange(); // Muat konten saat halaman pertama kali dimuat
+  handleTabChange();
 
   // Tambahkan listener untuk tab untuk memuat ulang konten saat tab berubah
   document.querySelectorAll("[x-on\\:click]").forEach((button) => {
