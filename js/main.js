@@ -13,223 +13,168 @@ function tambahBarang() {
   window.location.href = "crud/tambahbr.html";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Mendapatkan elemen konten untuk bahasa Inggris dan Indonesia
-  const contentEN = document.getElementById("content-en");
-  const contentID = document.getElementById("content-id");
+document.addEventListener("alpine:init", () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    // Mendapatkan elemen konten untuk bahasa Inggris dan Indonesia
+    const contentEN = document.getElementById("content-en");
+    const contentID = document.getElementById("content-id");
 
-  // Fungsi untuk memuat konten Bahasa Inggris
-  async function loadItems() {
-    try {
-      const response = await fetch(
-        "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/eng"
-      );
-      if (!response.ok) throw new Error("Network response was not ok");
-      const items = await response.json();
+    // Fungsi untuk memuat konten Bahasa Inggris
+    async function loadItems() {
+      try {
+        const response = await fetch(
+          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/eng"
+        );
+        if (!response.ok) throw new Error("Network response was not ok");
+        const items = await response.json();
 
-      let tableRows = "";
-      let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
+        let tableRows = "";
+        let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
-      items.forEach((item) => {
-        const rowStyle = lastRowStyle;
-        lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+        items.forEach((item) => {
+          const rowStyle = lastRowStyle;
+          lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
 
-        tableRows += `
-          <tr class="text-xs ${rowStyle}">
-            <td class="flex px-4 py-3">
-              <div>
-                <p class="font-medium">${item.prohibited_items || "N/A"}</p>
-              </div>
-            </td>
-            <td class="font-medium">${item.destination || "N/A"}</td>
-            <td>
-              <div>
-              <!-- Ikon Edit -->
-              <a class="inline-block mr-2" id="editItemLink" href="#">
-                <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
-              </a>
-              
-                <!-- Ikon Delete -->
-                <a class="inline-block" href="#" onclick="deleteItemEn('${
-                  item.id
-                }')">
-                  <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+          tableRows += `
+            <tr class="text-xs ${rowStyle}">
+              <td class="flex px-4 py-3">
+                <div>
+                  <p class="font-medium">${item.prohibited_items || "N/A"}</p>
+                </div>
+              </td>
+              <td class="font-medium">${item.destination || "N/A"}</td>
+              <td>
+                <div>
+                <!-- Ikon Edit -->
+                <a class="inline-block mr-2" id="editItemLink" href="#">
+                  <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
                 </a>
-              </div>
-            </td>
-          </tr>
-        `;
-      });
-
-      contentEN.innerHTML = `
-        <table class="table-auto w-full">
-          <thead>
-            <tr class="text-xs text-gray-500 text-left">
-              <th class="font-medium">Items Name</th>
-              <th class="font-medium">Destination</th>
-              <th class="font-medium">Action</th>
+                
+                  <!-- Ikon Delete -->
+                  <a class="inline-block" href="#" onclick="deleteItemEn('${
+                    item.id
+                  }')">
+                    <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+                  </a>
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody class="visibility-item">
-            ${tableRows}
-          </tbody>
-        </table>
-      `;
-    } catch (error) {
-      console.error("Error loading items:", error);
-      contentEN.innerHTML = `<p class="text-red-500">Failed to load items. Please try again later.</p>`;
+          `;
+        });
+
+        contentEN.innerHTML = `
+          <table class="table-auto w-full">
+            <thead>
+              <tr class="text-xs text-gray-500 text-left">
+                <th class="font-medium">Items Name</th>
+                <th class="font-medium">Destination</th>
+                <th class="font-medium">Action</th>
+              </tr>
+            </thead>
+            <tbody class="visibility-item">
+              ${tableRows}
+            </tbody>
+          </table>
+        `;
+      } catch (error) {
+        console.error("Error loading items:", error);
+        contentEN.innerHTML = `<p class="text-red-500">Failed to load items. Please try again later.</p>`;
+      }
     }
-  }
 
-  // Fungsi untuk memuat konten Bahasa Indonesia
-  async function loadBarang() {
-    try {
-      const response = await fetch(
-        "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/ind"
-      );
-      if (!response.ok) throw new Error("Network response was not ok");
-      const barangs = await response.json();
+    // Fungsi untuk memuat konten Bahasa Indonesia
+    async function loadBarang() {
+      try {
+        const response = await fetch(
+          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/ind"
+        );
+        if (!response.ok) throw new Error("Network response was not ok");
+        const barangs = await response.json();
 
-      let tableRows = "";
-      let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
+        let tableRows = "";
+        let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
-      barangs.forEach((barang) => {
-        const rowStyle = lastRowStyle;
-        lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+        barangs.forEach((barang) => {
+          const rowStyle = lastRowStyle;
+          lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
 
-        tableRows += `
-          <tr class="text-xs ${rowStyle}">
-            <td class="flex px-4 py-3">
-              <div>
-                <p class="font-medium">${barang.barang_terlarang || "N/A"}</p>
-              </div>
-            </td>
-            <td class="font-medium">${barang.destinasi || "N/A"}</td>
-            <td>
-              <div>
-              <!-- Ikon Edit -->
-              <a class="inline-block mr-2" id="editBrgLink" href="#">
-                <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
-              </a>
-              
-                <!-- Ikon Delete -->
-                <a class="inline-block" href="#" onclick="deleteItemId('${
-                  barang.id
-                }')">
-                  <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+          tableRows += `
+            <tr class="text-xs ${rowStyle}">
+              <td class="flex px-4 py-3">
+                <div>
+                  <p class="font-medium">${barang.barang_terlarang || "N/A"}</p>
+                </div>
+              </td>
+              <td class="font-medium">${barang.destinasi || "N/A"}</td>
+              <td>
+                <div>
+                <!-- Ikon Edit -->
+                <a class="inline-block mr-2" id="editBrgLink" href="#">
+                  <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
                 </a>
-              </div>
-            </td>
-          </tr>
-        `;
-      });
-
-      contentID.innerHTML = `
-        <table class="table-auto w-full">
-          <thead>
-            <tr class="text-xs text-gray-500 text-left">
-              <th class="font-medium">Nama Barang</th>
-              <th class="font-medium">Destinasi</th>
-              <th class="font-medium">Aksi</th>
+                
+                  <!-- Ikon Delete -->
+                  <a class="inline-block" href="#" onclick="deleteItemId('${
+                    barang.id
+                  }')">
+                    <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+                  </a>
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody class="visibility-item">
-            ${tableRows}
-          </tbody>
-        </table>
-      `;
-    } catch (error) {
-      console.error("Error loading barangs:", error);
-      contentID.innerHTML = `<p class="text-red-500">Gagal memuat barang. Coba lagi nanti.</p>`;
+          `;
+        });
+
+        contentID.innerHTML = `
+          <table class="table-auto w-full">
+            <thead>
+              <tr class="text-xs text-gray-500 text-left">
+                <th class="font-medium">Nama Barang</th>
+                <th class="font-medium">Destinasi</th>
+                <th class="font-medium">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="visibility-item">
+              ${tableRows}
+            </tbody>
+          </table>
+        `;
+      } catch (error) {
+        console.error("Error loading barangs:", error);
+        contentID.innerHTML = `<p class="text-red-500">Gagal memuat barang. Coba lagi nanti.</p>`;
+      }
     }
-  }
 
-  // Cek jika elemen editItemLink atau editBrgLink ada
-  const editItemLink = document.getElementById("editItemLink");
-  const editBrgLink = document.getElementById("editBrgLink");
+    // Menangani perubahan tab
+    function handleTabChange() {
+      const xDataElement = document.querySelector("[x-data]");
+      if (!xDataElement) {
+        console.error("Element with [x-data] attribute not found.");
+        return;
+      }
 
-  if (editItemLink) {
-    const itemId = new URLSearchParams(window.location.search).get("id");
-    if (itemId) {
-      editItemLink.href = `edititem.html?id=${itemId}`;
+      const tab = xDataElement.__x.$data.tab;
+      if (tab === "EN") {
+        loadItems();
+        contentID.innerHTML = ""; // Hapus konten Bahasa Indonesia
+      } else if (tab === "ID") {
+        loadBarang();
+        contentEN.innerHTML = ""; // Hapus konten Bahasa Inggris
+      }
     }
-  }
 
-  if (editBrgLink) {
-    const itemId = new URLSearchParams(window.location.search).get("id");
-    if (itemId) {
-      editBrgLink.href = `editbrg.html?id=${itemId}`;
+    // Cek jika elemen x-data ada sebelum mengakses propertinya
+    const xDataElement = document.querySelector("[x-data]");
+    if (xDataElement) {
+      handleTabChange();
+    } else {
+      console.error("Element with [x-data] attribute not found.");
     }
-  }
 
-  // Menangani perubahan tab
-  function handleTabChange() {
-    const tab = document.querySelector("[x-data]").__x.$data.tab;
-    if (tab === "EN") {
-      loadItems();
-      contentID.innerHTML = ""; // Hapus konten Bahasa Indonesia
-    } else if (tab === "ID") {
-      loadBarang();
-      contentEN.innerHTML = ""; // Hapus konten Bahasa Inggris
-    }
-  }
-
-  // Set tab default dan muat konten saat halaman pertama kali dimuat
-  document.querySelector("[x-data]").__x.$data.tab = "EN";
-  handleTabChange();
-
-  // Tambahkan listener untuk tab untuk memuat ulang konten saat tab berubah
-  document.querySelectorAll("[x-on\\:click]").forEach((button) => {
-    button.addEventListener("click", handleTabChange);
+    // Tambahkan listener untuk tab untuk memuat ulang konten saat tab berubah
+    document.querySelectorAll("[x-on\\:click]").forEach((button) => {
+      button.addEventListener("click", handleTabChange);
+    });
   });
 });
 
-// Fungsi untuk menghapus item Inggris
-function deleteItemEn(id) {
-  if (confirm("Are you sure you want to delete this item?")) {
-    fetch(
-      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en?id=${id}`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => {
-        if (response.ok) {
-          alert("Item deleted successfully");
-          // Update tampilan setelah penghapusan
-          location.reload(); // Refresh halaman untuk melihat perubahan
-        } else {
-          alert("Failed to delete item");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Error deleting item");
-      });
-  }
-}
-
-// Fungsi untuk menghapus item Indonesia
-function deleteItemId(id) {
-  if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-    fetch(
-      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id?id=${id}`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => {
-        if (response.ok) {
-          alert("Item berhasil dihapus");
-          // Update tampilan setelah penghapusan
-          location.reload(); // Refresh halaman untuk melihat perubahan
-        } else {
-          alert("Gagal menghapus item");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Error deleting item");
-      });
-  }
-}
