@@ -24,7 +24,7 @@
     
   </head>
   <body class="antialiased bg-body text-body font-body">
-    <div class="">
+    <div>
       <div x-data="{ mobileNavOpen: false }">
         <nav class="lg:hidden py-6 px-6 border-b">
           <div class="flex items-center justify-between">
@@ -84,8 +84,8 @@
               <ul class="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
-                    href="#"
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="index.html"
                   >
                   <span class="inline-block mr-3">
                     <i class="fas fa-home text-gray-200" style="font-size: 20px;"></i>
@@ -95,7 +95,7 @@
                 </li>
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
                     href="#"
                   >
                   <span class="inline-block mr-3">
@@ -179,9 +179,9 @@
             >
               <a class="text-xl font-semibold" href="#">
                 <img
-                  class="h-8"
-                  src="artemis-assets/logos/artemis-logo-light.svg"
-                  alt=""
+                  class="h-10"
+                  src="pos.png"
+                  alt="Logo PosInd"
                   width="auto"
                 />
               </a>
@@ -193,8 +193,8 @@
               <ul class="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
-                    href="#"
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="index.html"
                   >
                   <span class="inline-block mr-3">
                     <i class="fas fa-home text-gray-200" style="font-size: 20px;"></i>
@@ -204,7 +204,7 @@
                 </li>
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
                     href="#"
                   >
                     <span class="inline-block mr-3">
@@ -217,7 +217,7 @@
                   </a>
                 </li>
                
-                <li>
+                <!-- <li>
                   <a
                     class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
                     href="#"
@@ -227,9 +227,9 @@
                     </span>
                     <span>Profile</span>
                   </a>
-                </li>
+                </li> -->
                
-              </ul>
+              <!-- </ul>
               <h3 class="mb-2 text-xs uppercase text-gray-500 font-medium">
                 Secondary
               </h3>
@@ -257,7 +257,7 @@
                   <span>Settings</span>
                 </a>
                 </li>
-              </ul>
+              </ul> -->
               <div class="pt-8">
                 <a
                   class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
@@ -307,108 +307,120 @@
               <div class="flex items-center py-4">
                 <a
                   class="flex items-center text-sm hover:text-gray-800"
-                  href="#"
+                  href="index.html"
                 >
                   <span class="inline-block mr-2">
                     <i class="fas fa-home text-indigo-500 text-lg"></i>
                   </span>
                   <span>Home</span>
                 </a>
-
+                <span class="inline-block mx-3">
+                  <i class="fas fa-chevron-right text-indigo-500 text-lg"></i>
+                </span>
+                <a
+                  class="flex items-center text-sm hover:text-gray-800"
+                  href="#"
+                >
+                  <span class="inline-block mr-2">
+                    <i class="fas fa-list text-indigo-500" style="font-size: 20px;"></i>
+                  </span>
+                  <span>Data List</span>
+                </a>
               </div>
             </nav>
           </section>
           <!-- Navbar -->
 
-      <div class="py-8 px-6">
-        <div class="container px-4 mx-auto">
-          <h2 class="text-2xl font-bold">Welcome, Thomas Brown 👋</h2>
-        </div>
-      </div>
-      <section class="py-8">
-        <div class="container px-4 mx-auto">
-          <div class="flex flex-wrap -m-4">
-            <div class="w-full sm:w-1/2 lg:w-1/4 p-4">
-              <div class="p-6 bg-white rounded shadow">
-                <span>
-                    <i class="fas fa-times-circle text-red-600" style="font-size: 28px;"></i>
-                </span>
-                <h3 class="mt-3 mb-1 text-3xl font-bold">1 450</h3>
-                <p class="text-sm text-gray-600 font-medium">Prohibited Items</p>
+          <!-- Alert -->
+          <div
+            x-data="{ modal: true }"
+            :class="{ 'hidden': !modal }"
+            class="py-8 px-6"
+          >
+            <div
+              class="p-6 bg-gray-50 border-l-4 border-2 border-indigo-500 rounded-r-lg"
+            >
+              <div class="flex">
+                <div class="w-auto">
+                  <span class="w-auto inline-block mr-2">
+                    <i class="fas fa-exclamation-circle text-indigo-500 text-lg"></i>
+                  </span>
+                </div>
+                <div class="w-full">
+                  <div class="flex mb-2">
+                    <h3 class="text-indigo-800 font-medium">
+                      Example for Banner
+                    </h3>
+                    <button x-on:click="modal = false" class="ml-auto">
+                      <i class="fas fa-times text-indigo-800 text-lg"></i>
+                    </button>
+                  </div>
+                  <div class="pr-6">
+                    <p class="text-sm text-indigo-700">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Reprehenderit vel expedita, aut similique voluptates modi
+                      dolorem maxime illum.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="w-full sm:w-1/2 lg:w-1/4 p-4">
-              <div class="p-6 bg-white rounded shadow">
-                <span>
-                    <i class="fas fa-check-circle text-green-600" style="font-size: 28px;"></i>
-                </span>
-                <h3 class="mt-3 mb-1 text-3xl font-bold">5400</h3>
-                <p class="text-sm text-gray-600 font-medium">Allowed Items</p>
-              </div>
-            </div>
-            
+          </div>
+          <!-- Alert -->
+
+           <!-- Dashboard -->
+  <section class="py-8" x-data="{ tab: 'EN' }">
+    <div class="container px-4 mx-auto">
+      <div class="py-4 bg-white rounded">
+        <div class="flex px-6 pb-4 border-b">
+          <!-- Header for English and Indonesian -->
+          <h3 x-show="tab === 'EN'" class="text-xl font-bold flex-grow">
+            prohibited items
+          </h3>
+          <h3 x-show="tab === 'ID'" class="text-xl font-bold flex-grow">
+            barang terlarang
+          </h3>
+
+          <!-- Buttons for adding items -->
+          <div x-show="tab === 'EN'" style="margin-left: 10px">
+            <button onclick="addItem()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
+              Add Item
+            </button>
+          </div>
+          <div x-show="tab === 'ID'" style="margin-left: 10px">
+            <button onclick="tambahBarang()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
+              Tambah Barang
+            </button>
+          </div>
+
+          <!-- Tab buttons -->
+          <div class="ml-auto">
+            <button x-on:click="tab = 'EN'" :class="{'bg-indigo-500 text-white': tab === 'EN', 'text-gray-400': tab !== 'EN'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
+              EN
+            </button>
+            <button x-on:click="tab = 'ID'" :class="{'bg-indigo-500 text-white': tab === 'ID', 'text-gray-400': tab !== 'ID'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
+              ID
+            </button>
           </div>
         </div>
-      </section>
-      <section class="bg-gray-50 py-8 px-4">
-        <table class="table-auto w-full bg-white shadow rounded">
-          <thead class="border-b border-gray-100">
-            <tr>
-              <th class="pl-6 py-6">
-                <a class="flex items-center text-xs text-gray-500" href="#">
-                  <p>Item Name</p>
-                </a>
-              </th>
-              <th class="pl-6">
-                <a class="flex items-center text-xs text-gray-500" href="#">
-                  <p>User</p>
-                </a>
-              </th>
-              <th class="pl-6">
-                <a class="flex items-center text-xs text-gray-500" href="#">
-                  <p>Status</p>
-                </a>
-              </th>
-              <th class="pl-6">
-                <a class="flex items-center text-xs text-gray-500" href="#">
-                  <p>Date</p>
-                </a>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="text-xs border-t border-gray-200">
-              <td class="pl-6 py-6">Ashton Cox</td>
-              <td class="pl-6">Technical Author</td>
-              <td class="pl-6">Add</td>
-              <td class="pl-6">22/04/2021</td>
-            </tr>
-            <tr class="text-xs border-t border-gray-200">
-              <td class="pl-6 py-6">Cedric Kelly</td>
-              <td class="pl-6">Javascript Developer</td>
-              <td class="pl-6">Delete</td>
-              <td class="pl-6">22/04/2021</td>
-            </tr>
-            <tr class="text-xs border-t border-gray-200">
-              <td class="pl-6 py-6">Tiger Nixon</td>
-              <td class="pl-6">System Architect</td>
-              <td class="pl-6">Update</td>
-              <td class="pl-6">22/04/2021</td>
-            </tr>
-            <tr class="text-xs border-t border-gray-200">
-              <td class="pl-6 py-6">Tiger Nixon</td>
-              <td class="pl-6">Technical Author</td>
-              <td class="pl-6">Add</td>
-              <td class="pl-6">22/04/2021</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+        <!-- CRUD Data -->
+        <main class="pt-4 px-4 overflow-x-auto">
+          <!-- Content area based on tab -->
+          <div id="content-en" x-show="tab === 'EN'">
+            <!-- Konten untuk bahasa Inggris -->
+          </div>
+          <div id="content-id" x-show="tab === 'ID'">
+            <!-- Konten untuk bahasa Indonesia -->
+          </div>
+        </main>
       </div>
+    </div>
+  </section>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
-</body>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>
-

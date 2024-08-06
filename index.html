@@ -1,81 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Dashboard</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-    />
-    <link rel="stylesheet" href="css/tailwind/tailwind.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
-    
-    <!-- Favicon -->
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+    <link rel="stylesheet" href="css/tailwind/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <link href="favicon.ico" rel="icon" />
-    
-  </head>
-  <body class="antialiased bg-body text-body font-body">
-    <div class="">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+</head>
+<body class="antialiased bg-body text-body font-body">
+    <div>      
       <div x-data="{ mobileNavOpen: false }">
         <nav class="lg:hidden py-6 px-6 border-b">
           <div class="flex items-center justify-between">
             <a class="text-2xl font-semibold" href="#">
-              <img
-                class="h-10"
-                src="pos.png"
-                alt="Logo PosInd"
-                width="auto"
-              />
+              <img class="h-10" src="pos.png" alt="Logo PosInd" width="auto">
             </a>
-            <button
-              x-on:click="mobileNavOpen = !mobileNavOpen"
-              class="flex items-center rounded focus:outline-none"
-            >
-              <svg
-                class="text-white bg-indigo-500 hover:bg-indigo-600 block h-8 w-8 p-2 rounded"
-                viewbox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-              >
+            <button x-on:click="mobileNavOpen = !mobileNavOpen" class="flex items-center rounded focus:outline-none">
+              <svg class="text-white bg-indigo-500 hover:bg-indigo-600 block h-8 w-8 p-2 rounded" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                 <title>Mobile menu</title>
                 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
               </svg>
             </button>
           </div>
         </nav>
-        <div
-          :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}"
-          class="hidden relative z-50"
-        >
-          <div
-            x-on:click="mobileNavOpen = !mobileNavOpen"
-            class="fixed lg:hidden inset-0 bg-gray-800 opacity-10"
-          ></div>
-          <nav
-            class="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-white border-r overflow-y-auto"
-          >
-            <div
-              class="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-blue-50"
-            >
+        <div :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}" class="hidden relative z-50">
+          <div x-on:click="mobileNavOpen = !mobileNavOpen" class="fixed lg:hidden inset-0 bg-gray-800 opacity-10"></div>
+          <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-white border-r overflow-y-auto">
+            <div class="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-blue-50">
               <a class="text-xl font-semibold" href="#">
-                <img
-                  class="h-8"
-                  src="pos.png"
-                  alt="Logo PosInd"
-                  width="auto"
-                />
+                <img class="h-8" src="pos.png" alt="Logo PosInd" width="auto">
               </a>
             </div>
-
             <!-- Sidebar mobile-->
             <div class="px-4 pb-6">
               <h3 class="mb-2 text-xs uppercase text-gray-200 font-medium">
@@ -84,7 +43,7 @@
               <ul class="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
                     href="#"
                   >
                   <span class="inline-block mr-3">
@@ -95,8 +54,8 @@
                 </li>
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
-                    href="#"
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="dashboard.html"
                   >
                   <span class="inline-block mr-3">
                     <i class="fas fa-th-list text-gray-200" style="font-size: 20px;"></i>
@@ -108,7 +67,7 @@
                   </a>
                 </li>
 
-                <li>
+                <!-- <li>
                   <a
                     class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
                     href="#"
@@ -150,7 +109,7 @@
                 </a>
                 </li>
                 
-              </ul>
+              </ul> -->
               <div class="pt-8">
                 <a
                   class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
@@ -167,7 +126,6 @@
           </nav>
         </div>
         <!-- Sidebar mobile -->
-
         <!-- Sidebar  -->
         <div class="hidden lg:block relative z-50">
           <div class="fixed lg:hidden inset-0 bg-gray-800 opacity-10"></div>
@@ -179,9 +137,9 @@
             >
               <a class="text-xl font-semibold" href="#">
                 <img
-                  class="h-8"
-                  src="artemis-assets/logos/artemis-logo-light.svg"
-                  alt=""
+                  class="h-10"
+                  src="pos.png"
+                  alt="Logo PosInd"
                   width="auto"
                 />
               </a>
@@ -193,7 +151,7 @@
               <ul class="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
                     href="#"
                   >
                   <span class="inline-block mr-3">
@@ -204,8 +162,8 @@
                 </li>
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
-                    href="#"
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="dashboard.html"
                   >
                     <span class="inline-block mr-3">
                       <i class="fas fa-th-list text-gray-200" style="font-size: 20px;"></i>
@@ -217,7 +175,7 @@
                   </a>
                 </li>
                
-                <li>
+                <!-- <li>
                   <a
                     class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
                     href="#"
@@ -257,7 +215,7 @@
                   <span>Settings</span>
                 </a>
                 </li>
-              </ul>
+              </ul> -->
               <div class="pt-8">
                 <a
                   class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
@@ -274,7 +232,6 @@
           </nav>
         </div>
         <!-- Sidebar -->
-
         <!-- Navbar -->
         <div class="mx-auto lg:ml-80">
           <section class="pt-5 px-6 bg-white shadow">
@@ -312,115 +269,102 @@
                   <span class="inline-block mr-2">
                     <i class="fas fa-home text-indigo-500 text-lg"></i>
                   </span>
-                  <span>Start</span>
+                  <span>Home</span>
                 </a>
-                <span class="inline-block mx-3">
-                  <i class="fas fa-chevron-right text-indigo-500 text-lg"></i>
-                </span>
-                <a
-                  class="flex items-center text-sm hover:text-gray-800"
-                  href="#"
-                >
-                  <span class="inline-block mr-2">
-                    <i class="fas fa-list text-indigo-500" style="font-size: 20px;"></i>
-                  </span>
-                  <span>Main Tasks</span>
-                </a>
+
               </div>
             </nav>
           </section>
           <!-- Navbar -->
-
-          <!-- Alert -->
-          <div
-            x-data="{ modal: true }"
-            :class="{ 'hidden': !modal }"
-            class="py-8 px-6"
-          >
-            <div
-              class="p-6 bg-gray-50 border-l-4 border-2 border-indigo-500 rounded-r-lg"
-            >
-              <div class="flex">
-                <div class="w-auto">
-                  <span class="w-auto inline-block mr-2">
-                    <i class="fas fa-exclamation-circle text-indigo-500 text-lg"></i>
-                  </span>
-                </div>
-                <div class="w-full">
-                  <div class="flex mb-2">
-                    <h3 class="text-indigo-800 font-medium">
-                      Example for Banner
-                    </h3>
-                    <button x-on:click="modal = false" class="ml-auto">
-                      <i class="fas fa-times text-indigo-800 text-lg"></i>
-                    </button>
-                  </div>
-                  <div class="pr-6">
-                    <p class="text-sm text-indigo-700">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Reprehenderit vel expedita, aut similique voluptates modi
-                      dolorem maxime illum.
-                    </p>
-                  </div>
-                </div>
+      
+      <div class="py-8 px-6">
+        <div class="container px-4 mx-auto">
+          <h2 class="text-2xl font-bold">Welcome, Thomas Brown 👋</h2>
+        </div>
+      </div>
+      <section class="py-8">
+        <div class="container px-4 mx-auto">
+          <div class="flex flex-wrap -m-4">
+            <div class="w-full sm:w-1/2 lg:w-1/4 p-4">
+              <div class="p-6 bg-white rounded shadow">
+                <span>
+                  <i class="fas fa-times-circle text-red-600" style="font-size: 24px;"></i>
+                </span>
+                <h3 class="mt-3 mb-1 text-3xl font-bold">492</h3>
+                <p class="text-sm text-gray-600 font-medium">Prohibited Items</p>
+              </div>
+            </div>
+            <div class="w-full sm:w-1/2 lg:w-1/4 p-4">
+              <div class="p-6 bg-white rounded shadow">
+                <span>
+                  <i class="fas fa-check-circle text-green-600" style="font-size: 28px;"></i>
+                </span>
+                <h3 class="mt-3 mb-1 text-3xl font-bold">1 350</h3>
+                <p class="text-sm text-gray-600 font-medium">Allowed Items</p>
               </div>
             </div>
           </div>
-          <!-- Alert -->
-
-           <!-- Dashboard -->
-  <section class="py-8" x-data="{ tab: 'EN' }">
-    <div class="container px-4 mx-auto">
-      <div class="py-4 bg-white rounded">
-        <div class="flex px-6 pb-4 border-b">
-          <!-- Header for English and Indonesian -->
-          <h3 x-show="tab === 'EN'" class="text-xl font-bold flex-grow">
-            prohibited items
-          </h3>
-          <h3 x-show="tab === 'ID'" class="text-xl font-bold flex-grow">
-            barang terlarang
-          </h3>
-
-          <!-- Buttons for adding items -->
-          <div x-show="tab === 'EN'" style="margin-left: 10px">
-            <button onclick="addItem()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
-              Add Item
-            </button>
-          </div>
-          <div x-show="tab === 'ID'" style="margin-left: 10px">
-            <button onclick="tambahBarang()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
-              Tambah Barang
-            </button>
-          </div>
-
-          <!-- Tab buttons -->
-          <div class="ml-auto">
-            <button x-on:click="tab = 'EN'" :class="{'bg-indigo-500 text-white': tab === 'EN', 'text-gray-400': tab !== 'EN'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
-              EN
-            </button>
-            <button x-on:click="tab = 'ID'" :class="{'bg-indigo-500 text-white': tab === 'ID', 'text-gray-400': tab !== 'ID'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
-              ID
-            </button>
-          </div>
         </div>
-        <!-- CRUD Data -->
-        <main class="pt-4 px-4 overflow-x-auto">
-          <!-- Content area based on tab -->
-          <div id="content-en" x-show="tab === 'EN'">
-            <!-- Konten untuk bahasa Inggris -->
-          </div>
-          <div id="content-id" x-show="tab === 'ID'">
-            <!-- Konten untuk bahasa Indonesia -->
-          </div>
-        </main>
+      </section>
+      <section class="bg-gray-50 py-8 px-4">
+        <table class="table-auto w-full bg-white shadow rounded">
+          <thead class="border-b border-gray-100">
+            <tr>
+              <th class="pl-6 py-6">
+                <a class="flex items-center text-xs text-gray-500" href="#">
+                  <p>Items Name</p>
+                </a>
+              </th>
+              <th class="pl-6">
+                <a class="flex items-center text-xs text-gray-500" href="#">
+                  <p>User</p>
+                </a>
+              </th>
+              <th class="pl-6">
+                <a class="flex items-center text-xs text-gray-500" href="#">
+                  <p>Status</p>
+                </a>
+              </th>
+              <th class="pl-6">
+                <a class="flex items-center text-xs text-gray-500" href="#">
+                  <p>Date</p>
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-xs border-t border-gray-200">
+              <td class="pl-6 py-6">Guns</td>
+              <td class="pl-6">Ashton Cox</td>
+              <td class="pl-6">Added</td>
+              <td class="pl-6">22/04/2021</td>
+            </tr>
+            <tr class="text-xs border-t border-gray-200">
+              <td class="pl-6 py-6">Animals</td>
+              <td class="pl-6">Cedric Kelly</td>
+              <td class="pl-6">Updated</td>
+              <td class="pl-6">22/04/2021</td>
+            </tr>
+            <tr class="text-xs border-t border-gray-200">
+              <td class="pl-6 py-6">Senjata</td>
+              <td class="pl-6">Tiger Nixon</td>
+              <td class="pl-6">Deleted</td>
+              <td class="pl-6">22/04/2021</td>
+            </tr>
+            <tr class="text-xs border-t border-gray-200">
+              <td class="pl-6 py-6">Hewan</td>
+              <td class="pl-6">Tiger Nixon</td>
+              <td class="pl-6">Added</td>
+              <td class="pl-6">22/04/2021</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
       </div>
-    </div>
-  </section>
-        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
-    <script src="js/main.js" defer></script>
-  </body>
+</body>
 </html>
+
