@@ -17,7 +17,7 @@ function tambahBarang() {
 async function loadItems() {
   try {
     const response = await fetch(
-      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/eng"
+      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/prohibited-items/en"
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const items = await response.json();
@@ -86,7 +86,7 @@ async function loadItems() {
 async function loadBarang() {
   try {
     const response = await fetch(
-      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/items/ind"
+      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/prohibited-items/id"
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const barangs = await response.json();
