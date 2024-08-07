@@ -505,7 +505,11 @@ video {
 } .border-indigo-500{
   --tw-border-opacity: 1;
   border-color: rgb(56 44 221 / var(--tw-border-opacity));
-} .bg-body{
+}.focus\:border-indigo-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity)); /* Warna untuk indigo-500 */
+}
+ .bg-body{
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 251 / var(--tw-bg-opacity));
 } .bg-gray-50{
@@ -520,10 +524,15 @@ video {
 } .bg-indigo-100{
   --tw-bg-opacity: 1;
   background-color: rgb(215 213 248 / var(--tw-bg-opacity));
-} .bg-indigo-500{
+} 
+.bg-indigo-500{
   --tw-bg-opacity: 1;
   background-color: rgb(56 44 221 / var(--tw-bg-opacity));
-} .bg-orange-500{
+} .bg-indigo-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(49 46 129 / var(--tw-bg-opacity)); /* Tailwind's indigo-600 */
+}
+.bg-orange-500{
   --tw-bg-opacity: 1;
   background-color: rgb(246 122 40 / var(--tw-bg-opacity));
 } .bg-red-500{
@@ -636,7 +645,11 @@ video {
 } .text-gray-500{
   --tw-text-opacity: 1;
   color: rgb(103 121 142 / var(--tw-text-opacity));
-} .text-indigo-500{
+} .text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+.text-indigo-500{
   --tw-text-opacity: 1;
   color: rgb(56 44 221 / var(--tw-text-opacity));
 } .text-indigo-700{
@@ -648,7 +661,62 @@ video {
 } .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-} 
+}
+.text-gray-300 {
+  color: #D1D5DB; /* Tailwind's gray-300 */
+}
+
+.text-lg {
+  font-size: 1.125rem; /* Large text size */
+}
+.h-full {
+  height: 100%;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.-m-2 {
+  margin: -0.5rem; /* Negative margin */
+}
+.text-gray-800 {
+  color: #1F2937; /* Tailwind's gray-800 */
+}
+.md\:w-auto {
+  width: auto; /* For medium screens and up */
+}
+.border-gray-300 {
+  border-color: #D1D5DB; /* Tailwind's gray-300 */
+}
+.md\:w-9\/12 {
+  width: 75%; /* 9/12 width for medium screens and up */
+}
+.md\:w-1\/3 {
+  width: 33.333333%; /* 1/3 width for medium screens and up */
+}
+.p-3 {
+  padding: 0.75rem;
+}
+.text-base {
+  font-size: 1rem; /* Base text size */
+}
+.text-gray-900 {
+  color: #111827; /* Tailwind's gray-900 */
+}
+.font-normal {
+  font-weight: 400; /* Normal font weight */
+}
+.outline-none {
+  outline: none;
+}
+.focus\:border-green-500:focus {
+  border-color: #10B981; /* Tailwind's green-500 */
+}
+.rounded-lg {
+  border-radius: 0.5rem; /* Large border radius */
+}
 .antialiased{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

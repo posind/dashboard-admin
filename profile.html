@@ -112,7 +112,7 @@
                 <li>
                   <a
                     class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
-                    href="profile.html"
+                    href="#"
                   >
                     <span class="inline-block mr-3">
                       <i class="fas fa-user-circle text-gray-200" style="font-size: 20px;"></i>
@@ -206,8 +206,8 @@
                 <li>
                   <a
                       id="data-list-toggle"
-                      class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded cursor-pointer"
-                      href="#"
+                      class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded cursor-pointer"
+                      href="dashboard.html"
                   >
                       <span class="inline-block mr-3">
                           <i class="fas fa-th-list text-gray-200" style="font-size: 20px;"></i>
@@ -221,8 +221,8 @@
                
                 <li>
                   <a
-                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
-                    href="profile.html"
+                    class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500  rounded"
+                    href="#"
                   >
                     <span class="inline-block mr-3">
                       <i class="fas fa-user-circle text-gray-200" style="font-size: 20px;"></i>
@@ -291,7 +291,7 @@
                       class="hidden lg:flex items-center mr-auto pl-4 border rounded"
                     >
                       <button class="mr-2 text-gray-200 hover:text-gray-300">
-                        <i class="fas fa-search text-blue-500 text-lg"></i>
+                        <i class="fas fa-search text-lg"></i>
                       </button>
                       <input
                         class="pl-2 py-3 text-sm text-gray-200"
@@ -325,100 +325,68 @@
                   href="#"
                 >
                   <span class="inline-block mr-2">
-                    <i class="fas fa-list text-indigo-500" style="font-size: 20px;"></i>
+                    <i class="fas fa-user-circle text-indigo-500" style="font-size: 20px;"></i>
                   </span>
-                  <span>Data List</span>
+                  <span>Profile</span>
                 </a>
               </div>
             </nav>
           </section>
           <!-- Navbar -->
 
-          <!-- Alert -->
-          <div
-            x-data="{ modal: true }"
-            :class="{ 'hidden': !modal }"
-            class="py-8 px-6"
-          >
-            <div
-              class="p-6 bg-gray-50 border-l-4 border-2 border-indigo-500 rounded-r-lg"
-            >
-              <div class="flex">
-                <div class="w-auto">
-                  <span class="w-auto inline-block mr-2">
-                    <i class="fas fa-exclamation-circle text-indigo-500 text-lg"></i>
-                  </span>
-                </div>
-                <div class="w-full">
-                  <div class="flex mb-2">
-                    <h3 class="text-indigo-800 font-medium">
-                      Example for Banner
-                    </h3>
-                    <button x-on:click="modal = false" class="ml-auto">
-                      <i class="fas fa-times text-indigo-800 text-lg"></i>
-                    </button>
-                  </div>
-                  <div class="pr-6">
-                    <p class="text-sm text-indigo-700">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Reprehenderit vel expedita, aut similique voluptates modi
-                      dolorem maxime illum.
-                    </p>
+          <section class="bg-gray-50 py-4">
+            <div class="container px-4 mx-auto">
+              <div class="p-6 h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-md">
+                <div class="pb-6 border-b border-gray-100">
+                  <div class="flex flex-wrap items-center justify-between -m-2">
+                    <div class="w-full md:w-auto p-2">
+                      <h2 class="text-gray-800 text-lg font-semibold">Personal info</h2>
+                    </div>
+                    <div class="w-full md:w-auto p-2">
+                      <div class="flex flex-wrap justify-between -m-1">
+                        <div class="w-full md:w-auto p-1">
+                          <button class="flex flex-wrap justify-center w-full px-4 py-2 font-medium text-sm text-gray-500 hover:text-gray-600 border border-gray-200 hover:border-gray-300 bg-white rounded-md shadow-md">
+                            <p>Cancel</p>
+                          </button>
+                        </div>
+                        <div class="w-full md:w-auto p-1">
+                          <button class="flex flex-wrap justify-center w-full px-4 py-2 bg-indigo-500 hover:bg-indigo-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-md">
+                            <p>Save</p>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div class="py-6 border-b border-gray-100">
+                    <div class="w-full md:w-9/12">
+                      <div class="flex flex-wrap -m-3">
+                        <div class="w-full md:w-1/3 p-3">
+                          <label class="text-sm text-gray-800 font-semibold">Username</label>
+                        </div>
+                        <div class="w-full md:w-2/3 p-3">
+                          <input id="username" name="username" class="w-full px-4 py-2 text-base text-gray-600 font-normal outline-none focus:border-indigo-500 border border-gray-200 rounded-lg shadow-md" type="text" placeholder="Your Username">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="py-6 border-b border-gray-100">
+                    <div class="w-full md:w-9/12">
+                      <div class="flex flex-wrap -m-3">
+                        <div class="w-full md:w-1/3 p-3">
+                          <label class="text-sm text-gray-800 font-semibold">Email address</label>
+                        </div>
+                        <div class="w-full md:w-2/3 p-3">
+                          <input id="email" name="email" class="w-full px-4 py-2 text-base text-gray-600 font-normal outline-none focus:border-indigo-500 border border-gray-200 rounded-lg shadow-md" type="text" placeholder="Your Email">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
               </div>
             </div>
-          </div>
-          <!-- Alert -->
-
-           <!-- Dashboard -->
-  <section class="py-8" x-data="{ tab: 'EN' }">
-    <div class="container px-4 mx-auto">
-      <div class="py-4 bg-white rounded">
-        <div class="flex px-6 pb-4 border-b">
-          <!-- Header for English and Indonesian -->
-          <h3 x-show="tab === 'EN'" class="text-xl font-bold flex-grow">
-            prohibited items
-          </h3>
-          <h3 x-show="tab === 'ID'" class="text-xl font-bold flex-grow">
-            barang terlarang
-          </h3>
-
-          <!-- Buttons for adding items -->
-          <div x-show="tab === 'EN'" style="margin-left: 10px">
-            <button onclick="addItem()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
-              Add Item
-            </button>
-          </div>
-          <div x-show="tab === 'ID'" style="margin-left: 10px">
-            <button onclick="tambahBarang()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
-              Tambah Barang
-            </button>
-          </div>
-
-          <!-- Tab buttons -->
-          <div class="ml-auto">
-            <button x-on:click="tab = 'EN'" :class="{'bg-indigo-500 text-white': tab === 'EN', 'text-gray-400': tab !== 'EN'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
-              EN
-            </button>
-            <button x-on:click="tab = 'ID'" :class="{'bg-indigo-500 text-white': tab === 'ID', 'text-gray-400': tab !== 'ID'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
-              ID
-            </button>
-          </div>
-        </div>
-        <!-- CRUD Data -->
-        <main class="pt-4 px-4 overflow-x-auto">
-          <!-- Content area based on tab -->
-          <div id="content-en" x-show="tab === 'EN'">
-            <!-- Konten untuk bahasa Inggris -->
-          </div>
-          <div id="content-id" x-show="tab === 'ID'">
-            <!-- Konten untuk bahasa Indonesia -->
-          </div>
-        </main>
-      </div>
-    </div>
-  </section>
+          </section>          
         </div>
       </div>
     </div>
