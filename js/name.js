@@ -7,18 +7,23 @@ if (getCookie("login") === "") {
   redirect("/");
 }
 
+console.log('Calling getJSON with URL:', "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/pibackend/data/user");
+console.log('Using token:', getCookie("login"));
+
 getJSON("https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/pibackend/data/user", "login", getCookie("login"), responseFunction);
 
+
 function responseFunction(result) {
+    console.log('Response Function called with result:', result);
   if (result.status === 200) {
     setInner("navbarName", result.data.name);
     setInner("welcomeMessage","Welcome, " + result.data.name + " 👋");
     redirect("/dashboard");
-  } else {
+} else {
+    console.log('Error response:', result);
     setInner("content", "Silahkan lakukan chat ke bot helpdesk pemilihan operator");
     redirect("https://wa.me/62895800006000?text=bantuan+operator");
-  }
-  console.log(result);
+}
 }
 
 function logout() {
