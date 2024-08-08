@@ -304,8 +304,8 @@
                   </div>
                   <div>
                     <button class="flex items-center">
-                      <p class="text-sm mr-3">Thomas Brown</p>
-                    </button>
+                      <p id="navbarName" class="text-sm mr-3">Admin</p>
+                    </button>                   
                   </div>
                 </div>
               </div>
@@ -325,9 +325,10 @@
           <!-- Navbar -->
           <div class="py-8 px-6">
             <div class="container px-4 mx-auto">
-              <h2 class="text-2xl font-bold">Welcome, Thomas Brown 👋</h2>
+              <h2 id="welcomeMessage" class="text-2xl font-bold">Welcome, Admin 👋</h2>
             </div>
           </div>
+          <div id="content"></div>
           <section class="py-8">
             <div class="container px-4 mx-auto">
               <div class="flex flex-wrap -m-4">
@@ -504,5 +505,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
+    <script type="module" src="js/name.js"></script>
   </body>
 </html>

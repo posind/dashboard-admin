@@ -86,7 +86,7 @@ async function loadItems() {
 async function loadBarang() {
   try {
     const response = await fetch(
-      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/prohibited-items/id"
+      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item"
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const barangs = await response.json();
@@ -178,7 +178,7 @@ function deleteItemEn(id) {
 function deleteItemId(id) {
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     fetch(
-      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/id?id=${id}`,
+      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`,
       {
         method: "DELETE",
       }
