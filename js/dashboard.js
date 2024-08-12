@@ -1,16 +1,18 @@
-// Fungsi logout
+// Fungsi untuk menavigasi halaman dengan parameter dinamis
+function navigateTo(page) {
+  window.location.href = page;
+}
+
 function logout() {
-  window.location.href = "https://pos.in.my.id/login/login.html";
+  navigateTo("https://pos.in.my.id/login/login.html");
 }
 
-// Fungsi untuk menavigasi ke halaman tambah item
 function addItem() {
-  window.location.href = "crud/additem.html";
+  navigateTo("crud/additem.html");
 }
 
-// Fungsi untuk menavigasi ke halaman tambah barang
 function tambahBarang() {
-  window.location.href = "crud/tambahbr.html";
+  navigateTo("crud/tambahbr.html");
 }
 
 // Fungsi untuk memuat konten Bahasa Inggris
@@ -85,7 +87,7 @@ function deleteItemEn(id) {
       .then((response) => {
         if (response.ok) {
           alert("Item deleted successfully");
-          location.reload(); // Refresh halaman untuk melihat perubahan
+          loadItems(); // Memuat ulang data tanpa memuat ulang halaman
         } else {
           alert("Failed to delete item");
         }
@@ -172,7 +174,7 @@ function deleteItemId(id) {
       .then((response) => {
         if (response.ok) {
           alert("Item berhasil dihapus");
-          location.reload(); // Refresh halaman untuk melihat perubahan
+          loadBarang();
         } else {
           alert("Gagal menghapus item");
         }
