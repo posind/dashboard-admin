@@ -36,7 +36,7 @@
         const destination = document.getElementById('destination').value;
         const barangTerlarang = document.getElementById('barang_terlarang').value;
 
-        fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhooks/post/item', {
+        fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/item', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,7 +49,7 @@
         .then(response => {
             if (response.ok) {
                 alert('Barang berhasil ditambahkan');
-                window.location.href = '../index.html'; 
+                window.location.href = '../dashboard.html'; 
             } else {
                 alert('Gagal menambahkan barang');
             }

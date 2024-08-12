@@ -76,6 +76,27 @@ async function loadItems() {
   }
 }
 
+// Fungsi untuk menghapus item Bahasa Inggris
+function deleteItemEn(id) {
+  if (confirm("Are you sure you want to delete this item?")) {
+    fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Item deleted successfully");
+          location.reload(); // Refresh halaman untuk melihat perubahan
+        } else {
+          alert("Failed to delete item");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error deleting item");
+      });
+  }
+}
+
 // Fungsi untuk memuat konten Bahasa Indonesia
 async function loadBarang() {
   try {
@@ -103,7 +124,7 @@ async function loadBarang() {
           <td>
             <div>
               <!-- Ikon Edit -->
-              <a class="inline-block mr-2" href="#" id="editBrgLink">
+              <a class="inline-block mr-2" href="editbrg.html?id=${barang.id}">
                 <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
               </a>
               
@@ -131,41 +152,11 @@ async function loadBarang() {
         </tbody>
       </table>
     `;
-
-    // Cek jika elemen editBrgLink ada
-    const editBrgLink = document.getElementById("editBrgLink");
-    if (editBrgLink) {
-      editBrgLink.href = `editbrg.html?id=${barang.id}`;
-    }
   } catch (error) {
     console.error("Error loading barangs:", error);
     document.getElementById(
       "content-id"
     ).innerHTML = `<p class="text-red-500">Gagal memuat barang. Coba lagi nanti.</p>`;
-  }
-}
-
-// Fungsi untuk menghapus item Bahasa Inggris
-function deleteItemEn(id) {
-  if (confirm("Are you sure you want to delete this item?")) {
-    fetch(
-      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en?id=${id}`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => {
-        if (response.ok) {
-          alert("Item deleted successfully");
-          location.reload(); // Refresh halaman untuk melihat perubahan
-        } else {
-          alert("Failed to delete item");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Error deleting item");
-      });
   }
 }
 
