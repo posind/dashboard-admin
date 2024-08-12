@@ -18,11 +18,13 @@ function tambahBarang() {
 // Fungsi untuk memuat konten Bahasa Inggris
 async function loadItems() {
   try {
+    console.log("Loading items...");
     const response = await fetch(
-      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en?cache_buster=${new Date().getTime()}`
+      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en`
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const items = await response.json();
+    console.log("Items loaded:", items);
 
     let tableRows = "";
     let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
@@ -47,7 +49,9 @@ async function loadItems() {
               </a>
               
               <!-- Ikon Delete -->
-              <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
+              <a class="inline-block" href="#" onclick="deleteItemEn('${
+                item.id
+              }')">
                 <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
               </a>
             </div>
@@ -81,9 +85,12 @@ async function loadItems() {
 // Fungsi untuk menghapus item Bahasa Inggris
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
-    fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           alert("Item deleted successfully");
@@ -131,7 +138,9 @@ async function loadBarang() {
               </a>
               
               <!-- Ikon Delete -->
-              <a class="inline-block" href="#" onclick="deleteItemId('${barang.id}')">
+              <a class="inline-block" href="#" onclick="deleteItemId('${
+                barang.id
+              }')">
                 <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
               </a>
             </div>
