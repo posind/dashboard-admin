@@ -16,7 +16,6 @@ function responseFunction(result) {
   if (result.status === 200) {
     setInner("navbarName", result.data.name);
     setInner("welcomeMessage", "Welcome, " + result.data.name + " 👋");
-    setTimeout(() => redirect("/dashboard"), 1000);
   } else {
     console.log('Error response:', result);
     setInner("content", "Silahkan lakukan chat ke bot helpdesk pemilihan operator");
