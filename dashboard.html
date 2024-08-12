@@ -423,10 +423,41 @@
         </div>
       </div>
     </div>
+    <script type="module">
+      document.addEventListener("alpine:init", () => {
+        Alpine.data('dashboard', () => ({
+          tab: 'EN', // Default tab
+          init() {
+            // Memastikan bahwa loadItems() hanya dipanggil jika tab aktif adalah 'EN'
+            if (this.tab === "EN") {
+              loadItems();
+            }
+          },
+        }));
+      });
+    
+      document.addEventListener("DOMContentLoaded", () => {
+        // Pastikan Alpine.js telah terinisialisasi
+        const tabElement = document.querySelector("[x-data]");
+        if (tabElement && tabElement.__x) {
+          const xData = tabElement.__x.$data;
+          if (xData.tab === "EN") {
+            loadItems();
+          }
+        }
+      });
+    </script>    
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
     <script src="js/dashboard.js" defer></script>
-    <script src="js/name.js"></script>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Memastikan bahwa loadItems() hanya dipanggil jika tab aktif adalah 'EN'
+        const tabElement = document.querySelector("[x-data]");
+        if (tabElement && tabElement.__x.$data.tab === "EN") {
+          loadItems();
+        }
+      });
+    </script>
   </body>
 </html>

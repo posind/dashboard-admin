@@ -54,7 +54,7 @@
         const itemId = getQueryParam("id");
         if (itemId) {
           // Fetch the item details using the itemId and populate the form
-          fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en?id=${itemId}`)
+          fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en?id=${itemId}`)
             .then((response) => response.json())
             .then((data) => {
               document.getElementById("itemId").value = itemId;
@@ -77,25 +77,26 @@
           option.textContent = destination;
           destinationSelect.appendChild(option);
         });
-
       }
 
       function updateItem() {
         const id = document.getElementById("itemId").value;
         const destination = document.getElementById("destination").value;
-        const prohibitedItems =
-          document.getElementById("prohibited_items").value;
+        const prohibitedItems = document.getElementById("prohibited_items").value;
 
-        fetch(`https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/crud/item/en?id=${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            Destination: destination,
-            ProhibitedItems: prohibitedItems,
-          }),
-        })
+        fetch(
+          `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/put/prohibited-items/en?id=${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Destination: destination,
+              ProhibitedItems: prohibitedItems,
+            }),
+          }
+        )
           .then((response) => {
             if (response.ok) {
               alert("Item updated successfully");

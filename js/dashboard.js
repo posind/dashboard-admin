@@ -17,7 +17,7 @@ function tambahBarang() {
 async function loadItems() {
   try {
     const response = await fetch(
-      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/prohibited-items/en"
+      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en?cache_buster=${new Date().getTime()}`
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const items = await response.json();
@@ -40,7 +40,7 @@ async function loadItems() {
           <td>
             <div>
               <!-- Ikon Edit -->
-              <a class="inline-block mr-2" id="editItemLink" href="#">
+              <a class="inline-block mr-2" href="edititem.html?id=${item.id}">
                 <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
               </a>
               
@@ -68,17 +68,11 @@ async function loadItems() {
         </tbody>
       </table>
     `;
-
-    // Cek jika elemen editItemLink ada
-    const editItemLink = document.getElementById("editItemLink");
-    const itemId = new URLSearchParams(window.location.search).get("id");
-    if (editItemLink && itemId) {
-      editItemLink.href = `edititem.html?id=${itemId}`;
-    }
-
   } catch (error) {
     console.error("Error loading items:", error);
-    document.getElementById("content-en").innerHTML = `<p class="text-red-500">Failed to load items. Please try again later.</p>`;
+    document.getElementById(
+      "content-en"
+    ).innerHTML = `<p class="text-red-500">Failed to load items. Please try again later.</p>`;
   }
 }
 
@@ -109,7 +103,7 @@ async function loadBarang() {
           <td>
             <div>
               <!-- Ikon Edit -->
-              <a class="inline-block mr-2" id="editBrgLink" href="#">
+              <a class="inline-block mr-2" href="#" id="editBrgLink">
                 <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
               </a>
               
@@ -140,13 +134,14 @@ async function loadBarang() {
 
     // Cek jika elemen editBrgLink ada
     const editBrgLink = document.getElementById("editBrgLink");
-    if (editBrgLink && itemId) {
-      editBrgLink.href = `editbrg.html?id=${itemId}`;
+    if (editBrgLink) {
+      editBrgLink.href = `editbrg.html?id=${barang.id}`;
     }
-
   } catch (error) {
     console.error("Error loading barangs:", error);
-    document.getElementById("content-id").innerHTML = `<p class="text-red-500">Gagal memuat barang. Coba lagi nanti.</p>`;
+    document.getElementById(
+      "content-id"
+    ).innerHTML = `<p class="text-red-500">Gagal memuat barang. Coba lagi nanti.</p>`;
   }
 }
 
@@ -201,9 +196,7 @@ function deleteItemId(id) {
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
   document.addEventListener("alpine:initialized", () => {
-    // Tunggu hingga Alpine.js terinisialisasi sepenuhnya
     setTimeout(() => {
-      // Pastikan Alpine.js sudah terinisialisasi
       if (typeof Alpine !== "undefined") {
         console.log("Alpine.js is defined.");
         const xDataElement = document.querySelector("[x-data]");

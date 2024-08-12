@@ -1,64 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Prohibited Item (EN)</title>
-    <link rel="stylesheet" href="css/crud.css">
-</head>
-<body class="bg-gray-100">
-  <div class="container">
-    <div class="form-container">
-      <div class="form-content">
-        <h2 class="text-2xl font-bold mb-4 text-center">Add Prohibited Item</h2>
-        <form id="addItemForm" onsubmit="event.preventDefault(); addItem();">
-          <div class="mb-4">
-            <label for="destination" class="block text-gray-700">Destination:</label>
-            <select id="destination" name="destination" class="mt-1 block w-full" required>
-              <option value="USA">USA</option>
-              <option value="UK">UK</option>
-              <option value="France">France</option>
-              <option value="Germany">Germany</option>
-              <option value="Japan">Japan</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label for="prohibited_items" class="block text-gray-700">Prohibited Items:</label>
-            <input type="text" id="prohibited_items" name="prohibited_items" class="mt-1 block w-full" required>
-          </div>
-          <button type="submit" class="py-2 px-4 bg-indigo-500 text-white rounded w-full">Add Item</button>
-        </form>
+    <link rel="stylesheet" href="css/crud.css" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container">
+      <div class="form-container">
+        <div class="form-content">
+          <h2 class="text-2xl font-bold mb-4 text-center">
+            Add Prohibited Item
+          </h2>
+          <form
+            id="addItemForm"
+            onsubmit="event.preventDefault(); createItem();"
+          >
+            <div class="mb-4">
+              <label for="destination" class="block text-gray-700"
+                >Destination:</label
+              >
+              <select
+                id="destination"
+                name="destination"
+                class="mt-1 block w-full"
+                required
+              >
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Japan">Japan</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label for="prohibited_items" class="block text-gray-700"
+                >Prohibited Items:</label
+              >
+              <input
+                type="text"
+                id="prohibited_items"
+                name="prohibited_items"
+                class="mt-1 block w-full"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="py-2 px-4 bg-indigo-500 text-white rounded w-full"
+            >
+              Add Item
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <script>
-    function addItem() {
-        const destination = document.getElementById('destination').value;
-        const prohibitedItems = document.getElementById('prohibited_items').value;
+    <script>
+      function createItem() {
+        const destination = document.getElementById("destination").value;
+        const prohibitedItems =
+          document.getElementById("prohibited_items").value;
 
-        fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/en', {
-            method: 'POST',
+        fetch(
+          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en",
+          {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                destination: destination,
-                prohibited_items: prohibitedItems
+              destination: destination,
+              prohibited_items: prohibitedItems,
             }),
-        })
-        .then(response => {
+          }
+        )
+          .then((response) => {
             if (response.ok) {
-                alert('Item added successfully');
-                window.location.href = '../index.html'; 
+              alert("Item added successfully");
+              window.location.href = "../dashboard.html"; // Arahkan ke dashboard setelah penambahan
             } else {
-                alert('Failed to add item');
+              alert("Failed to add item");
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error adding item');
-        });
-    }
-  </script>
-</body>
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error adding item");
+          });
+      }
+    </script>
+  </body>
 </html>
