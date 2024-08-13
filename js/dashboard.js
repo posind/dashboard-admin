@@ -5,7 +5,7 @@ get("https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/
 
 
 function responsefunction(result) {
- console.log(result.data);
+ console.log(result);
 }
 
 
