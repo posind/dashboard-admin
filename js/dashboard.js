@@ -150,22 +150,26 @@ function deleteItemEn(id) {
 }
 
 
-
 // Fungsi untuk menghapus item Bahasa Indonesia
-function deleteItemId(id) {
-  if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-    const targetUrl = "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}";
+import { deleteJSON } from 'https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js';
+
+function deleteItemEn(id) {
+  if (confirm("Are you sure you want to delete this item?")) {
+    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
     
     deleteJSON(targetUrl, '', '', {}, (response) => {
       if (response.status === 200) {
-        alert("Item berhasil dihapus");
-        loadBarang();
+        alert("Item deleted successfully");
+        loadItems(); // Ensure this function is defined and working
       } else {
-        alert("Gagal menghapus item");
+        alert("Failed to delete item");
       }
     });
   }
 }
+
+window.deleteItemEn = deleteItemEn;
+
 
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
