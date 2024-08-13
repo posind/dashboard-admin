@@ -1,5 +1,16 @@
 import {get}from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
+get("https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en", responsefunction);
+
+
+
+function responsefunction(result) {
+ console.log(result.data);
+}
+
+
+
+
 // Fungsi untuk menavigasi halaman dengan parameter dinamis
 function navigateTo(page) {
   window.location.href = page;
@@ -22,7 +33,7 @@ async function loadItems() {
   try {
     console.log("Loading items...");
     const response = await fetch(
-      `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en`
+      "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en"
     );
     if (!response.ok) throw new Error("Network response was not ok");
     const items = await response.json();
