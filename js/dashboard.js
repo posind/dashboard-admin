@@ -151,7 +151,6 @@ function deleteItemEn(id) {
 
 
 // Fungsi untuk menghapus item Bahasa Indonesia
-import { deleteJSON } from 'https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js';
 
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
