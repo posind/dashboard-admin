@@ -1,3 +1,5 @@
+import {get}from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+
 // Fungsi untuk menavigasi halaman dengan parameter dinamis
 function navigateTo(page) {
   window.location.href = page;
