@@ -1,22 +1,23 @@
-import {get}from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
-import { deleteJSON } from 'https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js';
+import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
+// Muat data saat halaman dimuat
+get(
+  "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
+  responsefunction
+);
 
-get("https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en", responsefunction);
-
-
-// Fungsi untuk memuat konten Bahasa Inggris
+// Fungsi untuk menangani tampilan data
 function responsefunction(items) {
- console.log(items);
- 
- let tableRows = "";
- let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
+  console.log(items);
 
- items.forEach((item) => {
-   const rowStyle = lastRowStyle;
-   lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+  let tableRows = "";
+  let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
-   tableRows += `
+  items.forEach((item) => {
+    const rowStyle = lastRowStyle;
+    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+
+    tableRows += `
      <tr class="text-xs ${rowStyle}">
        <td class="flex px-4 py-3">
          <div>
@@ -41,9 +42,9 @@ function responsefunction(items) {
        </td>
      </tr>
    `;
- });
+  });
 
- document.getElementById("content-en").innerHTML = `
+  document.getElementById("content-en").innerHTML = `
    <table class="table-auto w-full">
      <thead>
        <tr class="text-xs text-gray-500 text-left">
@@ -59,12 +60,40 @@ function responsefunction(items) {
  `;
 }
 
-get("https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item", loadBarang);
+// Fungsi untuk menghapus item
+function deleteItemEn(id) {
+  if (confirm("Are you sure you want to delete this item?")) {
+    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
+    const tokenKey = "Content-Type";
+    const tokenValue = "application/json";
+
+    deleteJSON(targetUrl, tokenKey, tokenValue, {}, (response) => {
+      if (response.status === 200) {
+        alert("Item deleted successfully");
+        get(
+          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
+          responsefunction
+        ); // Muat ulang data setelah penghapusan
+      } else {
+        alert("Failed to delete item");
+      }
+    });
+  }
+}
+
+// Pastikan deleteItemEn tersedia secara global
+window.deleteItemEn = deleteItemEn;
+
+
+get(
+  "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item",
+  loadBarang
+);
 
 // Fungsi untuk memuat konten Bahasa Indonesia
 function loadBarang(barangs) {
   console.log(barangs);
-  
+
   let tableRows = "";
   let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
@@ -113,7 +142,30 @@ function loadBarang(barangs) {
       </tbody>
     </table>
   `;
- }
+}
+
+// Fungsi untuk menghapus item Bahasa Indonesia
+function deleteItemId(id) {
+  if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
+    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
+    const tokenKey = "Content-Type";
+    const tokenValue = "application/json";
+    
+    deleteJSON(targetUrl, tokenKey, tokenValue, {}, (response) => {
+      if (response.status === 200) {
+        alert("Item berhasil dihapus");
+        get(
+          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item",
+          loadBarang
+        );
+      } else {
+        alert("Gagal menghapus item");
+      }
+    });
+  }
+}
+
+window.deleteItemId = deleteItemId;
 
 // Fungsi untuk menavigasi halaman dengan parameter dinamis
 function navigateTo(page) {
@@ -131,44 +183,6 @@ function addItem() {
 function tambahBarang() {
   navigateTo("crud/tambahbr.html");
 }
-
-
-// Fungsi untuk menghapus item Bahasa Inggris
-function deleteItemEn(id) {
-  if (confirm("Are you sure you want to delete this item?")) {
-    const targetUrl = "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}";
-
-    deleteJSON(targetUrl, '', '', {}, (response) => {
-      if (response.status === 200) {
-        alert("Item deleted successfully");
-        loadItems(); // Memuat ulang data tanpa memuat ulang halaman
-      } else {
-        alert("Failed to delete item");
-      }
-    });
-  }
-}
-
-
-// Fungsi untuk menghapus item Bahasa Indonesia
-
-function deleteItemEn(id) {
-  if (confirm("Are you sure you want to delete this item?")) {
-    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
-    
-    deleteJSON(targetUrl, '', '', {}, (response) => {
-      if (response.status === 200) {
-        alert("Item deleted successfully");
-        loadItems(); // Ensure this function is defined and working
-      } else {
-        alert("Failed to delete item");
-      }
-    });
-  }
-}
-
-window.deleteItemEn = deleteItemEn;
-
 
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
@@ -207,3 +221,5 @@ function handleTabChange() {
     document.getElementById("content-en").innerHTML = ""; // Hapus konten Bahasa Inggris
   }
 }
+
+
