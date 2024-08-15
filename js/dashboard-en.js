@@ -79,30 +79,29 @@ function deleteItemEn(id) {
   }
 }
 
-/// Daftar opsi untuk destinasi
-const destinations = ["USA", "UK", "France", "Germany", "Japan"];
-
-// Fungsi untuk mengisi elemen <select> dengan opsi
 function populateOptions() {
   const selectElement = document.getElementById("destination");
 
-  // Kosongkan elemen <select> jika ada opsi sebelumnya
-  selectElement.innerHTML = "";
+  // Tambahkan opsi default hanya jika belum ada
+  if (!selectElement.querySelector('option[value=""]')) {
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = "Select a destination";
+    defaultOption.value = "";
+    selectElement.appendChild(defaultOption);
+  }
 
-  // Tambahkan opsi default
-  const defaultOption = document.createElement("option");
-  defaultOption.textContent = "Select a destination";
-  defaultOption.value = "";
-  selectElement.appendChild(defaultOption);
-
-  // Tambahkan opsi baru dari array destinations
+  // Tambahkan opsi baru dari array destinations jika belum ada
   destinations.forEach((destination) => {
-    const option = document.createElement("option");
-    option.textContent = destination;
-    option.value = destination;
-    selectElement.appendChild(option);
+    if (!selectElement.querySelector(`option[value="${destination}"]`)) {
+      const option = document.createElement("option");
+      option.textContent = destination;
+      option.value = destination;
+      selectElement.appendChild(option);
+    }
   });
 }
+
+
 
 // Fungsi untuk memuat data item ke dalam form saat halaman dimuat
 function loadItemData() {
