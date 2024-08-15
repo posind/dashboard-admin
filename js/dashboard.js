@@ -1,4 +1,4 @@
-import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+import { get, deleteJSON, putJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
 // Muat data saat halaman dimuat
 get(
@@ -18,30 +18,28 @@ function responsefunction(items) {
     lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
 
     tableRows += `
-     <tr class="text-xs ${rowStyle}">
-       <td class="flex px-4 py-3">
-         <div>
-           <p class="font-medium">${item.prohibited_items || "N/A"}</p>
-         </div>
-       </td>
-       <td class="font-medium">${item.destination || "N/A"}</td>
-       <td>
-         <div>
-           <!-- Ikon Edit -->
-           <a class="inline-block mr-2" href="edititem.html?id=${item.id}">
-             <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
-           </a>
-           
-           <!-- Ikon Delete -->
-           <a class="inline-block" href="#" onclick="deleteItemEn('${
-             item.id
-           }')">
-             <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
-           </a>
-         </div>
-       </td>
-     </tr>
-   `;
+      <tr class="text-xs ${rowStyle}">
+        <td class="flex px-4 py-3">
+          <div>
+            <p class="font-medium">${item.prohibited_items || "N/A"}</p>
+          </div>
+        </td>
+        <td class="font-medium">${item.destination || "N/A"}</td>
+        <td>
+          <div>
+            <!-- Ikon Edit -->
+            <a class="inline-block mr-2" href="edititem.html?id=${item.id}">
+              <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
+            </a>
+            
+            <!-- Ikon Delete -->
+            <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
+              <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    `;
   });
 
   document.getElementById("content-en").innerHTML = `
@@ -81,8 +79,86 @@ function deleteItemEn(id) {
   }
 }
 
-// Pastikan deleteItemEn tersedia secara global
+/// Daftar opsi untuk destinasi
+const destinations = ["USA", "UK", "France", "Germany", "Japan"];
+
+// Fungsi untuk mengisi elemen <select> dengan opsi
+function populateOptions() {
+  const selectElement = document.getElementById("destination");
+
+  // Kosongkan elemen <select> jika ada opsi sebelumnya
+  selectElement.innerHTML = "";
+
+  // Tambahkan opsi default
+  const defaultOption = document.createElement("option");
+  defaultOption.textContent = "Select a destination";
+  defaultOption.value = "";
+  selectElement.appendChild(defaultOption);
+
+  // Tambahkan opsi baru dari array destinations
+  destinations.forEach((destination) => {
+    const option = document.createElement("option");
+    option.textContent = destination;
+    option.value = destination;
+    selectElement.appendChild(option);
+  });
+}
+
+// Fungsi untuk memuat data item ke dalam form saat halaman dimuat
+function loadItemData() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const itemId = urlParams.get('id');
+
+  if (itemId) {
+    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-item/en/${itemId}`;
+
+    get(targetUrl, (response) => {
+      if (response.status === 200) {
+        const item = response.data;
+        document.getElementById("itemId").value = item.id;
+        document.getElementById("destination").value = item.destination;
+        document.getElementById("prohibited_items").value = item.prohibited_items;
+      } else {
+        alert("Failed to load item data");
+      }
+    });
+  }
+}
+
+// Fungsi untuk memperbarui item
+function updateItem() {
+  const id = document.getElementById("itemId").value;
+  const destination = document.getElementById("destination").value;
+  const prohibitedItems = document.getElementById("prohibited_items").value;
+
+  const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/update/prohibited-items/en`;
+  const tokenKey = "Content-Type";
+  const tokenValue = "application/json";
+  const datajson = {
+    id: id,
+    destination: destination,
+    prohibited_items: prohibitedItems,
+  };
+
+  putJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {
+    if (response.status === 200) {
+      alert("Item updated successfully");
+      window.location.href = "../dashboard.html"; // Kembali ke dashboard setelah pembaruan
+    } else {
+      alert("Failed to update item");
+    }
+  });
+}
+
+// Pastikan deleteItemEn dan updateItem tersedia secara global
 window.deleteItemEn = deleteItemEn;
+window.updateItem = updateItem;
+
+// Panggil fungsi saat halaman dimuat
+window.onload = function() {
+  loadItemData(); // Muat data item
+  populateOptions(); // Isi opsi dropdown
+};
 
 
 get(
