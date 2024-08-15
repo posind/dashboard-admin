@@ -79,29 +79,34 @@ function deleteItemEn(id) {
   }
 }
 
+// Definisikan data destinasi secara manual
+const destinations = [
+  { id: '1', destination: 'Afghanistan' },
+  { id: '2', destination: 'Albania' },
+  // Tambahkan destinasi lain sesuai kebutuhan
+];
+
+// Fungsi untuk mengisi elemen <select> dengan opsi
 function populateOptions() {
   const selectElement = document.getElementById("destination");
 
-  // Tambahkan opsi default hanya jika belum ada
-  if (!selectElement.querySelector('option[value=""]')) {
-    const defaultOption = document.createElement("option");
-    defaultOption.textContent = "Select a destination";
-    defaultOption.value = "";
-    selectElement.appendChild(defaultOption);
-  }
+  // Kosongkan elemen <select> jika ada opsi sebelumnya
+  selectElement.innerHTML = "";
 
-  // Tambahkan opsi baru dari array destinations jika belum ada
+  // Tambahkan opsi default
+  const defaultOption = document.createElement("option");
+  defaultOption.textContent = "Select a destination";
+  defaultOption.value = "";
+  selectElement.appendChild(defaultOption);
+
+  // Tambahkan opsi baru dari array destinations
   destinations.forEach((destination) => {
-    if (!selectElement.querySelector(`option[value="${destination}"]`)) {
-      const option = document.createElement("option");
-      option.textContent = destination;
-      option.value = destination;
-      selectElement.appendChild(option);
-    }
+    const option = document.createElement("option");
+    option.textContent = destination.destination;
+    option.value = destination.destination;
+    selectElement.appendChild(option);
   });
 }
-
-
 
 // Fungsi untuk memuat data item ke dalam form saat halaman dimuat
 function loadItemData() {
@@ -123,6 +128,12 @@ function loadItemData() {
     });
   }
 }
+
+// Panggil fungsi saat halaman dimuat
+window.onload = function() {
+  populateOptions(); // Isi opsi dropdown dengan data manual
+  loadItemData(); // Muat data item
+};
 
 // Fungsi untuk memperbarui item
 function updateItem() {
@@ -152,95 +163,6 @@ function updateItem() {
 // Pastikan deleteItemEn dan updateItem tersedia secara global
 window.deleteItemEn = deleteItemEn;
 window.updateItem = updateItem;
-
-// Panggil fungsi saat halaman dimuat
-window.onload = function() {
-  loadItemData(); // Muat data item
-  populateOptions(); // Isi opsi dropdown
-};
-
-
-get(
-  "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item",
-  loadBarang
-);
-
-// Fungsi untuk memuat konten Bahasa Indonesia
-function loadBarang(barangs) {
-  console.log(barangs);
-
-  let tableRows = "";
-  let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
-
-  barangs.forEach((barang) => {
-    const rowStyle = lastRowStyle;
-    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
-
-    tableRows += `
-      <tr class="text-xs ${rowStyle}">
-        <td class="flex px-4 py-3">
-          <div>
-            <p class="font-medium">${barang.barang_terlarang || "N/A"}</p>
-          </div>
-        </td>
-        <td class="font-medium">${barang.destinasi || "N/A"}</td>
-        <td>
-          <div>
-            <!-- Ikon Edit -->
-            <a class="inline-block mr-2" href="crud/editbrg.html?id=${barang.id}">
-              <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
-            </a>
-            
-            <!-- Ikon Delete -->
-            <a class="inline-block" href="#" onclick="deleteItemId('${
-              barang.id
-            }')">
-              <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
-    `;
-  });
-
-  document.getElementById("content-id").innerHTML = `
-    <table class="table-auto w-full">
-      <thead>
-        <tr class="text-xs text-gray-500 text-left">
-          <th class="font-medium">Nama Barang</th>
-          <th class="font-medium">Destinasi</th>
-          <th class="font-medium">Aksi</th>
-        </tr>
-      </thead>
-      <tbody class="visibility-item">
-        ${tableRows}
-      </tbody>
-    </table>
-  `;
-}
-
-// Fungsi untuk menghapus item Bahasa Indonesia
-function deleteItemId(id) {
-  if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
-    const tokenKey = "Content-Type";
-    const tokenValue = "application/json";
-    
-    deleteJSON(targetUrl, tokenKey, tokenValue, {}, (response) => {
-      if (response.status === 200) {
-        alert("Item berhasil dihapus");
-        get(
-          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item",
-          loadBarang
-        );
-      } else {
-        alert("Gagal menghapus item");
-      }
-    });
-  }
-}
-
-window.deleteItemId = deleteItemId;
 
 // Fungsi untuk menavigasi halaman dengan parameter dinamis
 function navigateTo(page) {
