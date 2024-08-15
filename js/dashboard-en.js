@@ -113,6 +113,8 @@ function loadItemData() {
   const urlParams = new URLSearchParams(window.location.search);
   const itemId = urlParams.get('id');
 
+  console.log("Item ID:", itemId); // Tambahkan log untuk memeriksa ID
+
   if (itemId) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-item/en/${itemId}`;
 
@@ -126,6 +128,8 @@ function loadItemData() {
         alert("Failed to load item data");
       }
     });
+  } else {
+    alert("No item ID provided");
   }
 }
 
@@ -177,7 +181,6 @@ function addItem() {
   navigateTo("crud/additem.html");
 }
 
-
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
   document.addEventListener("alpine:initialized", () => {
@@ -209,11 +212,9 @@ function handleTabChange() {
   const tab = xDataElement.__x.$data.tab;
   if (tab === "EN") {
     loadItems();
-    document.getElementById("content-id").innerHTML = ""; // Hapus konten Bahasa Indonesia
+    document.getElementById("content-id").innerHTML = ""; // Hapus konten ID jika ada
   } else if (tab === "ID") {
-    loadBarang();
+    loadItemsID();
     document.getElementById("content-en").innerHTML = ""; // Hapus konten Bahasa Inggris
   }
 }
-
-
