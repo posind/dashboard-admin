@@ -256,9 +256,6 @@ function addItem() {
   navigateTo("crud/additem.html");
 }
 
-function tambahBarang() {
-  navigateTo("crud/tambahbr.html");
-}
 
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
