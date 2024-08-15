@@ -31,32 +31,6 @@
       </div>
     </div>
   </div>
-  <script type="module">
-    import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
-
-    function addItem() {
-        const destination = document.getElementById('destination').value;
-        const prohibitedItems = document.getElementById('prohibited_items').value;
-
-        const target_url = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en';
-        const tokenkey = 'Content-Type';
-        const tokenvalue = 'application/json'; 
-        const datajson = {
-            destination: destination,
-            prohibited_items: prohibitedItems
-        };
-
-        postJSON(target_url, tokenkey, tokenvalue, datajson, responseFunction);
-    }
-
-    function responseFunction(result) {
-        if (result.status === 200) {
-            alert('Item added successfully');
-            window.location.href = '../dashboard.html'; 
-        } else {
-            alert('Failed to add item: ' + (result.data.message || 'Unknown error'));
-        }
-    }
-  </script>
+  <script src="js/dashboard-en.js" type="module"></script>
 </body>
 </html>

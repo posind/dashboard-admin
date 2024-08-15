@@ -1,4 +1,4 @@
-import { get, deleteJSON, putJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+import { get, postJSON, deleteJSON, putJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
 // Muat data saat halaman dimuat
 get(
@@ -76,6 +76,37 @@ function deleteItemEn(id) {
         alert("Failed to delete item");
       }
     });
+  }
+}
+
+// Fungsi untuk menambahkan item
+postJSON(
+  "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en",
+  addItem
+);
+
+function addItem() {
+  console.log("addItem function is called");
+  const destination = document.getElementById('destination').value;
+  const prohibitedItems = document.getElementById('prohibited_items').value;
+
+  const targetUrl = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en';
+  const tokenKey = 'Content-Type';
+  const tokenValue = 'application/json';
+  const datajson = {
+      destination: destination,
+      prohibited_items: prohibitedItems
+  };
+
+  postJSON(targetUrl, tokenKey, tokenValue, datajson, adding);
+}
+
+function adding(result) {
+  if (result.status === 200) {
+      alert('Item added successfully');
+      window.location.href = '../dashboard.html'; 
+  } else {
+      alert('Failed to add item: ' + (result.data.message || 'Unknown error'));
   }
 }
 
