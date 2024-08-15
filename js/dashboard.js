@@ -28,7 +28,7 @@ function responsefunction(items) {
         <td>
           <div>
             <!-- Ikon Edit -->
-            <a class="inline-block mr-2" href="edititem.html?id=${item.id}">
+            <a class="inline-block mr-2" href="crud/edititem.html?id=${item.id}">
               <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
             </a>
             
@@ -188,7 +188,7 @@ function loadBarang(barangs) {
         <td>
           <div>
             <!-- Ikon Edit -->
-            <a class="inline-block mr-2" href="editbrg.html?id=${barang.id}">
+            <a class="inline-block mr-2" href="crud/editbrg.html?id=${barang.id}">
               <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
             </a>
             
