@@ -177,11 +177,6 @@ function updateItem() {
 window.deleteItemEn = deleteItemEn;
 window.updateItem = updateItem;
 
-// Fungsi untuk menavigasi halaman dengan parameter dinamis
-function navigateTo(page) {
-  window.location.href = page;
-}
-
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
   document.addEventListener("alpine:initialized", () => {
