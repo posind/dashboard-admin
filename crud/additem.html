@@ -1,86 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Prohibited Item (EN)</title>
-  <link rel="stylesheet" href="css/crud.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Prohibited Item (EN)</title>
+    <link rel="stylesheet" href="css/crud.css">
 </head>
 <body class="bg-gray-100">
   <div class="container">
     <div class="form-container">
       <div class="form-content">
-        <h2 class="text-2xl font-bold mb-4 text-center">
-          Add Prohibited Item
-        </h2>
-        <form
-          id="addItemForm"
-          onsubmit="event.preventDefault(); createItem();"
-        >
-          <div class="mb-4">
-            <label for="destination" class="block text-gray-700">
-              Destination:
-            </label>
-            <select
-              id="destination"
-              name="destination"
-              class="mt-1 block w-full"
-              required
-            >
+      <h2 class="text-2xl font-bold mb-4 text-center">Add Prohibited Item</h2>
+      <form id="addItemForm" onsubmit="event.preventDefault(); addItem();">
+        <div class="mb-4">
+          <label for="destination" class="block text-gray-700">Destination:</label>
+          <select id="destination" name="destination" class="mt-1 block w-full" required>
               <option value="USA">USA</option>
               <option value="UK">UK</option>
               <option value="France">France</option>
               <option value="Germany">Germany</option>
               <option value="Japan">Japan</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label for="prohibited_items" class="block text-gray-700">
-              Prohibited Items:
-            </label>
-            <input
-              type="text"
-              id="prohibited_items"
-              name="prohibited_items"
-              class="mt-1 block w-full"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            class="py-2 px-4 bg-indigo-500 text-white rounded w-full"
-          >
-            Add Item
-          </button>
-        </form>
-      </div>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="prohibited_items" class="block text-gray-700">Prohibited Items:</label>
+          <input type="text" id="prohibited_items" name="prohibited_items" class="mt-1 block w-full" required>
+        </div>
+        <button type="submit" class="py-2 px-4 bg-indigo-500 text-white rounded w-full">Add Item</button>
+      </form>
+    </div>
     </div>
   </div>
   <script type="module">
     import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
-    function createItem() {
-      const destination = document.getElementById("destination").value;
-      const prohibitedItems = document.getElementById("prohibited_items").value;
+    function addItem() {
+        const destination = document.getElementById('destination').value;
+        const prohibitedItems = document.getElementById('prohibited_items').value;
 
-      const target_url = "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en";
-      const tokenkey = "Content-Type"; 
-      const tokenvalue = "application/json"; 
-      const datajson = {
-        destination: destination,
-        prohibited_items: prohibitedItems,
-      };
+        const target_url = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en';
+        const tokenkey = 'Content-Type';
+        const tokenvalue = 'application/json'; 
+        const datajson = {
+            destination: destination,
+            prohibited_items: prohibitedItems
+        };
 
-      postJSON(target_url, tokenkey, tokenvalue, datajson, responseFunction);
+        postJSON(target_url, tokenkey, tokenvalue, datajson, responseFunction);
     }
 
     function responseFunction(result) {
-      if (result.status === 200) {
-        alert("Item added successfully");
-        window.location.href = "../dashboard.html";
-      } else {
-        alert("Failed to add item: " + (result.data.message || "Unknown error"));
-      }
+        if (result.status === 200) {
+            alert('Item added successfully');
+            window.location.href = '../dashboard.html'; 
+        } else {
+            alert('Failed to add item: ' + (result.data.message || 'Unknown error'));
+        }
     }
   </script>
 </body>
