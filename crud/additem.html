@@ -10,25 +10,25 @@
   <div class="container">
     <div class="form-container">
       <div class="form-content">
-      <h2 class="text-2xl font-bold mb-4 text-center">Add Prohibited Item</h2>
-      <form id="addItemForm" onsubmit="event.preventDefault(); addItem();">
-        <div class="mb-4">
-          <label for="destination" class="block text-gray-700">Destination:</label>
-          <select id="destination" name="destination" class="mt-1 block w-full" required>
-              <option value="USA">USA</option>
-              <option value="UK">UK</option>
-              <option value="France">France</option>
-              <option value="Germany">Germany</option>
-              <option value="Japan">Japan</option>
-          </select>
-        </div>
-        <div class="mb-4">
-          <label for="prohibited_items" class="block text-gray-700">Prohibited Items:</label>
-          <input type="text" id="prohibited_items" name="prohibited_items" class="mt-1 block w-full" required>
-        </div>
-        <button type="submit" class="py-2 px-4 bg-indigo-500 text-white rounded w-full">Add Item</button>
-      </form>
-    </div>
+        <h2 class="text-2xl font-bold mb-4 text-center">Add Prohibited Item</h2>
+        <form id="addItemForm" onsubmit="event.preventDefault(); addItem();">
+          <div class="mb-4">
+            <label for="destination" class="block text-gray-700">Destination:</label>
+            <select id="destination" name="destination" class="mt-1 block w-full" required>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Japan">Japan</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="prohibited_items" class="block text-gray-700">Prohibited Items:</label>
+            <input type="text" id="prohibited_items" name="prohibited_items" class="mt-1 block w-full" required>
+          </div>
+          <button type="submit" class="py-2 px-4 bg-indigo-500 text-white rounded w-full">Add Item</button>
+        </form>
+      </div>
     </div>
   </div>
   <script type="module">
