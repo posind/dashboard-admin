@@ -35,6 +35,6 @@ window.addItem = function() {
   redirect("crud/additem.html"); 
 }
 
-window.tambahBarang() = function() {
+window.tambahBarang = function() {
   redirect("crud/tambahbr.html"); 
 }
