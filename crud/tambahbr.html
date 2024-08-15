@@ -11,7 +11,7 @@
     <div class="form-container">
       <div class="form-content">
       <h2 class="text-2xl font-bold mb-4 text-center">Tambah Barang Terlarang</h2>
-      <form id="tambahBarangForm" onsubmit="event.preventDefault(); tambahBarang();">
+      <form id="tambahBarangForm">
         <div class="mb-4">
           <label for="destination" class="block text-gray-700">Destinasi:</label>
           <select id="destination" name="destination" class="mt-1 block w-full" required>
@@ -34,29 +34,39 @@
   <script type="module">
     import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
-    function tambahBarang() {
-        const destination = document.getElementById('destination').value;
-        const barangTerlarang = document.getElementById('barang_terlarang').value;
+function tambahBarang(event) {
+    event.preventDefault(); // Mencegah pengiriman form default
 
-        const target_url = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/item';
-        const tokenkey = 'Content-Type';
-        const tokenvalue = 'application/json'; 
-        const datajson = {
-            destinasi: destination,
-            barang_terlarang: barangTerlarang
-        };
+    const destination = document.getElementById('destination').value;
+    const barangTerlarang = document.getElementById('barang_terlarang').value;
 
-        postJSON(target_url, tokenkey, tokenvalue, datajson, responseFunction);
+    if (!destination || !barangTerlarang) {
+      alert("Harap isi semua kolom.");
+      return;
     }
 
-    function responseFunction(result) {
-        if (result.status === 200) {
-            alert('Barang berhasil ditambahkan');
-            window.location.href = '../dashboard.html'; 
-        } else {
-            alert('Gagal menambahkan barang: ' + (result.data.message || 'Kesalahan tidak diketahui'));
-        }
-    }
+    const target_url = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/item';
+    const tokenkey = 'Content-Type';
+    const tokenvalue = 'application/json'; 
+    const datajson = {
+        destinasi: destination,
+        barang_terlarang: barangTerlarang
+    };
+
+    postJSON(target_url, tokenkey, tokenvalue, datajson, (response) => {
+      if (response.status === 200) {
+        alert('Barang berhasil ditambahkan');
+        window.location.href = '../dashboard.html'; 
+      } else {
+        alert('Gagal menambahkan barang: ' + (response.data.message || 'Unknown error'));
+      }
+    });
+}
+
+document
+    .getElementById("tambahBarangForm")
+    .addEventListener("submit", tambahBarang);
+
   </script>
 </body>
 </html>

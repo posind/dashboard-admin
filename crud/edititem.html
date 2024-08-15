@@ -1,33 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Prohibited Item (EN)</title>
-  <link rel="stylesheet" href="css/crud.css" />
-</head>
-<body>
-  <div class="container">
-    <div class="form-container">
-      <div class="form-content">
-        <h2>Edit Prohibited Item</h2>
-        <form id="editItemForm" onsubmit="event.preventDefault(); updateItem();">
-          <input type="hidden" id="itemId" />
-          <div class="form-group mb-4">
-            <label for="destination">Destination:</label>
-            <select id="destination" name="destination" class="form-control" required>
-              <!-- Options will be populated dynamically -->
-            </select>
-          </div>
-          <div class="form-group mb-4">
-            <label for="prohibited_items">Prohibited Items:</label>
-            <input type="text" id="prohibited_items" name="prohibited_items" class="form-control" required />
-          </div>
-          <button type="submit" class="btn">Update Item</button>
-        </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Prohibited Item (EN)</title>
+    <link rel="stylesheet" href="css/crud.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <div class="form-content">
+          <h2>Edit Prohibited Item</h2>
+          <form id="editItemForm">
+            <input type="hidden" id="itemId" />
+            <div class="form-group mb-4">
+              <label for="destination">Destination:</label>
+              <select
+                id="destination"
+                name="destination"
+                class="form-control"
+                required
+              >
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group mb-4">
+              <label for="prohibited_items">Prohibited Items:</label>
+              <input
+                type="text"
+                id="prohibited_items"
+                name="prohibited_items"
+                class="form-control"
+                required
+              />
+            </div>
+            <button type="submit" class="btn">Update Item</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <script type="module" src="../js/dashboard-en.js"></script>
-</body>
+    <script type="module">
+      import { putJSON, get } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+
+      // Definisikan data destinasi secara manual
+      const destinations = [
+        { id: "1", destination: "Afghanistan" },
+        { id: "2", destination: "Albania" },
+        { id: "3", destination: "USA" },
+        { id: "4", destination: "UK" },
+        { id: "5", destination: "France" },
+        { id: "6", destination: "Germany" },
+        { id: "7", destination: "Japan" },
+        // Tambahkan destinasi lain sesuai kebutuhan
+      ];
+
+      // Fungsi untuk mengisi elemen <select> dengan opsi
+      function populateOptions() {
+        const selectElement = document.getElementById("destination");
+
+        // Kosongkan elemen <select> jika ada opsi sebelumnya
+        selectElement.innerHTML = "";
+
+        // Tambahkan opsi default
+        const defaultOption = document.createElement("option");
+        defaultOption.textContent = "Select a destination";
+        defaultOption.value = "";
+        selectElement.appendChild(defaultOption);
+
+        // Tambahkan opsi baru dari array destinations
+        destinations.forEach((destination) => {
+          const option = document.createElement("option");
+          option.textContent = destination.destination;
+          option.value = destination.destination;
+          selectElement.appendChild(option);
+        });
+      }
+
+      // Fungsi untuk memuat data item ke dalam form saat halaman dimuat
+      function loadItemData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const itemId = urlParams.get("id");
+
+        if (itemId) {
+          const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-item/en/${itemId}`;
+
+          get(targetUrl, (response) => {
+            if (response.status === 200) {
+              const item = response.data;
+              document.getElementById("itemId").value = item.id;
+              document.getElementById("destination").value = item.destination;
+              document.getElementById("prohibited_items").value = item.prohibited_items;
+            } else {
+              alert("Failed to load item data");
+            }
+          });
+        } else {
+          alert("No item ID provided");
+        }
+      }
+
+      // Fungsi untuk memperbarui item
+      function updateItem(event) {
+        event.preventDefault();
+
+        const id = document.getElementById("itemId").value;
+        const destination = document.getElementById("destination").value;
+        const prohibitedItems = document.getElementById("prohibited_items").value;
+
+        const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/update/prohibited-items/en`;
+        const tokenKey = "Content-Type";
+        const tokenValue = "application/json";
+        const datajson = {
+          id: id,
+          destination: destination,
+          prohibited_items: prohibitedItems,
+        };
+
+        putJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {
+          if (response.status === 200) {
+            alert("Item updated successfully");
+            window.location.href = "../dashboard.html"; // Redirect after update
+          } else {
+            alert("Failed to update item");
+          }
+        });
+      }
+
+      // Panggil fungsi saat halaman dimuat
+      window.onload = function () {
+        populateOptions(); // Isi opsi dropdown dengan data manual
+        loadItemData(); // Muat data item
+      };
+
+      // Attach event listener to form submit
+      document
+        .getElementById("editItemForm")
+        .addEventListener("submit", updateItem);
+    </script>
+  </body>
 </html>
