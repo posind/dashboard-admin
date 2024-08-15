@@ -80,25 +80,25 @@ function deleteItemEn(id) {
 }
 
 // Fungsi untuk menambahkan item
-postJSON(
-  "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en",
-  addItem
-);
+function addItem(event) {
+  event.preventDefault();
 
-function addItem() {
   console.log("addItem function is called");
   const destination = document.getElementById('destination').value;
   const prohibitedItems = document.getElementById('prohibited_items').value;
 
   const targetUrl = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/prohibited-items/en';
-  const tokenKey = 'Content-Type';
-  const tokenValue = 'application/json';
+  
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+
   const datajson = {
       destination: destination,
       prohibited_items: prohibitedItems
   };
 
-  postJSON(targetUrl, tokenKey, tokenValue, datajson, adding);
+  postJSON(targetUrl, headers, datajson, adding);
 }
 
 function adding(result) {
@@ -109,6 +109,8 @@ function adding(result) {
       alert('Failed to add item: ' + (result.data.message || 'Unknown error'));
   }
 }
+document.getElementById('add-item-button').addEventListener('click', addItem);
+
 
 // Definisikan data destinasi secara manual
 const destinations = [
