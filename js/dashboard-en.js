@@ -113,12 +113,16 @@ function loadItemData() {
   const urlParams = new URLSearchParams(window.location.search);
   const itemId = urlParams.get('id');
 
-  console.log("Item ID:", itemId); // Tambahkan log untuk memeriksa ID
+  console.log("Item ID:", itemId);
 
   if (itemId) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-item/en/${itemId}`;
 
+    console.log("Fetching URL:", targetUrl); // Log URL untuk memverifikasi
+
     get(targetUrl, (response) => {
+      console.log("API Response:", response); // Log respons API untuk debug
+
       if (response.status === 200) {
         const item = response.data;
         document.getElementById("itemId").value = item.id;
@@ -132,6 +136,7 @@ function loadItemData() {
     alert("No item ID provided");
   }
 }
+
 
 // Panggil fungsi saat halaman dimuat
 window.onload = function() {
