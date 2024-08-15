@@ -82,19 +82,6 @@ get(
   
   window.deleteItemId = deleteItemId;
   
-  // Fungsi untuk menavigasi halaman dengan parameter dinamis
-  function navigateTo(page) {
-    window.location.href = page;
-  }
-  
-  function logout() {
-    navigateTo("https://pos.in.my.id/login/login.html");
-  }
-  
-  function tambahBarang() {
-    navigateTo("crud/tambahbr.html");
-  }
-  
   // Menambahkan event listener untuk Alpine.js
   document.addEventListener("alpine:init", () => {
     document.addEventListener("alpine:initialized", () => {

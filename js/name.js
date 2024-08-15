@@ -30,3 +30,11 @@ window.logout = function() {
   deleteCookie("login"); 
   window.location.href = "https://pos.in.my.id";
 }
+
+window.addItem = function() {
+  redirect("crud/additem.html"); 
+}
+
+window.tambahBarang() = function() {
+  redirect("crud/tambahbr.html"); 
+}

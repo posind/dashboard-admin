@@ -140,9 +140,13 @@ function loadItemData() {
 
 // Panggil fungsi saat halaman dimuat
 window.onload = function() {
-  populateOptions(); // Isi opsi dropdown dengan data manual
+  const destinationElement = document.getElementById("destination");
+  if (destinationElement) {
+    populateOptions(); // Isi opsi dropdown dengan data manual
+  }
   loadItemData(); // Muat data item
 };
+
 
 // Fungsi untuk memperbarui item
 function updateItem() {
@@ -176,14 +180,6 @@ window.updateItem = updateItem;
 // Fungsi untuk menavigasi halaman dengan parameter dinamis
 function navigateTo(page) {
   window.location.href = page;
-}
-
-function logout() {
-  navigateTo("https://pos.in.my.id/login/login.html");
-}
-
-function addItem() {
-  navigateTo("crud/additem.html");
 }
 
 // Menambahkan event listener untuk Alpine.js
