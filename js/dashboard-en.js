@@ -1,4 +1,4 @@
-import { get, postJSON, deleteJSON, putJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
 // Muat data saat halaman dimuat
 get(
