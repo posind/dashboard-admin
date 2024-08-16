@@ -4,3 +4,5 @@ window.logout = function() {
     deleteCookie("login"); 
     window.location.href = "https://pos.in.my.id";
   }
+
+  logout();
