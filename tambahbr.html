@@ -311,47 +311,48 @@
               </div>
               </div>
             </div>
-            <script type="module">
-              import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
-          
-          function tambahBarang(event) {
-              event.preventDefault(); // Mencegah pengiriman form default
-          
-              const destination = document.getElementById('destination').value;
-              const barangTerlarang = document.getElementById('barang_terlarang').value;
-          
-              if (!destination || !barangTerlarang) {
-                alert("Harap isi semua kolom.");
-                return;
-              }
-          
-              const target_url = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/item';
-              const tokenkey = 'Content-Type';
-              const tokenvalue = 'application/json'; 
-              const datajson = {
-                  destinasi: destination,
-                  barang_terlarang: barangTerlarang
-              };
-          
-              postJSON(target_url, tokenkey, tokenvalue, datajson, (response) => {
-                if (response.status === 200) {
-                  alert('Barang berhasil ditambahkan');
-                  window.location.href = '../dashboard.html'; 
-                } else {
-                  alert('Gagal menambahkan barang: ' + (response.data.message || 'Unknown error'));
-                }
-              });
-          }
-          
-          document
-              .getElementById("tambahBarangForm")
-              .addEventListener("submit", tambahBarang);
-          
-            </script>
-            </div>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="js/charts-demo.js"></script>
-    <script type="module" src="js/name.js"></script>
-  </body>
-</html>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+
+function tambahBarang(event) {
+    event.preventDefault(); // Mencegah pengiriman form default
+
+    const destination = document.getElementById('destination').value;
+    const barangTerlarang = document.getElementById('barang_terlarang').value;
+
+    if (!destination || !barangTerlarang) {
+      alert("Harap isi semua kolom.");
+      return;
+    }
+
+    const target_url = 'https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/post/item';
+    const tokenkey = 'Content-Type';
+    const tokenvalue = 'application/json'; 
+    const datajson = {
+        destinasi: destination,
+        barang_terlarang: barangTerlarang
+    };
+
+    postJSON(target_url, tokenkey, tokenvalue, datajson, (response) => {
+      if (response.status === 200) {
+        alert('Barang berhasil ditambahkan');
+        window.location.href = '../dashboard.html'; 
+      } else {
+        alert('Gagal menambahkan barang: ' + (response.data.message || 'Unknown error'));
+      }
+    });
+}
+
+document
+    .getElementById("tambahBarangForm")
+    .addEventListener("submit", tambahBarang);
+
+  </script>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="js/charts-demo.js"></script>
+</body>
 </html>

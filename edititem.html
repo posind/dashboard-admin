@@ -1,141 +1,425 @@
-d<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Prohibited Item (EN)</title>
+    <title>Adding Prohibited Item (EN)</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+    />
+    <link rel="stylesheet" href="css/tailwind/home.css" />
     <link rel="stylesheet" href="css/crud.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link href="favicon.ico" rel="icon" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"
+      defer
+    ></script>
   </head>
-  <body>
-    <div class="container">
-      <div class="form-container">
-        <div class="form-content">
-          <h2>Edit Prohibited Item</h2>
-          <form id="editItemForm">
-            <input type="hidden" id="itemId" />
-            <div class="form-group mb-4">
-              <label for="destination">Destination:</label>
-              <select
-                id="destination"
-                name="destination"
-                class="form-control"
-                required
+  <body class="antialiased bg-body text-body font-body">
+    <div>
+      <div x-data="{ mobileNavOpen: false }">
+        <nav class="lg:hidden py-6 px-6 border-b">
+          <div class="flex items-center justify-between">
+            <a class="text-2xl font-semibold" href="#">
+              <img class="h-10" src="pos.png" alt="Logo PosInd" width="auto" />
+            </a>
+            <a
+              x-on:click="mobileNavOpen = !mobileNavOpen"
+              class="flex items-center rounded focus:outline-none"
+            >
+              <svg
+                class="text-white bg-indigo-500 hover:bg-indigo-600 block h-8 w-8 p-2 rounded"
+                viewbox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
               >
-                <!-- Options will be populated dynamically -->
-              </select>
+                <title>Mobile menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+              </svg>
+            </a>
+          </div>
+        </nav>
+        <div
+          :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}"
+          class="hidden relative z-50"
+        >
+          <div
+            x-on:click="mobileNavOpen = !mobileNavOpen"
+            class="fixed lg:hidden inset-0 bg-gray-800 opacity-10"
+          ></div>
+          <nav
+            class="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-white border-r overflow-y-auto"
+          >
+            <div
+              class="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-blue-50"
+            >
+              <a class="text-xl font-semibold" href="#">
+                <img class="h-8" src="pos.png" alt="Logo PosInd" width="auto" />
+              </a>
             </div>
-            <div class="form-group mb-4">
-              <label for="prohibited_items">Prohibited Items:</label>
-              <input
-                type="text"
-                id="prohibited_items"
-                name="prohibited_items"
-                class="form-control"
-                required
-              />
+            <!-- Sidebar mobile-->
+            <div class="px-4 pb-6">
+              <h3 class="mb-2 text-xs uppercase text-gray-200 font-medium">
+                Main
+              </h3>
+              <ul class="mb-8 text-sm font-medium">
+                <li>
+                  <a
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="index.html"
+                  >
+                    <span class="inline-block mr-3">
+                      <i
+                        class="fas fa-home text-gray-200"
+                        style="font-size: 20px"
+                      ></i>
+                    </span>
+                    <span>Home</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="dashboard.html"
+                  >
+                    <span class="inline-block mr-3">
+                      <i
+                        class="fas fa-th-list text-gray-200"
+                        style="font-size: 20px"
+                      ></i>
+                    </span>
+                    <span>Data List</span>
+                    <span class="inline-block ml-auto">
+                      <i
+                        class="fas fa-chevron-down text-gray-400"
+                        style="font-size: 12px"
+                      ></i>
+                    </span>
+                  </a>
+                </li>
+               <li>
+                  <a
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="profile.html"
+                  >
+                    <span class="inline-block mr-3">
+                      <i class="fas fa-user-circle text-gray-200" style="font-size: 20px;"></i>
+                      </svg>
+                    </span>
+                    <span>Profile</span>
+                  </a>
+                </li> 
+                <li>
+                    <a
+                      class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
+                      href="#"
+                    >
+                      <span class="inline-block mr-3">
+                        <i class="fas fa-question-circle text-gray-200" style="font-size: 20px;"></i>
+                        </svg>
+                      </span>
+                      <span>SSD</span>
+                    </a>
+                  </li> 
+              </ul> 
+              <div class="pt-8">
+                <a
+                  class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
+                  href="logout.html"
+                >
+                  <span class="inline-block mr-4">
+                    <i class="fas fa-sign-out-alt text-gray-200 text-lg"></i>
+                  </span>
+                  <span>Log Out</span>
+                </a>
+              </div>
             </div>
-            <button type="submit" class="btn">Update Item</button>
-          </form>
+          </nav>
         </div>
+        <!-- Sidebar mobile -->
+        <!-- Sidebar  -->
+        <div class="hidden lg:block relative z-50">
+          <div class="fixed lg:hidden inset-0 bg-gray-800 opacity-10"></div>
+          <nav
+            class="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-white border-r overflow-y-auto"
+          >
+            <div
+              class="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-blue-50"
+            >
+              <a class="text-xl font-semibold" href="#">
+                <img
+                  class="h-10"
+                  src="pos.png"
+                  alt="Logo PosInd"
+                  width="auto"
+                />
+              </a>
+            </div>
+            <div class="px-4 pb-6">
+              <h3 class="mb-2 text-xs uppercase text-gray-200 font-medium">
+                Main
+              </h3>
+              <ul class="mb-8 text-sm font-medium">
+                <li>
+                  <a
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="index.html"
+                  >
+                    <span class="inline-block mr-3">
+                      <i
+                        class="fas fa-home text-gray-200"
+                        style="font-size: 20px"
+                      ></i>
+                    </span>
+                    <span>Home</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="dashboard.html"
+                  >
+                    <span class="inline-block mr-3">
+                      <i
+                        class="fas fa-th-list text-gray-200"
+                        style="font-size: 20px"
+                      ></i>
+                    </span>
+                    <span>Data List</span>
+                    <span class="inline-block ml-auto">
+                      <i
+                        class="fas fa-chevron-down text-gray-400"
+                        style="font-size: 12px"
+                      ></i>
+                    </span>
+                  </a>
+                </li>
+               <li>
+                  <a
+                    class="flex items-center pl-3 py-3 pr-4 text-gray-500 hover:bg-indigo-50 rounded"
+                    href="profile.html"
+                  >
+                    <span class="inline-block mr-3">
+                      <i class="fas fa-user-circle text-gray-200" style="font-size: 20px;"></i>
+                    </span>
+                    <span>Profile</span>
+                  </a>
+                </li>
+                <li>
+                    <a
+                      class="flex items-center pl-3 py-3 pr-4 text-white bg-indigo-500 rounded"
+                      href="#"
+                    >
+                      <span class="inline-block mr-3">
+                        <i class="fas fa-question-circle text-gray-200" style="font-size: 20px;"></i>
+                      </span>
+                      <span>SSD</span>
+                    </a>
+                  </li>
+              </ul>
+              <div class="pt-8">
+                <a
+                  class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded"
+                  href="logout.html"
+                >
+                  <span class="inline-block mr-4">
+                    <i class="fas fa-sign-out-alt text-gray-200 text-lg"></i>
+                  </span>
+                  <span>Log Out</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <!-- Sidebar -->
+        <!-- Navbar -->
+        <div class="mx-auto lg:ml-80">
+            <section class="pt-5 px-6 bg-white shadow">
+              <nav>
+                <div class="pb-5 border-b">
+                  <div class="relative flex items-center">
+                    <div
+                      class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:w-auto lg:space-x-10"
+                    >
+                    </div>
+                    <div>
+                      <a class="flex items-center">
+                        <p id="navbarName" class="text-sm mr-3"></p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center py-4">
+                  <a
+                    class="flex items-center text-sm hover:text-gray-800"
+                    href="index.html"
+                  >
+                    <span class="inline-block mr-2">
+                      <i class="fas fa-home text-indigo-500 text-lg"></i>
+                    </span>
+                    <span>Home</span>
+                  </a>
+                  <span class="inline-block mx-3">
+                    <i class="fas fa-chevron-right text-indigo-500 text-lg"></i>
+                  </span>
+                  <a
+                    class="flex items-center text-sm hover:text-gray-800"
+                    href="#"
+                  >
+                    <span class="inline-block mr-2">
+                      <i class="fas fa-question-circle text-indigo-500" style="font-size: 20px;"></i>
+                    </span>
+                    <span>SSD</span>
+                  </a>
+                </div>
+              </nav>
+            </section>
+            <!-- Navbar -->
+          
+          <!-- form -->
+          <div class="container">
+            <div class="form-container">
+              <div class="form-content">
+                <h2>Edit Prohibited Item</h2>
+                <form id="editItemForm">
+                  <input type="hidden" id="itemId" />
+                  <div class="form-group mb-4">
+                    <label for="destination">Destination:</label>
+                    <select
+                      id="destination"
+                      name="destination"
+                      class="form-control"
+                      required
+                    >
+                      <!-- Options will be populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="form-group mb-4">
+                    <label for="prohibited_items">Prohibited Items:</label>
+                    <input
+                      type="text"
+                      id="prohibited_items"
+                      name="prohibited_items"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn">Update Item</button>
+                </form>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
-    <script type="module">
-      import { putJSON, get } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+  </div>
+  <script type="module">
+    import { putJSON, get } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
-      // Definisikan data destinasi secara manual
-      const destinations = [
-        { id: "1", destination: "Afghanistan" },
-        { id: "2", destination: "Albania" },
-        { id: "3", destination: "USA" },
-        { id: "4", destination: "UK" },
-        { id: "5", destination: "France" },
-        { id: "6", destination: "Germany" },
-        { id: "7", destination: "Japan" },
-        // Tambahkan destinasi lain sesuai kebutuhan
-      ];
+    // Definisikan data destinasi secara manual
+    const destinations = [
+      { id: "1", destination: "Afghanistan" },
+      { id: "2", destination: "Albania" },
+      { id: "3", destination: "USA" },
+      { id: "4", destination: "UK" },
+      { id: "5", destination: "France" },
+      { id: "6", destination: "Germany" },
+      { id: "7", destination: "Japan" },
+      // Tambahkan destinasi lain sesuai kebutuhan
+    ];
 
-      // Fungsi untuk mengisi elemen <select> dengan opsi
-      function populateOptions() {
-        const selectElement = document.getElementById("destination");
+    // Fungsi untuk mengisi elemen <select> dengan opsi
+    function populateOptions() {
+      const selectElement = document.getElementById("destination");
 
-        // Kosongkan elemen <select> jika ada opsi sebelumnya
-        selectElement.innerHTML = "";
+      // Kosongkan elemen <select> jika ada opsi sebelumnya
+      selectElement.innerHTML = "";
 
-        // Tambahkan opsi default
-        const defaultOption = document.createElement("option");
-        defaultOption.textContent = "Select a destination";
-        defaultOption.value = "";
-        selectElement.appendChild(defaultOption);
+      // Tambahkan opsi default
+      const defaultOption = document.createElement("option");
+      defaultOption.textContent = "Select a destination";
+      defaultOption.value = "";
+      selectElement.appendChild(defaultOption);
 
-        // Tambahkan opsi baru dari array destinations
-        destinations.forEach((destination) => {
-          const option = document.createElement("option");
-          option.textContent = destination.destination;
-          option.value = destination.destination;
-          selectElement.appendChild(option);
-        });
-      }
+      // Tambahkan opsi baru dari array destinations
+      destinations.forEach((destination) => {
+        const option = document.createElement("option");
+        option.textContent = destination.destination;
+        option.value = destination.destination;
+        selectElement.appendChild(option);
+      });
+    }
 
-      // Fungsi untuk memuat data item ke dalam form saat halaman dimuat
-      function loadItemData() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const itemId = urlParams.get("id");
+    // Fungsi untuk memuat data item ke dalam form saat halaman dimuat
+    function loadItemData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const itemId = urlParams.get("id");
 
-        if (itemId) {
-          const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-item/en/${itemId}`;
+      if (itemId) {
+        const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-item/en/${itemId}`;
 
-          get(targetUrl, (response) => {
-            if (response.status === 200) {
-              const item = response.data;
-              document.getElementById("itemId").value = item.id;
-              document.getElementById("destination").value = item.destination;
-              document.getElementById("prohibited_items").value = item.prohibited_items;
-            } else {
-              alert("Failed to load item data");
-            }
-          });
-        } else {
-          alert("No item ID provided");
-        }
-      }
-
-      // Fungsi untuk memperbarui item
-      function updateItem(event) {
-        event.preventDefault();
-
-        const id = document.getElementById("itemId").value;
-        const destination = document.getElementById("destination").value;
-        const prohibitedItems = document.getElementById("prohibited_items").value;
-
-        const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/update/prohibited-items/en`;
-        const tokenKey = "Content-Type";
-        const tokenValue = "application/json";
-        const datajson = {
-          id: id,
-          destination: destination,
-          prohibited_items: prohibitedItems,
-        };
-
-        putJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {
+        get(targetUrl, (response) => {
           if (response.status === 200) {
-            alert("Item updated successfully");
-            window.location.href = "../dashboard.html"; // Redirect after update
+            const item = response.data;
+            document.getElementById("itemId").value = item.id;
+            document.getElementById("destination").value = item.destination;
+            document.getElementById("prohibited_items").value = item.prohibited_items;
           } else {
-            alert("Failed to update item");
+            alert("Failed to load item data");
           }
         });
+      } else {
+        alert("No item ID provided");
       }
+    }
 
-      // Panggil fungsi saat halaman dimuat
-      window.onload = function () {
-        populateOptions(); // Isi opsi dropdown dengan data manual
-        loadItemData(); // Muat data item
+    // Fungsi untuk memperbarui item
+    function updateItem(event) {
+      event.preventDefault();
+
+      const id = document.getElementById("itemId").value;
+      const destination = document.getElementById("destination").value;
+      const prohibitedItems = document.getElementById("prohibited_items").value;
+
+      const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/update/prohibited-items/en`;
+      const tokenKey = "Content-Type";
+      const tokenValue = "application/json";
+      const datajson = {
+        id: id,
+        destination: destination,
+        prohibited_items: prohibitedItems,
       };
 
-      // Attach event listener to form submit
-      document
-        .getElementById("editItemForm")
-        .addEventListener("submit", updateItem);
-    </script>
+      putJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {
+        if (response.status === 200) {
+          alert("Item updated successfully");
+          window.location.href = "../dashboard.html"; // Redirect after update
+        } else {
+          alert("Failed to update item");
+        }
+      });
+    }
+
+    // Panggil fungsi saat halaman dimuat
+    window.onload = function () {
+      populateOptions(); // Isi opsi dropdown dengan data manual
+      loadItemData(); // Muat data item
+    };
+
+    // Attach event listener to form submit
+    document
+      .getElementById("editItemForm")
+      .addEventListener("submit", updateItem);
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="js/charts-demo.js"></script>
   </body>
 </html>

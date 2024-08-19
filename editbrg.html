@@ -286,171 +286,116 @@
             <!-- Navbar -->
           
           <!-- form -->
-          <div class="bg-gray-100">
-            <div class="container">
-              <div class="form-container">
-                <div class="form-content">
-                  <h2 class="text-2xl font-bold mb-4 text-center">
-                    Add Prohibited Item
-                  </h2>
-                  <form id="addItemForm">
-                    <div class="mb-4">
-                      <label for="destination" class="block text-gray-700">
-                        Destination:
-                      </label>
-                      <select
-                        id="destination"
-                        name="destination"
-                        class="mt-1 block w-full"
-                        required
-                      >
-                        <option value="" disabled selected>Select destination</option>
-                        <option value="USA">USA</option>
-                        <option value="UK">UK</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Japan">Japan</option>
-                      </select>
-                    </div>
-                    <div class="mb-4">
-                      <label for="prohibited_items" class="block text-gray-700">
-                        Prohibited Items:
-                      </label>
-                      <input
-                        type="text"
-                        id="prohibited_items"
-                        name="prohibited_items"
-                        class="mt-1 block w-full"
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      class="py-2 px-4 bg-indigo-500 text-white rounded w-full"
+          <div class="container">
+            <div class="form-container">
+              <div class="form-content">
+                <h2>Edit Barang Terlarang</h2>
+                <form
+                  id="editItemForm"
+                  onsubmit="event.preventDefault(); updateItem();"
+                >
+                  <input type="hidden" id="itemId" />
+                  <div class="form-group mb-4">
+                    <label for="destination">Destinasi:</label>
+                    <select
+                      id="destination"
+                      name="destination"
+                      class="form-control"
+                      required
                     >
-                      Add Item
-                    </button>
-                  </form>
-                </div>
+                      <!-- Options will be populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="form-group mb-4">
+                    <label for="prohibited_items">Barang Terlarang:</label>
+                    <input
+                      type="text"
+                      id="prohibited_items"
+                      name="prohibited_items"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn">Perbarui Barang</button>
+                </form>
               </div>
             </div>
-        </div>
+          </div>
       </div>
     </div>
   </div>
+  <script>
+    // Function to get query string parameter by name
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const itemId = getQueryParam("id");
+      if (itemId) {
+        fetch(
+          `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item?id=${itemId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("itemId").value = itemId;
+            document.getElementById("destination").value = data.destinasi;
+            document.getElementById("prohibited_items").value =
+              data.barang_terlarang;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    });
+
+    // Function to fetch and populate the destination options
+    function loadDestinations() {
+      const destinations = ["USA", "UK", "France", "Germany", "Japan"];
+      const destinationSelect = document.getElementById("destination");
+      destinations.forEach((destination) => {
+        const option = document.createElement("option");
+        option.value = destination;
+        option.textContent = destination;
+        destinationSelect.appendChild(option);
+      });
+    }
+
+    function updateItem() {
+      const id = document.getElementById("itemId").value;
+      const destination = document.getElementById("destination").value;
+      const prohibitedItems =
+        document.getElementById("prohibited_items").value;
+
+      fetch(
+        `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/put/item`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            destinasi: destination,
+            barang_terlarang: prohibitedItems, 
+          }),
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            alert("Barang berhasil diperbarui");
+            window.location.href = "../dashboard.html";
+          } else {
+            alert("Gagal memperbarui barang");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Error memperbarui barang");
+        });
+    }
+
+    loadDestinations();
+  </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
-    <script type="module" src="js/add.js"></script>
-    <script type="module" src="js/name.js"></script>
-  </body>
-</html>
-
-    <div class="container">
-      <div class="form-container">
-        <div class="form-content">
-          <h2>Edit Barang Terlarang</h2>
-          <form
-            id="editItemForm"
-            onsubmit="event.preventDefault(); updateItem();"
-          >
-            <input type="hidden" id="itemId" />
-            <div class="form-group mb-4">
-              <label for="destination">Destinasi:</label>
-              <select
-                id="destination"
-                name="destination"
-                class="form-control"
-                required
-              >
-                <!-- Options will be populated dynamically -->
-              </select>
-            </div>
-            <div class="form-group mb-4">
-              <label for="prohibited_items">Barang Terlarang:</label>
-              <input
-                type="text"
-                id="prohibited_items"
-                name="prohibited_items"
-                class="form-control"
-                required
-              />
-            </div>
-            <button type="submit" class="btn">Perbarui Barang</button>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      // Function to get query string parameter by name
-      function getQueryParam(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const itemId = getQueryParam("id");
-        if (itemId) {
-          fetch(
-            `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item?id=${itemId}`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              document.getElementById("itemId").value = itemId;
-              document.getElementById("destination").value = data.destinasi;
-              document.getElementById("prohibited_items").value =
-                data.barang_terlarang;
-            })
-            .catch((error) => console.error("Error:", error));
-        }
-      });
-
-      // Function to fetch and populate the destination options
-      function loadDestinations() {
-        const destinations = ["USA", "UK", "France", "Germany", "Japan"];
-        const destinationSelect = document.getElementById("destination");
-        destinations.forEach((destination) => {
-          const option = document.createElement("option");
-          option.value = destination;
-          option.textContent = destination;
-          destinationSelect.appendChild(option);
-        });
-      }
-
-      function updateItem() {
-        const id = document.getElementById("itemId").value;
-        const destination = document.getElementById("destination").value;
-        const prohibitedItems =
-          document.getElementById("prohibited_items").value;
-
-        fetch(
-          `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/put/item`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              destinasi: destination,
-              barang_terlarang: prohibitedItems, 
-            }),
-          }
-        )
-          .then((response) => {
-            if (response.ok) {
-              alert("Barang berhasil diperbarui");
-              window.location.href = "../dashboard.html";
-            } else {
-              alert("Gagal memperbarui barang");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Error memperbarui barang");
-          });
-      }
-
-      loadDestinations();
-    </script>
   </body>
 </html>
