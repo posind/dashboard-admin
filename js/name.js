@@ -29,9 +29,9 @@ function responseFunction(result) {
 
 
 window.addItem = function() {
-  redirect("crud/additem.html"); 
+  redirect("additem.html"); 
 }
 
 window.tambahBarang = function() {
-  redirect("crud/tambahbr.html"); 
+  redirect("tambahbr.html"); 
 }
