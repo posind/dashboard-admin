@@ -23,6 +23,7 @@ get(
               <p class="font-medium">${barang.barang_terlarang || "N/A"}</p>
             </div>
           </td>
+          <td class="font-medium">${barang.berat_barang || "N/A"}</td>
           <td class="font-medium">${barang.destinasi || "N/A"}</td>
           <td>
             <div>
@@ -48,6 +49,7 @@ get(
         <thead>
           <tr class="text-xs text-gray-500 text-left">
             <th class="font-medium">Nama Barang</th>
+            <th class="font-medium">Berat Barang</th>
             <th class="font-medium">Destinasi</th>
             <th class="font-medium">Aksi</th>
           </tr>

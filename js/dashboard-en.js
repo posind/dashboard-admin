@@ -24,6 +24,7 @@ function responsefunction(items) {
             <p class="font-medium">${item.prohibited_items || "N/A"}</p>
           </div>
         </td>
+        <td class="font-medium">${item.max_weight || "N/A"}</td>
         <td class="font-medium">${item.destination || "N/A"}</td>
         <td>
           <div>
@@ -47,6 +48,7 @@ function responsefunction(items) {
      <thead>
        <tr class="text-xs text-gray-500 text-left">
          <th class="font-medium">Items Name</th>
+         <th class="font-medium">Max Weight</th>
          <th class="font-medium">Destination</th>
          <th class="font-medium">Action</th>
        </tr>
