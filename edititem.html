@@ -313,6 +313,16 @@
                       required
                     />
                   </div>
+                  <div class="form-group mb-4">
+                    <label for="max_weight">Prohibited Items:</label>
+                    <input
+                      type="number"
+                      id="max_weight"
+                      name="max_weight"
+                      class="form-control"
+                      required
+                    />
+                  </div>
                   <button type="submit" class="btn">Update Item</button>
                 </form>
               </div>
@@ -372,6 +382,7 @@
             document.getElementById("itemId").value = item.id;
             document.getElementById("destination").value = item.destination;
             document.getElementById("prohibited_items").value = item.prohibited_items;
+            document.getElementById("max_weight").value = item.max_weight;
           } else {
             alert("Failed to load item data");
           }
@@ -388,6 +399,7 @@
       const id = document.getElementById("itemId").value;
       const destination = document.getElementById("destination").value;
       const prohibitedItems = document.getElementById("prohibited_items").value;
+      const maxweight = document.getElementById("max_weight").value;
 
       const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/update/prohibited-items/en`;
       const tokenKey = "Content-Type";
@@ -396,6 +408,7 @@
         id: id,
         destination: destination,
         prohibited_items: prohibitedItems,
+        max_weight: maxweight,
       };
 
       putJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {

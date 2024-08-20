@@ -7,8 +7,9 @@ import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
         const destination = document.getElementById("destination").value;
         const prohibitedItems =
           document.getElementById("prohibited_items").value;
+        const maxweight = document.getElementById('max_weight').value;
 
-        if (!destination || !prohibitedItems) {
+        if (!destination || !prohibitedItems || !maxweight) {
           alert("Please fill out all fields.");
           return;
         }
@@ -21,6 +22,7 @@ import { postJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
         const datajson = {
           destination: destination,
           prohibited_items: prohibitedItems,
+          max_weight: maxweight
         };
 
         postJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {
