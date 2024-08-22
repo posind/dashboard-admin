@@ -290,16 +290,13 @@
             <div class="form-container">
               <div class="form-content">
                 <h2>Edit Barang Terlarang</h2>
-                <form
-                  id="editItemForm"
-                  onsubmit="event.preventDefault(); updateItem();"
-                >
+                <form id="editItemForm">
                   <input type="hidden" id="itemId" />
                   <div class="form-group mb-4">
-                    <label for="destination">Destinasi:</label>
+                    <label for="destinasi">Destinasi:</label>
                     <select
-                      id="destination"
-                      name="destination"
+                      id="destinasi"
+                      name="destinasi"
                       class="form-control"
                       required
                     >
@@ -307,17 +304,17 @@
                     </select>
                   </div>
                   <div class="form-group mb-4">
-                    <label for="prohibited_items">Barang Terlarang:</label>
+                    <label for="barang_terlarang">Barang Terlarang:</label>
                     <input
                       type="text"
-                      id="prohibited_items"
-                      name="prohibited_items"
+                      id="barang_terlarang"
+                      name="barang_terlarang"
                       class="form-control"
                       required
                     />
                   </div>
                   <div class="form-group mb-4">
-                    <label for="berat_barang">Barang Terlarang:</label>
+                    <label for="berat_barang">Berat Barang:</label>
                     <input
                       type="number"
                       id="berat_barang"
@@ -334,76 +331,99 @@
       </div>
     </div>
   </div>
-  <script>
-    // Function to get query string parameter by name
-    function getQueryParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
+  <script type="module">
+    import { putJSON, get } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+    
+        const destinasis = [
+      { id: "1", destinasi: "Afghanistan" },
+      { id: "2", destinasi: "Albania" },
+      { id: "3", destinasi: "USA" },
+      { id: "4", destinasi: "UK" },
+      { id: "5", destinasi: "France" },
+      { id: "6", destinasi: "Germany" },
+      { id: "7", destinasi: "Japan" },
+    ];
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const itemId = getQueryParam("id");
-      if (itemId) {
-        fetch(
-          `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item?id=${itemId}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            document.getElementById("itemId").value = itemId;
-            document.getElementById("destination").value = data.destinasi;
-            document.getElementById("prohibited_items").value =
-              data.barang_terlarang;
-          })
-          .catch((error) => console.error("Error:", error));
-      }
-    });
+    function populateOptions() {
+      const selectElement = document.getElementById("destinasi");
 
-    // Function to fetch and populate the destination options
-    function loadDestinations() {
-      const destinations = ["USA", "UK", "France", "Germany", "Japan"];
-      const destinationSelect = document.getElementById("destination");
-      destinations.forEach((destination) => {
+      // Kosongkan elemen <select> jika ada opsi sebelumnya
+      selectElement.innerHTML = "";
+
+      // Tambahkan opsi default
+      const defaultOption = document.createElement("option");
+      defaultOption.textContent = "Pilih Destinasi";
+      defaultOption.value = "";
+      selectElement.appendChild(defaultOption);
+
+      // Tambahkan opsi baru dari array destinations
+      destinations.forEach((destinasi) => {
         const option = document.createElement("option");
-        option.value = destination;
-        option.textContent = destination;
-        destinationSelect.appendChild(option);
+        option.textContent = destinasi.destinasi;
+        option.value = destinasi.destinasi;
+        selectElement.appendChild(option);
       });
     }
 
-    function updateItem() {
-      const id = document.getElementById("itemId").value;
-      const destination = document.getElementById("destination").value;
-      const prohibitedItems =
-        document.getElementById("prohibited_items").value;
+    function loadBarangData(){
+      const urlParams = new URLSearchParams(window.location.search);
+      const itemId = urlParams.get("id");
 
-      fetch(
-        `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/put/item`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            destinasi: destination,
-            barang_terlarang: prohibitedItems, 
-          }),
-        }
-      )
-        .then((response) => {
-          if (response.ok) {
-            alert("Barang berhasil diperbarui");
-            window.location.href = "../dashboard.html";
+      if (itemId) {
+        const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item?id=${itemId}`;
+
+        get(targetUrl, (response) => {
+          if (response.status === 200) {
+            const item = response.data;
+            document.getElementById("itemId").value = item.id;
+            document.getElementById("destinasi").value = item.destinasi;
+            document.getElementById("barang_terlarang").value = item.barang_terlarang;
+            document.getElementById("berat_barang").value = item.berat_barang;
           } else {
-            alert("Gagal memperbarui barang");
+            alert("Gagal memuat data item");
           }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Error memperbarui barang");
         });
+      } else {
+        alert("Gagal memuat data item");
+      }
     }
 
-    loadDestinations();
+    function updateItem(event) {
+      event.preventDefault();
+
+      const itemId = document.getElementById("itemId").value;
+      const destinasi = document.getElementById("destinasi").value;
+      const barangterlarang = document.getElementById("barang_terlarang").value;
+      const beratbarang = document.getElementById("berat_barang").value;
+
+      const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/put/item`;
+      const tokenKey = "Content-Type";
+      const tokenValue = "application/json";
+      const datajson = {
+        id: itemId,
+        destinasi: destinasi,
+        barang_terlarang: barangterlarang,
+        berat_barang: beratbarang,
+      };
+
+      putJSON(targetUrl, tokenKey, tokenValue, datajson, (response) => {
+        if (response.status === 200) {
+          alert("Item berhasil diperbarui");
+          window.location.href = "../dashboard.html"; // Redirect after update
+        } else {
+          alert("Gagal memperbarui item");
+        }
+      });
+    }
+
+    window.onload = function () {
+      populateOptions(); 
+      loadBarangData(); 
+    };
+
+    document
+      .getElementById("editItemForm")
+      .addEventListener("submit", updateItem);
   </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
