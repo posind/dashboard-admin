@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <title>Edit Barang Terlarang (ID)</title>
     <meta charset="utf-8" />
@@ -368,7 +368,7 @@
       });
     }
 
-    function loadBarangData(){
+    function loadDataBarang(){
       const urlParams = new URLSearchParams(window.location.search);
       const itemId = urlParams.get("id");
 
@@ -394,7 +394,7 @@
     function updateItem(event) {
       event.preventDefault();
 
-      const itemId = document.getElementById("itemId").value;
+      const id = document.getElementById("itemId").value;
       const destinasi = document.getElementById("destinasi").value;
       const barangterlarang = document.getElementById("barang_terlarang").value;
       const beratbarang = document.getElementById("berat_barang").value;
@@ -403,7 +403,7 @@
       const tokenKey = "Content-Type";
       const tokenValue = "application/json";
       const datajson = {
-        id: itemId,
+        id: id,
         destinasi: destinasi,
         barang_terlarang: barangterlarang,
         berat_barang: beratbarang,
@@ -421,7 +421,7 @@
 
     window.onload = function () {
       populateOptions(); 
-      loadBarangData(); 
+      loadDataBarang(); 
     };
 
     document
