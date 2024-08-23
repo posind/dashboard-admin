@@ -2,7 +2,6 @@ import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/a
 
 const token = 'YOUR_LOGIN_TOKEN'; // Ganti dengan token dari hasil login
 
-// Fungsi untuk memuat data saat halaman dimuat
 function loadItems() {
   const headers = new Headers({
     "login": token,
@@ -16,9 +15,11 @@ function loadItems() {
   );
 }
 
-// Fungsi untuk menangani tampilan data
 function responsefunction(items) {
-  console.log(items);
+  if (!Array.isArray(items)) {
+    console.error("Expected an array but got:", items);
+    return;
+  }
 
   let tableRows = "";
   let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
@@ -70,7 +71,6 @@ function responsefunction(items) {
  `;
 }
 
-// Fungsi untuk menghapus item
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
