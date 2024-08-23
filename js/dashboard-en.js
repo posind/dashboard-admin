@@ -1,10 +1,20 @@
 import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
-// Muat data saat halaman dimuat
-get(
-  "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
-  responsefunction
-);
+const token = 'YOUR_LOGIN_TOKEN'; // Ganti dengan token dari hasil login
+
+// Fungsi untuk memuat data saat halaman dimuat
+function loadItems() {
+  const headers = new Headers({
+    "login": token,
+    "Content-Type": "application/json"
+  });
+
+  get(
+    "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
+    responsefunction,
+    { headers }
+  );
+}
 
 // Fungsi untuk menangani tampilan data
 function responsefunction(items) {
@@ -64,16 +74,15 @@ function responsefunction(items) {
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
-    const tokenKey = "Content-Type";
-    const tokenValue = "application/json";
+    const headers = new Headers({
+      "login": token,
+      "Content-Type": "application/json"
+    });
 
-    deleteJSON(targetUrl, tokenKey, tokenValue, {}, (response) => {
+    deleteJSON(targetUrl, headers, {}, (response) => {
       if (response.status === 200) {
         alert("Item deleted successfully");
-        get(
-          "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
-          responsefunction
-        ); // Muat ulang data setelah penghapusan
+        loadItems(); // Muat ulang data setelah penghapusan
       } else {
         alert("Failed to delete item");
       }
@@ -81,7 +90,7 @@ function deleteItemEn(id) {
   }
 }
 
-// Pastikan deleteItemEn dan updateItem tersedia secara global
+// Pastikan deleteItemEn tersedia secara global
 window.deleteItemEn = deleteItemEn;
 
 // Menambahkan event listener untuk Alpine.js

@@ -24,7 +24,7 @@ function responseFunction(result) {
   console.log('Response Function called with result:', result);
 }
 
-checkLoginAndFetchData();
+// checkLoginAndFetchData();
 
 
 
