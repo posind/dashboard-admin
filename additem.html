@@ -1,29 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Adding Prohibited Item (EN)</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
-    />
-    <link rel="stylesheet" href="css/tailwind/home.css" />
-    <link rel="stylesheet" href="css/crud.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link href="favicon.ico" rel="icon" />
-    <script
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"
-      defer
-    ></script>
-  </head>
+<head>
+  <title>Adding Prohibited Item</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="css/tailwind/home.css" />
+  <link rel="stylesheet" href="css/crud.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="favicon.ico" rel="icon" />
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+</head>
   <body class="antialiased bg-body text-body font-body">
     <div>
       <div x-data="{ mobileNavOpen: false }">
@@ -286,12 +273,16 @@
             <!-- Navbar -->
           
           <!-- form -->
-          <div class="bg-gray-100">
-            <div class="container">
-              <div class="form-container">
-                <div class="form-content">
-                  <h2 class="text-2xl font-bold mb-4 text-center">
-                    Add Prohibited Item
+          <div class="bg-gray-100 py-6">
+            <div class="container mx-auto">
+              <div class="form-container relative p-6 shadow-lg rounded-lg">
+                <div class="form-content mt-12">
+                  <h2 class="text-2xl font-bold mb-4 text-center flex justify-between items-center">
+                    <span>Add Prohibited Item</span>
+                    <div class="tabs-container absolute top-0 right-0 mt-4 mr-4">
+                      <a href="additem.html" id="tab-en" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2">EN</a>
+                      <a href="tambahbr.html" id="tab-id" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2 ml-2">IN</a>
+                  </div>                  
                   </h2>
                   <form id="addItemForm">
                     <div class="mb-4">
@@ -354,6 +345,20 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const path = window.location.pathname;
+      const tabEN = document.getElementById('tab-en');
+      const tabID = document.getElementById('tab-id');
+  
+      if (path.includes('additem.html')) {
+        tabEN.classList.add('active');
+      } else if (path.includes('tambabr.html')) {
+        tabID.classList.add('active');
+      }
+    });
+  </script>
+  
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
     <script type="module" src="js/add.js"></script>

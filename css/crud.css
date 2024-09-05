@@ -1,48 +1,69 @@
-/* Background color for the page */
 body {
-    background-color: #f3f4f6; /* Light background color */
+    background-color: #f3f4f6;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-}
-
-/* Container for centering the form */
-.container {
+  }
+  
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80vh;
     padding: 20px;
-}
-
-/* Form container styles */
-.form-container {
+  }
+  
+  .form-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     width: 100%;
-}
-
-.form-content {
+  }
+  
+  .form-content {
     background-color: #ffffff;
     border-radius: 8px;
     padding: 24px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
-}
-
-/* Form labels */
-label {
+    position: relative; /* Add this */
+  }
+  
+  .tabs-container {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    display: flex;
+    gap: 8px;
+  }
+  
+  .tab-link {
+    padding: 8px 16px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    border: 2px solid transparent; /* Default border style */
+  }
+  
+  .tab-link.active {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border: 2px solid #3b82f6; /* Border for active tab */
+  }
+  
+  label {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: 500;
     color: #4b5563;
-}
-
-/* Form inputs */
-input, select {
+  }
+  
+  input,
+  select {
     width: 100%;
     padding: 12px;
     border: 1px solid #d1d5db;
@@ -51,17 +72,16 @@ input, select {
     font-size: 14px;
     color: #4b5563;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* Input focus state */
-input:focus, select:focus {
+  }
+  
+  input:focus,
+  select:focus {
     border-color: #6366f1;
     outline: none;
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-}
-
-/* Button styles */
-button {
+  }
+  
+  button {
     background-color: #4f46e5;
     color: #ffffff;
     padding: 12px 24px;
@@ -71,20 +91,18 @@ button {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-/* Button hover state */
-button:hover {
+  }
+  
+  button:hover {
     background-color: #4338ca;
     transform: scale(1.05);
-}
-
-/* Margin and spacing */
-.mb-4 {
+  }
+  
+  .mb-4 {
     margin-bottom: 16px;
-}
-
-/* Additional spacing for form elements */
-form > *:not(:last-child) {
+  }
+  
+  form > *:not(:last-child) {
     margin-bottom: 20px;
-}
+  }
+  

@@ -1,6 +1,6 @@
 import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
-const token = 'YOUR_LOGIN_TOKEN'; // Ganti dengan token dari hasil login
+const token = 'YOUR_LOGIN_TOKEN'; // token dari hasil login
 
 function loadItems() {
   const headers = new Headers({
