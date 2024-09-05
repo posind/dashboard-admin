@@ -286,10 +286,17 @@
             <!-- Navbar -->
           
           <!-- form -->
-          <div class="container">
-            <div class="form-container">
-              <div class="form-content">
-                <h2>Edit Prohibited Item</h2>
+          <div class="bg-gray-100 py-6">
+          <div class="container mx-auto">
+            <div class="form-container relative p-6 shadow-lg rounded-lg">
+              <div class="form-content mt-12">
+                <h2 class="text-2xl font-bold mb-4 text-center flex justify-between items-center">
+                  <span>Edit Prohibited Item</span>
+                  <div class="tabs-container absolute top-0 right-0 mt-4 mr-4">
+                    <a href="edititem.html" id="tab-en" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2">EN</a>
+                    <a href="editbrg.html" id="tab-id" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2 ml-2">ID</a>
+                </div>
+                </h2>
                 <form id="editItemForm">
                   <input type="hidden" id="itemId" />
                   <div class="form-group mb-4">
@@ -433,6 +440,21 @@
     document
       .getElementById("editItemForm")
       .addEventListener("submit", updateItem);
+      document
+    .getElementById("tambahBarangForm")
+    .addEventListener("submit", tambahBarang);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const path = window.location.pathname;
+      const tabEN = document.getElementById('tab-en');
+      const tabID = document.getElementById('tab-id');
+  
+      if (path.includes('edititem.html')) {
+        tabEN.classList.add('active');
+      } else if (path.includes('editbrg.html')) {
+        tabID.classList.add('active');
+      }
+    });
   </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
