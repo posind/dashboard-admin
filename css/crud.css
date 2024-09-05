@@ -27,13 +27,13 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
-    position: relative; /* Add this */
+    position: relative; 
   }
   
   .tabs-container {
     position: absolute;
-    top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
+    top: 10px; 
+    right: 10px; 
     display: flex;
     gap: 8px;
   }
@@ -45,13 +45,13 @@ body {
     text-decoration: none;
     color: #4b5563;
     font-weight: 500;
-    border: 2px solid transparent; /* Default border style */
+    border: 2px solid transparent; 
   }
   
   .tab-link.active {
     background-color: #3b82f6;
     color: #ffffff;
-    border: 2px solid #3b82f6; /* Border for active tab */
+    border: 2px solid #3b82f6;
   }
   
   label {
