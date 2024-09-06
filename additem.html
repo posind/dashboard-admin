@@ -273,75 +273,76 @@
             <!-- Navbar -->
           
           <!-- form -->
-          <div class="bg-gray-100 py-6">
-            <div class="container mx-auto">
-              <div class="form-container relative p-6 shadow-lg rounded-lg">
-                <div class="form-content mt-12">
-                  <h2 class="text-2xl font-bold mb-4 text-center flex justify-between items-center">
-                    <span>Add Prohibited Item</span>
-                    <div class="tabs-container absolute top-0 right-0 mt-4 mr-4">
-                      <a href="additem.html" id="tab-en" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2">EN</a>
-                      <a href="tambahbr.html" id="tab-id" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2 ml-2">ID</a>
-                  </div>                  
-                  </h2>
-                  <form id="addItemForm">
-                    <div class="mb-4">
-                      <label for="destination" class="block text-gray-700">
-                        Destination:
-                      </label>
-                      <select
-                        id="destination"
-                        name="destination"
-                        class="mt-1 block w-full"
-                        required
-                      >
-                        <option value="" disabled selected>Select destination</option>
-                        <option value="USA">USA</option>
-                        <option value="UK">UK</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Japan">Japan</option>
-                      </select>
-                    </div>
-                    <div class="mb-4">
-                      <label for="prohibited_items" class="block text-gray-700">
-                        Prohibited Items:
-                      </label>
-                      <input
-                        type="text"
-                        id="prohibited_items"
-                        name="prohibited_items"
-                        class="mt-1 block w-full"
-                        required
-                      />
-                    </div>
-                    <div class="mb-4">
-                      <label for="max_weight" class="block text-gray-700">
-                          Max Weight Items:
-                      </label>
-                      <input
-                          type="number"
-                          id="max_weight"
-                          name="max_weight"
-                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                          required
-                          placeholder="Enter weight in kg"
-                          min="0"           
-                          step="0.01"      
-                      />
-                  </div>
-                  
-                    <button
-                      type="submit"
-                      class="py-2 px-4 bg-indigo-500 text-white rounded w-full"
-                    >
-                      Add Item
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
+<div class="bg-gray-100 py-6">
+  <div class="container mx-auto">
+    <div class="form-container relative p-6 shadow-lg rounded-lg">
+      <div class="form-content mt-12">
+        <h2 class="text-2xl font-bold mb-4 text-center flex flex-col md:flex-row md:justify-between items-center">
+          <span>Add Prohibited Item</span>
+          <div class="tabs-container flex mt-4 md:mt-0 space-x-2">
+            <a href="additem.html" id="tab-en" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2">EN</a>
+            <a href="tambahbr.html" id="tab-id" class="tab-link text-indigo-500 hover:text-indigo-600 text-sm py-1 px-2">ID</a>
+          </div>                  
+        </h2>
+        <form id="addItemForm">
+          <div class="mb-4">
+            <label for="destination" class="block text-gray-700">
+              Destination:
+            </label>
+            <select
+              id="destination"
+              name="destination"
+              class="mt-1 block w-full"
+              required
+            >
+              <option value="" disabled selected>Select destination</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+              <option value="France">France</option>
+              <option value="Germany">Germany</option>
+              <option value="Japan">Japan</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="prohibited_items" class="block text-gray-700">
+              Prohibited Items:
+            </label>
+            <input
+              type="text"
+              id="prohibited_items"
+              name="prohibited_items"
+              class="mt-1 block w-full"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="max_weight" class="block text-gray-700">
+              Max Weight Items:
+            </label>
+            <input
+              type="number"
+              id="max_weight"
+              name="max_weight"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+              placeholder="Enter weight in kg"
+              min="0"           
+              step="0.01"      
+            />
+          </div>
+          <button
+            type="submit"
+            class="py-2 px-4 bg-indigo-500 text-white rounded w-full"
+          >
+            Add Item
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
       </div>
     </div>
   </div>
