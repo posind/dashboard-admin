@@ -250,29 +250,33 @@
   <section class="py-8" x-data="{ tab: 'EN' }">
     <div class="container px-4 mx-auto">
       <div class="py-4 bg-white rounded">
-        <div class="flex px-6 pb-4 border-b">
+        <div class="flex flex-wrap px-6 pb-4 border-b justify-between items-center">
           <!-- Header for English and Indonesian -->
-          <h3 x-show="tab === 'EN'" class="text-xl font-bold flex-grow">
-            prohibited items
-          </h3>
-          <h3 x-show="tab === 'ID'" class="text-xl font-bold flex-grow">
-            barang terlarang
-          </h3>
+          <div class="flex-grow">
+            <h3 x-show="tab === 'EN'" class="text-xl font-bold">
+              Prohibited Items
+            </h3>
+            <h3 x-show="tab === 'ID'" class="text-xl font-bold">
+              Barang Terlarang
+            </h3>
+          </div>
 
           <!-- Buttons for adding items -->
-          <div x-show="tab === 'EN'" style="margin-left: 10px">
-            <button onclick="addItem()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
-              Add Item
-            </button>
-          </div>
-          <div x-show="tab === 'ID'" style="margin-left: 10px">
-            <button onclick="tambahBarang()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
-              Tambah Barang
-            </button>
+          <div class="flex space-x-4">
+            <div x-show="tab === 'EN'" class="mr-4">
+              <button onclick="addItem()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
+                Add Item
+              </button>
+            </div>
+            <div x-show="tab === 'ID'" class="mr-4">
+              <button onclick="tambahBarang()" class="py-2 px-3 bg-indigo-500 text-white text-sm font-medium rounded-md">
+                Tambah Barang
+              </button>
+            </div>
           </div>
 
           <!-- Tab buttons -->
-          <div class="ml-auto">
+          <div class="ml-auto flex space-x-2">
             <button x-on:click="tab = 'EN'" :class="{'bg-indigo-500 text-white': tab === 'EN', 'text-gray-400': tab !== 'EN'}" class="py-2 px-3 text-xs font-medium text-gray-400 rounded-md">
               EN
             </button>
