@@ -9,8 +9,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-    padding: 20px;
+    min-height: 10vh;
+    padding: 0; 
+    margin: 0 auto; 
   }
   
   .form-container {
@@ -18,6 +19,9 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    max-width: 1400px; 
+    padding: 1rem;
+    margin: 0 auto; 
   }
   
   .form-content {
@@ -27,7 +31,8 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
-    position: relative; 
+    max-width: 1200px; 
+    max-height: 95vh; 
   }
   
   .tabs-container {
@@ -99,13 +104,13 @@ body {
 
 @media (max-width: 480px) {
   .tabs-container {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-top: 1rem;
   }
   
   .form-content h2 {
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
   }
 
