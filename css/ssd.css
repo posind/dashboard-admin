@@ -62,7 +62,7 @@ input:focus, select:focus {
 
 .button-container {
     display: flex;
-    justify-content: center; 
+    justify-content: start; 
     margin-top: 30px;
 }
 
