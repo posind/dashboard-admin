@@ -9,7 +9,6 @@ export const loading = `
     <circle cx="74.350" cy="81.734" fill="#f47e60" r="5" transform="rotate(348.352 50 50)">
       <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.0625s"></animateTransform>
     </circle>
-    <!-- Tambahkan semua elemen SVG lainnya di sini -->
   </g>
 </svg>
 `;
