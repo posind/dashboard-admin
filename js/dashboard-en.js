@@ -52,7 +52,7 @@ function loadItems() {
             <td>
               <div>
                 <!-- Ikon Edit -->
-                <a class="inline-block mr-2" href="../pages/edititem.html?id=${item._id['$oid']}">
+                <a class="inline-block mr-2" href="./edititem.html?id=${item._id['$oid']}">
                   <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
                 </a>
                 
