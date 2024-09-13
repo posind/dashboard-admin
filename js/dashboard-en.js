@@ -1,5 +1,6 @@
 import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
+// Fungsi untuk mengambil token dari cookie
 function getCookie(name) {
   let value = "; " + document.cookie;
   let parts = value.split("; " + name + "=");
@@ -8,7 +9,7 @@ function getCookie(name) {
 }
 
 // Ambil token dari cookie
-const token = getCookie('login'); 
+const token = getCookie('login');
 
 if (!token) {
   console.error("Login token not found in cookies.");
@@ -17,114 +18,96 @@ if (!token) {
   console.log("Login token found:", token);
 }
 
-// Fungsi untuk memuat item dari API
+// Fungsi untuk memuat item dari file JSON (bahasa Inggris)
 function loadItems() {
-  if (!token) {
-    alert("You are not logged in!");
-    return;
-  }
+  // Gunakan file JSON dummy
+  fetch('webhook.prohibited_items_en.json')
+    .then(response => response.json())
+    .then(items => {
+      console.log("Data received (EN):", items);
 
-  const headers = new Headers({
-    "Authorization": `Bearer ${token}`, // Gunakan format Bearer token untuk otentikasi
-    "Content-Type": "application/json"
-  });
+      // Cek apakah 'items' adalah array sebelum memproses
+      if (!Array.isArray(items)) {
+        console.error("Expected an array but got:", items);
+        return;
+      }
 
-  get(
-    "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
-    responsefunction,
-    { headers }
-  );
+      let tableRows = "";
+      let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
+
+      // Iterasi melalui data items
+      items.forEach((item) => {
+        const rowStyle = lastRowStyle;
+        lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+
+        tableRows += `
+          <tr class="text-xs ${rowStyle}">
+            <td class="flex px-4 py-3">
+              <div>
+                <p class="font-medium">${item['Prohibited Items'] || "N/A"}</p>
+              </div>
+            </td>
+            <td class="font-medium">${"N/A"}</td> <!-- Kolom 'Max Weight' tidak ada di JSON, jadi tampilkan 'N/A' -->
+            <td class="font-medium">${item.Destination || "N/A"}</td>
+            <td>
+              <div>
+                <!-- Ikon Edit -->
+                <a class="inline-block mr-2" href="../edititem.html?id=${item._id['$oid']}">
+                  <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
+                </a>
+                
+                <!-- Ikon Delete -->
+                <a class="inline-block" href="#" onclick="deleteItemEn('${item._id['$oid']}')">
+                  <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      const contentEnElement = document.getElementById("content-en");
+      if (contentEnElement) {
+        contentEnElement.innerHTML = `
+         <table class="table-auto w-full">
+           <thead>
+             <tr class="text-xs text-gray-500 text-left">
+               <th class="font-medium">Prohibited Item</th>
+               <th class="font-medium">Max Weight</th>
+               <th class="font-medium">Destination</th>
+               <th class="font-medium">Action</th>
+             </tr>
+           </thead>
+           <tbody class="visibility-item">
+             ${tableRows}
+           </tbody>
+         </table>
+       `;
+      } else {
+        console.error("Element with id 'content-en' not found.");
+      }
+    })
+    .catch(error => {
+      console.error("Error loading dummy data:", error);
+    });
 }
 
-// Fungsi untuk menangani respons API
-function responsefunction(response) {
-  console.log("Response from API:", response);
-
-  // Cek apakah respons berisi status sukses dan array items
-  if (!response || response.status !== 'success' || !Array.isArray(response.items)) {
-    console.error("Unexpected response format:", response);
-    return;
-  }
-
-  const items = response.items;
-  let tableRows = "";
-  let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
-
-  items.forEach((item) => {
-    const rowStyle = lastRowStyle;
-    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
-
-    tableRows += `
-      <tr class="text-xs ${rowStyle}">
-        <td class="flex px-4 py-3">
-          <div>
-            <p class="font-medium">${item.prohibited_items || "N/A"}</p>
-          </div>
-        </td>
-        <td class="font-medium">${item.max_weight || "N/A"}</td>
-        <td class="font-medium">${item.destination || "N/A"}</td>
-        <td>
-          <div>
-            <!-- Ikon Edit -->
-            <a class="inline-block mr-2" href="crud/edititem.html?id=${item.id}">
-              <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
-            </a>
-            
-            <!-- Ikon Delete -->
-            <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
-              <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
-    `;
-  });
-
-  const contentEnElement = document.getElementById("content-en");
-  if (contentEnElement) {
-    contentEnElement.innerHTML = `
-     <table class="table-auto w-full">
-       <thead>
-         <tr class="text-xs text-gray-500 text-left">
-           <th class="font-medium">Items Name</th>
-           <th class="font-medium">Max Weight</th>
-           <th class="font-medium">Destination</th>
-           <th class="font-medium">Action</th>
-         </tr>
-       </thead>
-       <tbody class="visibility-item">
-         ${tableRows}
-       </tbody>
-     </table>
-   `;
-  } else {
-    console.error("Element with id 'content-en' not found.");
-  }
-}
-
-// Fungsi untuk menghapus item
+// Fungsi untuk menghapus item Bahasa Inggris
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
-    const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
-    const headers = new Headers({
-      "Authorization": `Bearer ${token}`, // Gunakan Bearer token di header Authorization
-      "Content-Type": "application/json"
-    });
+    // Simulasi penghapusan item
+    alert(`Item with ID ${id} successfully deleted (simulation)`);
 
-    deleteJSON(targetUrl, headers, {}, (response) => {
-      if (response.status === 200) {
-        alert("Item deleted successfully");
-        loadItems(); // Muat ulang data setelah penghapusan
-      } else {
-        console.error("Failed to delete item. Response:", response);
-        alert("Failed to delete item");
-      }
-    });
+    // Muat ulang data setelah penghapusan (simulasi tanpa mengubah JSON)
+    loadItems();
   }
 }
 
 // Pastikan deleteItemEn tersedia secara global
 window.deleteItemEn = deleteItemEn;
+
+// Memuat data ketika halaman pertama kali diakses
+loadItems();
 
 // Event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
@@ -156,97 +139,12 @@ function handleTabChange() {
 
   const tab = xDataElement.__x.$data.tab;
   if (tab === "EN") {
-    loadItems();
+    loadItems(); // Panggil loadItems untuk memuat data barang Bahasa Inggris
     const contentIdElement = document.getElementById("content-id");
-    if (contentIdElement) contentIdElement.innerHTML = ""; // Hapus konten ID jika ada
+    if (contentIdElement) contentIdElement.innerHTML = ""; // Hapus konten Bahasa Indonesia
   } else if (tab === "ID") {
-    loadItemsID(); // Fungsi ini harus diimplementasikan untuk tab ID
+    loadItemsID(); // Panggil loadItemsID untuk memuat data barang Bahasa Indonesia
     const contentEnElement = document.getElementById("content-en");
     if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
-  }
-}
-
-// Fungsi tambahan untuk memuat item dalam bahasa Indonesia (ID)
-function loadItemsID() {
-  if (!token) {
-    alert("You are not logged in!");
-    return;
-  }
-
-  const headers = new Headers({
-    "Authorization": `Bearer ${token}`,
-    "Content-Type": "application/json"
-  });
-
-  get(
-    "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/id",
-    responsefunctionID,
-    { headers }
-  );
-}
-
-// Fungsi untuk menangani respons API dalam bahasa Indonesia
-function responsefunctionID(response) {
-  console.log("Response from API (ID):", response);
-
-  // Cek apakah respons berisi status sukses dan array items
-  if (!response || response.status !== 'success' || !Array.isArray(response.items)) {
-    console.error("Unexpected response format:", response);
-    return;
-  }
-
-  const items = response.items;
-  let tableRows = "";
-  let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
-
-  items.forEach((item) => {
-    const rowStyle = lastRowStyle;
-    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
-
-    tableRows += `
-      <tr class="text-xs ${rowStyle}">
-        <td class="flex px-4 py-3">
-          <div>
-            <p class="font-medium">${item.prohibited_items || "N/A"}</p>
-          </div>
-        </td>
-        <td class="font-medium">${item.max_weight || "N/A"}</td>
-        <td class="font-medium">${item.destination || "N/A"}</td>
-        <td>
-          <div>
-            <!-- Ikon Edit -->
-            <a class="inline-block mr-2" href="crud/edititem.html?id=${item.id}">
-              <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
-            </a>
-            
-            <!-- Ikon Delete -->
-            <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
-              <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
-    `;
-  });
-
-  const contentIdElement = document.getElementById("content-id");
-  if (contentIdElement) {
-    contentIdElement.innerHTML = `
-     <table class="table-auto w-full">
-       <thead>
-         <tr class="text-xs text-gray-500 text-left">
-           <th class="font-medium">Nama Barang</th>
-           <th class="font-medium">Berat Maksimal</th>
-           <th class="font-medium">Destinasi</th>
-           <th class="font-medium">Aksi</th>
-         </tr>
-       </thead>
-       <tbody class="visibility-item">
-         ${tableRows}
-       </tbody>
-     </table>
-   `;
-  } else {
-    console.error("Element with id 'content-id' not found.");
   }
 }
