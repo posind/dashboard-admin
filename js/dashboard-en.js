@@ -13,7 +13,7 @@ const token = getCookie('login');
 
 if (!token) {
   console.error("Login token not found in cookies.");
-  alert("You are not logged in!");
+  // alert("You are not logged in!");
 } else {
   console.log("Login token found:", token);
 }
