@@ -1,8 +1,26 @@
 import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
 
-const token = 'YOUR_LOGIN_TOKEN'; // token dari hasil login
+function getCookie(name) {
+  let value = "; " + document.cookie;
+  let parts = value.split("; " + name + "=");
+  if (parts.length === 2) return parts.pop().split(";").shift();
+  return null;
+}
+
+const token = getCookie('login'); // Ambil token dari cookie
+
+if (!token) {
+  console.error("Login token not found in cookies.");
+} else {
+  console.log("Login token found:", token);
+}
 
 function loadItems() {
+  if (!token) {
+    alert("You are not logged in!");
+    return;
+  }
+
   const headers = new Headers({
     "login": token,
     "Content-Type": "application/json"
