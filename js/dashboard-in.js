@@ -26,7 +26,7 @@ function loadBarangData() {
   }
 
   const headers = new Headers({
-    "login": token, // Gunakan token login yang diambil dari cookie
+    "Authorization": `Bearer ${token}`, // Gunakan token login yang diambil dari cookie dalam format Bearer
     "Content-Type": "application/json"
   });
 
@@ -114,7 +114,7 @@ function deleteItemId(id) {
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
     const headers = new Headers({
-      "login": token, // Gunakan token login dari cookie
+      "Authorization": `Bearer ${token}`, // Gunakan token login dari cookie dalam format Bearer
       "Content-Type": "application/json"
     });
 

@@ -25,7 +25,7 @@ function loadItems() {
   }
 
   const headers = new Headers({
-    "login": token,
+    "Authorization": `Bearer ${token}`, // Gunakan format Bearer token untuk otentikasi
     "Content-Type": "application/json"
   });
 
@@ -107,7 +107,7 @@ function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
     const headers = new Headers({
-      "login": token,
+      "Authorization": `Bearer ${token}`, // Gunakan Bearer token di header Authorization
       "Content-Type": "application/json"
     });
 
@@ -163,5 +163,90 @@ function handleTabChange() {
     loadItemsID(); // Fungsi ini harus diimplementasikan untuk tab ID
     const contentEnElement = document.getElementById("content-en");
     if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
+  }
+}
+
+// Fungsi tambahan untuk memuat item dalam bahasa Indonesia (ID)
+function loadItemsID() {
+  if (!token) {
+    alert("You are not logged in!");
+    return;
+  }
+
+  const headers = new Headers({
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+  });
+
+  get(
+    "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/id",
+    responsefunctionID,
+    { headers }
+  );
+}
+
+// Fungsi untuk menangani respons API dalam bahasa Indonesia
+function responsefunctionID(response) {
+  console.log("Response from API (ID):", response);
+
+  // Cek apakah respons berisi status sukses dan array items
+  if (!response || response.status !== 'success' || !Array.isArray(response.items)) {
+    console.error("Unexpected response format:", response);
+    return;
+  }
+
+  const items = response.items;
+  let tableRows = "";
+  let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
+
+  items.forEach((item) => {
+    const rowStyle = lastRowStyle;
+    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+
+    tableRows += `
+      <tr class="text-xs ${rowStyle}">
+        <td class="flex px-4 py-3">
+          <div>
+            <p class="font-medium">${item.prohibited_items || "N/A"}</p>
+          </div>
+        </td>
+        <td class="font-medium">${item.max_weight || "N/A"}</td>
+        <td class="font-medium">${item.destination || "N/A"}</td>
+        <td>
+          <div>
+            <!-- Ikon Edit -->
+            <a class="inline-block mr-2" href="crud/edititem.html?id=${item.id}">
+              <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
+            </a>
+            
+            <!-- Ikon Delete -->
+            <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
+              <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  const contentIdElement = document.getElementById("content-id");
+  if (contentIdElement) {
+    contentIdElement.innerHTML = `
+     <table class="table-auto w-full">
+       <thead>
+         <tr class="text-xs text-gray-500 text-left">
+           <th class="font-medium">Nama Barang</th>
+           <th class="font-medium">Berat Maksimal</th>
+           <th class="font-medium">Destinasi</th>
+           <th class="font-medium">Aksi</th>
+         </tr>
+       </thead>
+       <tbody class="visibility-item">
+         ${tableRows}
+       </tbody>
+     </table>
+   `;
+  } else {
+    console.error("Element with id 'content-id' not found.");
   }
 }
