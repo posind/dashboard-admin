@@ -7,14 +7,17 @@ function getCookie(name) {
   return null;
 }
 
-const token = getCookie('login'); // Ambil token dari cookie
+// Ambil token dari cookie
+const token = getCookie('login'); 
 
 if (!token) {
   console.error("Login token not found in cookies.");
+  alert("You are not logged in!");
 } else {
   console.log("Login token found:", token);
 }
 
+// Fungsi untuk memuat item dari API
 function loadItems() {
   if (!token) {
     alert("You are not logged in!");
@@ -33,12 +36,17 @@ function loadItems() {
   );
 }
 
-function responsefunction(items) {
-  if (!Array.isArray(items)) {
-    console.error("Expected an array but got:", items);
+// Fungsi untuk menangani respons API
+function responsefunction(response) {
+  console.log("Response from API:", response);
+
+  // Cek apakah respons berisi status sukses dan array items
+  if (!response || response.status !== 'success' || !Array.isArray(response.items)) {
+    console.error("Unexpected response format:", response);
     return;
   }
 
+  const items = response.items;
   let tableRows = "";
   let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
@@ -72,23 +80,29 @@ function responsefunction(items) {
     `;
   });
 
-  document.getElementById("content-en").innerHTML = `
-   <table class="table-auto w-full">
-     <thead>
-       <tr class="text-xs text-gray-500 text-left">
-         <th class="font-medium">Items Name</th>
-         <th class="font-medium">Max Weight</th>
-         <th class="font-medium">Destination</th>
-         <th class="font-medium">Action</th>
-       </tr>
-     </thead>
-     <tbody class="visibility-item">
-       ${tableRows}
-     </tbody>
-   </table>
- `;
+  const contentEnElement = document.getElementById("content-en");
+  if (contentEnElement) {
+    contentEnElement.innerHTML = `
+     <table class="table-auto w-full">
+       <thead>
+         <tr class="text-xs text-gray-500 text-left">
+           <th class="font-medium">Items Name</th>
+           <th class="font-medium">Max Weight</th>
+           <th class="font-medium">Destination</th>
+           <th class="font-medium">Action</th>
+         </tr>
+       </thead>
+       <tbody class="visibility-item">
+         ${tableRows}
+       </tbody>
+     </table>
+   `;
+  } else {
+    console.error("Element with id 'content-en' not found.");
+  }
 }
 
+// Fungsi untuk menghapus item
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
@@ -102,6 +116,7 @@ function deleteItemEn(id) {
         alert("Item deleted successfully");
         loadItems(); // Muat ulang data setelah penghapusan
       } else {
+        console.error("Failed to delete item. Response:", response);
         alert("Failed to delete item");
       }
     });
@@ -111,7 +126,7 @@ function deleteItemEn(id) {
 // Pastikan deleteItemEn tersedia secara global
 window.deleteItemEn = deleteItemEn;
 
-// Menambahkan event listener untuk Alpine.js
+// Event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
   document.addEventListener("alpine:initialized", () => {
     setTimeout(() => {
@@ -131,7 +146,7 @@ document.addEventListener("alpine:init", () => {
   });
 });
 
-// Menangani perubahan tab
+// Fungsi untuk menangani perubahan tab
 function handleTabChange() {
   const xDataElement = document.querySelector("[x-data]");
   if (!xDataElement) {
@@ -142,9 +157,11 @@ function handleTabChange() {
   const tab = xDataElement.__x.$data.tab;
   if (tab === "EN") {
     loadItems();
-    document.getElementById("content-id").innerHTML = ""; // Hapus konten ID jika ada
+    const contentIdElement = document.getElementById("content-id");
+    if (contentIdElement) contentIdElement.innerHTML = ""; // Hapus konten ID jika ada
   } else if (tab === "ID") {
-    loadItemsID();
-    document.getElementById("content-en").innerHTML = ""; // Hapus konten Bahasa Inggris
+    loadItemsID(); // Fungsi ini harus diimplementasikan untuk tab ID
+    const contentEnElement = document.getElementById("content-en");
+    if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
   }
 }
