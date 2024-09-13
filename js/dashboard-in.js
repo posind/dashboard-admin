@@ -51,7 +51,7 @@ function loadBarangData() {
             <td>
               <div>
                 <!-- Ikon Edit -->
-                <a class="inline-block mr-2" href="../editbrg.html?id=${barang._id['$oid']}">
+                <a class="inline-block mr-2" href="./editbrg.html?id=${barang._id['$oid']}">
                   <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
                 </a>
                 
