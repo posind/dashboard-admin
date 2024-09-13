@@ -89,7 +89,9 @@
                           Destination:
                           <strong x-text="item.Destination"></strong> -
                           Prohibited:
-                          <strong x-text="item['Prohibited Items']"></strong>
+                          <strong x-text="item['Prohibited Items']"></strong> -
+                          Max Weight:
+                          <strong x-text="item['Max Weight']"></strong> kg
                         </li>
                       </template>
                     </ul>
@@ -100,7 +102,9 @@
                         <li class="mb-2">
                           Destinasi: <strong x-text="item.Destinasi"></strong> -
                           Barang Terlarang:
-                          <strong x-text="item['Barang Terlarang']"></strong>
+                          <strong x-text="item['Barang Terlarang']"></strong> -
+                          Berat Maksimum:
+                          <strong x-text="item['Berat Maksimum']"></strong> kg
                         </li>
                       </template>
                     </ul>
@@ -135,6 +139,18 @@
                 x-model="newItem.Prohibited"
               />
             </div>
+            <div class="mb-4">
+              <label
+                class="block"
+                x-text="tab === 'EN' ? 'Max Weight (kg):' : 'Berat Maksimum (kg):'"
+              ></label>
+              <input
+                type="number"
+                class="border p-2 w-full"
+                x-model="newItem.Weight"
+                step="0.01"
+              />
+            </div>
             <button
               @click="addItem()"
               class="bg-green-500 text-white py-2 px-4 rounded"
@@ -157,22 +173,39 @@
         return {
           tab: "EN", // Default to English tab
           showAddForm: false, // Control for add item form
-          newItem: { Destination: "", Prohibited: "" },
+          newItem: { Destination: "", Prohibited: "", Weight: "" },
           enItems: [], // English Items
           idItems: [], // Indonesian Items
 
-          // Simulated function to load JSON data (normally this would be fetched via an API)
+          // Function to load JSON data (replace with actual fetch calls in production)
           loadJSONData() {
-            // Replace with actual fetch() logic for production use
-            fetch("data/prohibited_items_en.json")
-              .then((response) => response.json())
+            // Replace the paths with the correct file paths
+            fetch("webhook.prohibited_items_en.json")
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
               .then((data) => {
                 this.enItems = data;
+              })
+              .catch((error) => {
+                console.error("Error fetching English items:", error);
               });
-            fetch("data/prohibited_items_id.json")
-              .then((response) => response.json())
+
+            fetch("webhook.prohibited_items_id.json")
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
               .then((data) => {
                 this.idItems = data;
+              })
+              .catch((error) => {
+                console.error("Error fetching Indonesian items:", error);
               });
           },
 
@@ -186,16 +219,18 @@
                 id_item: Date.now().toString(),
                 Destination: this.newItem.Destination,
                 "Prohibited Items": this.newItem.Prohibited,
+                "Max Weight": this.newItem.Weight,
               });
             } else {
               this.idItems.push({
                 id_item: Date.now().toString(),
                 Destinasi: this.newItem.Destination,
                 "Barang Terlarang": this.newItem.Prohibited,
+                "Berat Maksimum": this.newItem.Weight,
               });
             }
             // Clear input fields after adding
-            this.newItem = { Destination: "", Prohibited: "" };
+            this.newItem = { Destination: "", Prohibited: "", Weight: "" };
             this.showAddForm = false;
           },
 
