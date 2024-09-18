@@ -110,35 +110,46 @@ function loadBarang(barangs) {
 
 // Fungsi untuk menghapus item
 function deleteItemId(id) {
-  const loginToken = getCookie("login");
+  const loginToken = getCookie("login"); // Ambil token dari cookie
   if (!loginToken) {
     alert("You are not logged in! Redirecting to login page.");
-    redirect("../");
+    redirect("../"); // Arahkan ke halaman login jika tidak ada token
     return;
   }
 
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
-    const headers = new Headers({
+    const headers = {
       "Authorization": `Bearer ${loginToken}`, // Gunakan token login dari cookie dalam format Bearer
       "Content-Type": "application/json"
-    });
+    };
 
     console.log("Sending delete request with headers:", headers);
 
-    deleteJSON(targetUrl, headers, {}, (response) => {
-      console.log("Delete response status:", response.status);
-      if (response.status === 200) {
+    // Gunakan fetch API untuk melakukan request DELETE
+    fetch(targetUrl, {
+      method: 'DELETE',
+      headers: headers
+    })
+    .then(response => response.json()) // Parsing respons sebagai JSON
+    .then(data => {
+      console.log("Delete response data:", data);
+      if (data.status === 'success') { // Jika status dari respons adalah 'success'
         alert("Item berhasil dihapus");
         // Muat ulang data setelah penghapusan
         loadBarangData(loginToken);
       } else {
-        console.error("Failed to delete item. Status code:", response.status);
+        console.error("Failed to delete item. Response:", data);
         alert("Gagal menghapus item");
       }
+    })
+    .catch(error => {
+      console.error("Error while deleting item:", error);
+      alert("Terjadi kesalahan saat menghapus item");
     });
   }
 }
+
 
 // Pastikan deleteItemId tersedia secara global
 window.deleteItemId = deleteItemId;
