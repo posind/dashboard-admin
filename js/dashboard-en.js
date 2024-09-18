@@ -1,5 +1,5 @@
 import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croot.js";
-import { getJSON, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
+import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
 // Ambil token dari cookie menggunakan jscroot
@@ -98,7 +98,7 @@ function responsefunction(response) {
   }
 }
 
-// Fungsi untuk menghapus item
+// Fungsi untuk menghapus item menggunakan fetch API
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
@@ -107,18 +107,27 @@ function deleteItemEn(id) {
       "Content-Type": "application/json"
     };
 
-    deleteJSON(targetUrl, headers, {}, (response) => {
-      if (response.status === 200) {
+    // Menggunakan fetch API untuk melakukan request DELETE
+    fetch(targetUrl, {
+      method: 'DELETE',
+      headers: headers
+    })
+    .then(response => response.json()) // Parsing respons sebagai JSON
+    .then(data => {
+      if (data.status === 'success') {
         alert("Item deleted successfully");
         loadItems(); // Muat ulang data setelah penghapusan
       } else {
-        console.error("Failed to delete item. Response:", response);
+        console.error("Failed to delete item. Response:", data);
         alert("Failed to delete item");
       }
+    })
+    .catch(error => {
+      console.error("Error while deleting item:", error);
+      alert("An error occurred while deleting the item");
     });
   }
 }
-
 
 // Pastikan deleteItemEn tersedia secara global
 window.deleteItemEn = deleteItemEn;

@@ -1,5 +1,5 @@
 import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croot.js";
-import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
+import { get } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
 // Fungsi untuk memeriksa token login dan memuat data barang
@@ -149,7 +149,6 @@ function deleteItemId(id) {
     });
   }
 }
-
 
 // Pastikan deleteItemId tersedia secara global
 window.deleteItemId = deleteItemId;
