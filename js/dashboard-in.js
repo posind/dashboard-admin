@@ -1,38 +1,42 @@
-import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croot.js";
+import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
+import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-// Fungsi untuk mengambil token dari cookie
-function getCookie(name) {
-  let value = "; " + document.cookie;
-  let parts = value.split("; " + name + "=");
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-}
-
-// Ambil token dari cookie
-const token = getCookie('login');
-
-if (!token) {
-  console.error("Login token not found in cookies.");
-  alert("You are not logged in!");
-} else {
-  console.log("Login token found:", token);
-}
-
-// Memuat data dari API untuk barang dalam Bahasa Indonesia
-function loadBarangData() {
-  if (!token) {
-    alert("You are not logged in!");
+// Fungsi untuk memeriksa token login dan memuat data barang
+function checkLoginAndFetchData() {
+  const loginToken = getCookie("login");
+  if (!loginToken) {
+    alert("You are not logged in! Redirecting to login page.");
+    redirect("../"); // Redirect ke halaman login jika tidak ada token
     return;
   }
 
+  console.log("Login token found:", loginToken);
+
+  // Memuat data barang
+  loadBarangData(loginToken);
+}
+
+// Memuat data dari API untuk barang dalam Bahasa Indonesia
+function loadBarangData(token) {
   const headers = new Headers({
     "Authorization": `Bearer ${token}`, // Gunakan token login yang diambil dari cookie dalam format Bearer
     "Content-Type": "application/json"
   });
 
+  console.log("Sending request with headers:", headers);
+
   get(
     "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/item",
-    loadBarang,
+    (response) => {
+      console.log("Response status:", response.status);
+      if (response.status === 200) {
+        loadBarang(response.data); // Memuat data jika respons sukses
+      } else {
+        console.error("Failed to load data. Status code:", response.status);
+        alert("Failed to load data. Please check your login status.");
+      }
+    },
     { headers }
   );
 }
@@ -104,27 +108,32 @@ function loadBarang(barangs) {
   }
 }
 
-// Fungsi untuk menghapus item Bahasa Indonesia
+// Fungsi untuk menghapus item
 function deleteItemId(id) {
-  if (!token) {
-    alert("You are not logged in!");
+  const loginToken = getCookie("login");
+  if (!loginToken) {
+    alert("You are not logged in! Redirecting to login page.");
+    redirect("../");
     return;
   }
 
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
     const headers = new Headers({
-      "Authorization": `Bearer ${token}`, // Gunakan token login dari cookie dalam format Bearer
+      "Authorization": `Bearer ${loginToken}`, // Gunakan token login dari cookie dalam format Bearer
       "Content-Type": "application/json"
     });
 
+    console.log("Sending delete request with headers:", headers);
+
     deleteJSON(targetUrl, headers, {}, (response) => {
+      console.log("Delete response status:", response.status);
       if (response.status === 200) {
         alert("Item berhasil dihapus");
         // Muat ulang data setelah penghapusan
-        loadBarangData();
+        loadBarangData(loginToken);
       } else {
-        console.error("Failed to delete item. Response:", response);
+        console.error("Failed to delete item. Status code:", response.status);
         alert("Gagal menghapus item");
       }
     });
@@ -135,7 +144,7 @@ function deleteItemId(id) {
 window.deleteItemId = deleteItemId;
 
 // Memuat data ketika halaman pertama kali diakses
-loadBarangData();
+checkLoginAndFetchData();
 
 // Menambahkan event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
@@ -171,7 +180,7 @@ function handleTabChange() {
     const contentIdElement = document.getElementById("content-id");
     if (contentIdElement) contentIdElement.innerHTML = ""; // Hapus konten Bahasa Indonesia
   } else if (tab === "ID") {
-    loadBarangData(); // Panggil loadBarangData untuk memuat data barang Bahasa Indonesia
+    checkLoginAndFetchData(); // Panggil checkLoginAndFetchData untuk memuat data barang Bahasa Indonesia
     const contentEnElement = document.getElementById("content-en");
     if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
   }
