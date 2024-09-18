@@ -6,7 +6,7 @@ import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js
 function checkLoginAndFetchData() {
   const loginToken = getCookie("login");
   if (!loginToken) {
-    redirect("/"); 
+    redirect("../"); 
     return; 
   }
 
