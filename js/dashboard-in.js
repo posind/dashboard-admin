@@ -7,7 +7,7 @@ function checkLoginAndFetchData() {
   const loginToken = getCookie("login");
   if (!loginToken) {
     alert("You are not logged in! Redirecting to login page.");
-    redirect("../"); // Redirect ke halaman login jika tidak ada token
+    redirect("../");
     return;
   }
 

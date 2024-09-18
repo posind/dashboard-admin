@@ -1,18 +1,14 @@
-import { get, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/api.js";
+import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croot.js";
+import { getJSON, deleteJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
+import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-function getCookie(name) {
-  let value = "; " + document.cookie;
-  let parts = value.split("; " + name + "=");
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-}
-
-// Ambil token dari cookie
+// Ambil token dari cookie menggunakan jscroot
 const token = getCookie('login'); 
 
 if (!token) {
   console.error("Login token not found in cookies.");
   alert("You are not logged in!");
+  redirect("../"); // Redirect jika tidak ada token
 } else {
   console.log("Login token found:", token);
 }
@@ -24,15 +20,15 @@ function loadItems() {
     return;
   }
 
-  const headers = new Headers({
+  const headers = {
     "Authorization": `Bearer ${token}`, // Gunakan format Bearer token untuk otentikasi
     "Content-Type": "application/json"
-  });
+  };
 
-  get(
+  getJSON(
     "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
-    responsefunction,
-    { headers }
+    headers,
+    responsefunction
   );
 }
 
@@ -106,10 +102,10 @@ function responsefunction(response) {
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
-    const headers = new Headers({
+    const headers = {
       "Authorization": `Bearer ${token}`, // Gunakan Bearer token di header Authorization
       "Content-Type": "application/json"
-    });
+    };
 
     deleteJSON(targetUrl, headers, {}, (response) => {
       if (response.status === 200) {
