@@ -2,12 +2,12 @@ import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croo
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-const token = getCookie("login"); 
+const token = getCookie('login'); 
 
 if (!token) {
   console.error("Login token not found in cookies.");
   alert("You are not logged in!");
-  redirect("../"); // Redirect ke halaman login jika token tidak ada
+  redirect("../");
 } else {
   console.log("Login token found:", token);
 }
@@ -19,11 +19,9 @@ function loadItems() {
   }
 
   const headers = {
-    "Authorization": `Bearer ${token}`, // Gunakan header Authorization
+    "Login": `Bearer ${token}`, 
     "Content-Type": "application/json"
   };
-
-  console.log("Sending request with headers:", headers);
 
   getJSON(
     "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
@@ -37,15 +35,8 @@ function responsefunction(response) {
   console.log("Response from API:", response);
 
   // Check if response contains success status and items array
-  if (!response || response.status !== "success" || !Array.isArray(response.items)) {
-    if (response && response.status === 401) {
-      console.error("Unauthorized! Token might be invalid or expired.");
-      alert("Login expired. Please log in again.");
-      redirect("../"); // Redirect ke halaman login
-    } else {
-      console.error("Unexpected response format:", response);
-      alert("Failed to load items. Please try again.");
-    }
+  if (!response || response.status !== 'success' || !Array.isArray(response.items)) {
+    console.error("Unexpected response format:", response);
     return;
   }
 
@@ -110,37 +101,26 @@ function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
     const headers = {
-      "Authorization": `Bearer ${token}`, // Gunakan header Authorization
+      "Login": `Bearer ${token}`, // Use 'Login' header with token
       "Content-Type": "application/json"
     };
 
-    console.log("Sending delete request with headers:", headers);
-
+    // Using fetch API to send a DELETE request
     fetch(targetUrl, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: headers
     })
-    .then((response) => {
-      if (!response.ok) {
-        if (response.status === 401) {
-          console.error("Unauthorized! Token might be invalid or expired.");
-          alert("Login expired. Please log in again.");
-          redirect("../");
-        } else {
-          console.error(`Failed to delete item. Status: ${response.status}`);
-          alert("Failed to delete item.");
-        }
-        return;
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.status === "success") {
+    .then(response => response.json()) // Parse the response as JSON
+    .then(data => {
+      if (data.status === 'success') {
         alert("Item deleted successfully");
         loadItems(); // Reload items after deletion
+      } else {
+        console.error("Failed to delete item. Response:", data);
+        alert("Failed to delete item");
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.error("Error while deleting item:", error);
       alert("An error occurred while deleting the item");
     });

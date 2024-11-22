@@ -8,7 +8,7 @@ function checkLoginAndFetchData() {
   
   if (!token) {
     alert("You are not logged in! Redirecting to login page.");
-    redirect("../"); // Redirect ke halaman login
+    redirect("../");
     return;
   }
 
@@ -21,7 +21,7 @@ function checkLoginAndFetchData() {
 // Fungsi untuk memuat data barang dari API dalam Bahasa Indonesia
 function loadBarangData(token) {
   const headers = {
-    "Authorization": `Bearer ${token}`, // Menggunakan header 'Authorization'
+    "Login": `Bearer ${token}`, // Menggunakan header 'Login' dengan token
     "Content-Type": "application/json"
   };
 
@@ -33,10 +33,6 @@ function loadBarangData(token) {
       console.log("Response status:", response.status);
       if (response.status === 200) {
         loadBarang(response.data); // Memuat data jika respons sukses
-      } else if (response.status === 401) {
-        console.error("Unauthorized! Token might be invalid or expired.");
-        alert("Login expired. Please log in again.");
-        redirect("../"); // Redirect ke halaman login
       } else {
         console.error("Failed to load data. Status code:", response.status);
         alert("Failed to load data. Please check your login status.");
@@ -50,6 +46,7 @@ function loadBarangData(token) {
 function loadBarang(barangs) {
   console.log("Data received:", barangs);
 
+  // Cek apakah 'barangs' adalah array sebelum memproses
   if (!Array.isArray(barangs)) {
     console.error("Expected an array but got:", barangs);
     return;
@@ -58,6 +55,7 @@ function loadBarang(barangs) {
   let tableRows = "";
   let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
+  // Iterasi melalui data barang
   barangs.forEach((barang) => {
     const rowStyle = lastRowStyle;
     lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
@@ -88,6 +86,7 @@ function loadBarang(barangs) {
     `;
   });
 
+  // Menampilkan tabel barang di elemen dengan id "content-id"
   const contentIdElement = document.getElementById("content-id");
   if (contentIdElement) {
     contentIdElement.innerHTML = `
@@ -122,34 +121,26 @@ function deleteItemId(id) {
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
     const headers = {
-      "Authorization": `Bearer ${token}`, // Menggunakan header 'Authorization'
+      "Login": `Bearer ${token}`, // Menggunakan header 'Login' dengan token
       "Content-Type": "application/json"
     };
 
     console.log("Sending delete request with headers:", headers);
 
+    // Gunakan fetch API untuk melakukan request DELETE
     fetch(targetUrl, {
       method: 'DELETE',
       headers: headers
     })
-    .then(response => {
-      if (!response.ok) {
-        if (response.status === 401) {
-          console.error("Unauthorized! Token might be invalid or expired.");
-          alert("Login expired. Please log in again.");
-          redirect("../");
-        } else {
-          console.error(`Failed to delete item. Status: ${response.status}`);
-          alert("Failed to delete item.");
-        }
-        return;
-      }
-      return response.json();
-    })
+    .then(response => response.json()) // Parsing respons sebagai JSON
     .then(data => {
-      if (data && data.status === 'success') {
+      console.log("Delete response data:", data);
+      if (data.status === 'success') { // Jika status dari respons adalah 'success'
         alert("Item berhasil dihapus");
         loadBarangData(token); // Muat ulang data setelah penghapusan
+      } else {
+        console.error("Failed to delete item. Response:", data);
+        alert("Gagal menghapus item");
       }
     })
     .catch(error => {
@@ -204,3 +195,4 @@ function handleTabChange() {
     if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
   }
 }
+w0fp
