@@ -4,25 +4,26 @@ import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js
 
 // Fungsi untuk memeriksa token login dan memuat data barang
 function checkLoginAndFetchData() {
-  const loginToken = getCookie("login");
-  if (!loginToken) {
+  const token = getCookie("login"); // Mengambil token dari cookie 'login'
+  
+  if (!token) {
     alert("You are not logged in! Redirecting to login page.");
-    redirect("../");
+    redirect("../"); // Redirect ke halaman login
     return;
   }
 
-  console.log("Login token found:", loginToken);
+  console.log("Login token found:", token);
 
   // Memuat data barang
-  loadBarangData(loginToken);
+  loadBarangData(token);
 }
 
-// Memuat data dari API untuk barang dalam Bahasa Indonesia
+// Fungsi untuk memuat data barang dari API dalam Bahasa Indonesia
 function loadBarangData(token) {
-  const headers = new Headers({
-    "Authorization": `Bearer ${token}`, // Gunakan token login yang diambil dari cookie dalam format Bearer
+  const headers = {
+    "Authorization": `Bearer ${token}`, // Menggunakan header 'Authorization'
     "Content-Type": "application/json"
-  });
+  };
 
   console.log("Sending request with headers:", headers);
 
@@ -32,6 +33,10 @@ function loadBarangData(token) {
       console.log("Response status:", response.status);
       if (response.status === 200) {
         loadBarang(response.data); // Memuat data jika respons sukses
+      } else if (response.status === 401) {
+        console.error("Unauthorized! Token might be invalid or expired.");
+        alert("Login expired. Please log in again.");
+        redirect("../"); // Redirect ke halaman login
       } else {
         console.error("Failed to load data. Status code:", response.status);
         alert("Failed to load data. Please check your login status.");
@@ -41,11 +46,10 @@ function loadBarangData(token) {
   );
 }
 
-// Fungsi untuk memuat konten Bahasa Indonesia
+// Fungsi untuk menampilkan data barang dalam tabel
 function loadBarang(barangs) {
   console.log("Data received:", barangs);
 
-  // Cek apakah 'barangs' adalah array sebelum memproses
   if (!Array.isArray(barangs)) {
     console.error("Expected an array but got:", barangs);
     return;
@@ -54,7 +58,6 @@ function loadBarang(barangs) {
   let tableRows = "";
   let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
 
-  // Iterasi melalui data barang
   barangs.forEach((barang) => {
     const rowStyle = lastRowStyle;
     lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
@@ -85,7 +88,6 @@ function loadBarang(barangs) {
     `;
   });
 
-  // Menampilkan tabel barang di elemen dengan id "content-id"
   const contentIdElement = document.getElementById("content-id");
   if (contentIdElement) {
     contentIdElement.innerHTML = `
@@ -108,10 +110,10 @@ function loadBarang(barangs) {
   }
 }
 
-// Fungsi untuk menghapus item
+// Fungsi untuk menghapus item menggunakan token login
 function deleteItemId(id) {
-  const loginToken = getCookie("login"); // Ambil token dari cookie
-  if (!loginToken) {
+  const token = getCookie("login"); // Ambil token dari cookie
+  if (!token) {
     alert("You are not logged in! Redirecting to login page.");
     redirect("../"); // Arahkan ke halaman login jika tidak ada token
     return;
@@ -120,27 +122,34 @@ function deleteItemId(id) {
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
     const headers = {
-      "Authorization": `Bearer ${loginToken}`, // Gunakan token login dari cookie dalam format Bearer
+      "Authorization": `Bearer ${token}`, // Menggunakan header 'Authorization'
       "Content-Type": "application/json"
     };
 
     console.log("Sending delete request with headers:", headers);
 
-    // Gunakan fetch API untuk melakukan request DELETE
     fetch(targetUrl, {
       method: 'DELETE',
       headers: headers
     })
-    .then(response => response.json()) // Parsing respons sebagai JSON
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error("Unauthorized! Token might be invalid or expired.");
+          alert("Login expired. Please log in again.");
+          redirect("../");
+        } else {
+          console.error(`Failed to delete item. Status: ${response.status}`);
+          alert("Failed to delete item.");
+        }
+        return;
+      }
+      return response.json();
+    })
     .then(data => {
-      console.log("Delete response data:", data);
-      if (data.status === 'success') { // Jika status dari respons adalah 'success'
+      if (data && data.status === 'success') {
         alert("Item berhasil dihapus");
-        // Muat ulang data setelah penghapusan
-        loadBarangData(loginToken);
-      } else {
-        console.error("Failed to delete item. Response:", data);
-        alert("Gagal menghapus item");
+        loadBarangData(token); // Muat ulang data setelah penghapusan
       }
     })
     .catch(error => {
@@ -156,7 +165,7 @@ window.deleteItemId = deleteItemId;
 // Memuat data ketika halaman pertama kali diakses
 checkLoginAndFetchData();
 
-// Menambahkan event listener untuk Alpine.js
+// Event listener untuk Alpine.js
 document.addEventListener("alpine:init", () => {
   document.addEventListener("alpine:initialized", () => {
     setTimeout(() => {
@@ -176,7 +185,7 @@ document.addEventListener("alpine:init", () => {
   });
 });
 
-// Menangani perubahan tab
+// Fungsi untuk menangani perubahan tab
 function handleTabChange() {
   const xDataElement = document.querySelector("[x-data]");
   if (!xDataElement) {

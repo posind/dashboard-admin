@@ -2,18 +2,16 @@ import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croo
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-// Ambil token dari cookie menggunakan jscroot
-const token = getCookie('login'); 
+const token = getCookie("login"); 
 
 if (!token) {
   console.error("Login token not found in cookies.");
   alert("You are not logged in!");
-  redirect("../"); // Redirect jika tidak ada token
+  redirect("../"); // Redirect ke halaman login jika token tidak ada
 } else {
   console.log("Login token found:", token);
 }
 
-// Fungsi untuk memuat item dari API
 function loadItems() {
   if (!token) {
     alert("You are not logged in!");
@@ -21,9 +19,11 @@ function loadItems() {
   }
 
   const headers = {
-    "Authorization": `Bearer ${token}`, // Gunakan format Bearer token untuk otentikasi
+    "Authorization": `Bearer ${token}`, // Gunakan header Authorization
     "Content-Type": "application/json"
   };
+
+  console.log("Sending request with headers:", headers);
 
   getJSON(
     "https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/get/prohibited-items/en",
@@ -32,23 +32,30 @@ function loadItems() {
   );
 }
 
-// Fungsi untuk menangani respons API
+// Function to handle API response
 function responsefunction(response) {
   console.log("Response from API:", response);
 
-  // Cek apakah respons berisi status sukses dan array items
-  if (!response || response.status !== 'success' || !Array.isArray(response.items)) {
-    console.error("Unexpected response format:", response);
+  // Check if response contains success status and items array
+  if (!response || response.status !== "success" || !Array.isArray(response.items)) {
+    if (response && response.status === 401) {
+      console.error("Unauthorized! Token might be invalid or expired.");
+      alert("Login expired. Please log in again.");
+      redirect("../"); // Redirect ke halaman login
+    } else {
+      console.error("Unexpected response format:", response);
+      alert("Failed to load items. Please try again.");
+    }
     return;
   }
 
   const items = response.items;
   let tableRows = "";
-  let lastRowStyle = "bg-gray-50"; // Mulai dengan gaya pertama
+  let lastRowStyle = "bg-gray-50"; // Start with the first style
 
   items.forEach((item) => {
     const rowStyle = lastRowStyle;
-    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Berganti gaya
+    lastRowStyle = lastRowStyle === "bg-gray-50" ? "" : "bg-gray-50"; // Toggle row style
 
     tableRows += `
       <tr class="text-xs ${rowStyle}">
@@ -61,12 +68,12 @@ function responsefunction(response) {
         <td class="font-medium">${item.destination || "N/A"}</td>
         <td>
           <div>
-            <!-- Ikon Edit -->
+            <!-- Edit Icon -->
             <a class="inline-block mr-2" href="crud/edititem.html?id=${item.id}">
               <i class="fas fa-edit" style="font-size: 18px; color: #382CDD;"></i>
             </a>
             
-            <!-- Ikon Delete -->
+            <!-- Delete Icon -->
             <a class="inline-block" href="#" onclick="deleteItemEn('${item.id}')">
               <i class="fas fa-trash" style="font-size: 20px; color: #E85444;"></i>
             </a>
@@ -98,41 +105,52 @@ function responsefunction(response) {
   }
 }
 
-// Fungsi untuk menghapus item menggunakan fetch API
+// Function to delete an item using the fetch API
 function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
     const headers = {
-      "Authorization": `Bearer ${token}`, // Gunakan Bearer token di header Authorization
+      "Authorization": `Bearer ${token}`, // Gunakan header Authorization
       "Content-Type": "application/json"
     };
 
-    // Menggunakan fetch API untuk melakukan request DELETE
+    console.log("Sending delete request with headers:", headers);
+
     fetch(targetUrl, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: headers
     })
-    .then(response => response.json()) // Parsing respons sebagai JSON
-    .then(data => {
-      if (data.status === 'success') {
+    .then((response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error("Unauthorized! Token might be invalid or expired.");
+          alert("Login expired. Please log in again.");
+          redirect("../");
+        } else {
+          console.error(`Failed to delete item. Status: ${response.status}`);
+          alert("Failed to delete item.");
+        }
+        return;
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data && data.status === "success") {
         alert("Item deleted successfully");
-        loadItems(); // Muat ulang data setelah penghapusan
-      } else {
-        console.error("Failed to delete item. Response:", data);
-        alert("Failed to delete item");
+        loadItems(); // Reload items after deletion
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error while deleting item:", error);
       alert("An error occurred while deleting the item");
     });
   }
 }
 
-// Pastikan deleteItemEn tersedia secara global
+// Make deleteItemEn globally accessible
 window.deleteItemEn = deleteItemEn;
 
-// Event listener untuk Alpine.js
+// Event listener for Alpine.js initialization
 document.addEventListener("alpine:init", () => {
   document.addEventListener("alpine:initialized", () => {
     setTimeout(() => {
@@ -148,11 +166,11 @@ document.addEventListener("alpine:init", () => {
       } else {
         console.error("Alpine.js is not defined.");
       }
-    }, 100); // Tunggu sebentar untuk memastikan Alpine.js terinisialisasi
+    }, 100); // Wait briefly to ensure Alpine.js is initialized
   });
 });
 
-// Fungsi untuk menangani perubahan tab
+// Function to handle tab change
 function handleTabChange() {
   const xDataElement = document.querySelector("[x-data]");
   if (!xDataElement) {
@@ -164,10 +182,10 @@ function handleTabChange() {
   if (tab === "EN") {
     loadItems();
     const contentIdElement = document.getElementById("content-id");
-    if (contentIdElement) contentIdElement.innerHTML = ""; // Hapus konten ID jika ada
+    if (contentIdElement) contentIdElement.innerHTML = ""; // Clear ID content if present
   } else if (tab === "ID") {
-    loadItemsID(); // Fungsi ini harus diimplementasikan untuk tab ID
+    loadItemsID(); // Implement this function for the ID tab
     const contentEnElement = document.getElementById("content-en");
-    if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
+    if (contentEnElement) contentEnElement.innerHTML = ""; // Clear English content
   }
 }
