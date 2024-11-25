@@ -4,7 +4,7 @@ import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js
 
 // Fungsi untuk memeriksa token login dan memuat data barang
 function checkLoginAndFetchData() {
-  const token = getCookie("login"); // Mengambil token dari cookie 'login'
+  const token = getCookie("Login"); // Mengambil token dari cookie 'Login'
   
   if (!token) {
     alert("You are not logged in! Redirecting to login page.");

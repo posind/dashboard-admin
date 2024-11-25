@@ -2,7 +2,7 @@ import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croo
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-const token = getCookie('login'); 
+const token = getCookie('Login'); 
 
 if (!token) {
   console.error("Login token not found in cookies.");
