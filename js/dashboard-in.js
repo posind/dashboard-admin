@@ -4,7 +4,7 @@ import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js
 
 // Fungsi untuk memeriksa token login dan memuat data barang
 function checkLoginAndFetchData() {
-  const token = getCookie("Login"); // Mengambil token dari cookie 'Login'
+  const token = getCookie("login"); // Mengambil token dari cookie 'Login'
   
   if (!token) {
     alert("You are not logged in! Redirecting to login page.");
@@ -21,7 +21,7 @@ function checkLoginAndFetchData() {
 // Fungsi untuk memuat data barang dari API dalam Bahasa Indonesia
 function loadBarangData(token) {
   const headers = {
-    "Login": `Bearer ${token}`, // Menggunakan header 'Login' dengan token
+    "login": `${token}`, // Menggunakan header 'Login' dengan token
     "Content-Type": "application/json"
   };
 
@@ -121,7 +121,7 @@ function deleteItemId(id) {
   if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/item?id=${id}`;
     const headers = {
-      "Login": `Bearer ${token}`, // Menggunakan header 'Login' dengan token
+      "login": `${token}`, // Menggunakan header 'Login' dengan token
       "Content-Type": "application/json"
     };
 
@@ -195,4 +195,3 @@ function handleTabChange() {
     if (contentEnElement) contentEnElement.innerHTML = ""; // Hapus konten Bahasa Inggris
   }
 }
-w0fp

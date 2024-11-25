@@ -2,7 +2,7 @@ import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croo
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-const token = getCookie('Login'); 
+const token = getCookie('login'); 
 
 if (!token) {
   console.error("Login token not found in cookies.");
@@ -19,7 +19,7 @@ function loadItems() {
   }
 
   const headers = {
-    "Login": `Bearer ${token}`, 
+    "login": `Bearer ${token}`, 
     "Content-Type": "application/json"
   };
 
@@ -101,7 +101,7 @@ function deleteItemEn(id) {
   if (confirm("Are you sure you want to delete this item?")) {
     const targetUrl = `https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/delete/prohibited-items/en?id=${id}`;
     const headers = {
-      "Login": `Bearer ${token}`, // Use 'Login' header with token
+      "login": `Bearer ${token}`, // Use 'Login' header with token
       "Content-Type": "application/json"
     };
 
